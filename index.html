@@ -620,6 +620,14 @@ td.mono{color:#7DD3FC}.kv .v{color:#5EEAD4}.kv:hover{background:rgba(190,160,255
 @keyframes btnpulse{50%{box-shadow:0 0 0 8px rgba(236,72,153,.18),0 14px 34px -8px rgba(236,72,153,.8)}}
 .login-error{background:var(--rust-soft);border-color:rgba(251,113,133,.45);color:#FDA4AF}
 </style>
+<style id="wa-actions">
+.act{white-space:nowrap}.act .btn,td.noprint .btn{margin-right:6px}
+.btn-wa{background:linear-gradient(100deg,#25D366,#128C7E);color:#04210f;font-weight:700;border:0;box-shadow:0 6px 18px -8px rgba(37,211,102,.8)}
+.btn-wa:hover{background:linear-gradient(100deg,#4ADE80,#25D366);transform:translateY(-1px);box-shadow:0 10px 24px -8px rgba(37,211,102,.95)}
+.btn-wa:active{transform:translateY(1px)}
+tr.click:hover .btn-ghost{border-color:rgba(45,212,191,.5)}
+@media print{.act{display:none}}
+</style>
 </head>
 <body>
 <div id="loginScreen">
@@ -761,6 +769,31 @@ function reg(){head("Register applicant");
    head("Registered");
    $("#view").innerHTML=`<div class="panel ok-box" style="max-width:560px;"><div class="tick">&#10003;</div><div class="big mono">${esc(j.rec.AppNo)}</div><p>${esc(j.rec.Name)} is registered for ${esc(j.rec.Grade)}.<br>Give this application number to the parent.</p><div style="display:flex;gap:10px;justify-content:center;margin-top:16px;"><button class="btn btn-primary" onclick="reg()">Register another</button><button class="btn btn-ghost" onclick="go('apps')">View applicants</button></div></div>`})}}
 
+/* whatsapp click-to-chat */
+const WA_ICON=`<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.15c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.25-8.23 4.54 0 8.23 3.69 8.23 8.23s-3.7 8.24-8.23 8.24zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.42h-.48c-.17 0-.43.06-.66.31-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.23-.16-.48-.29z"/></svg>`;
+const actBtns=no=>`<button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();edit('${no}')">&#9998; Edit</button><button class="btn btn-wa btn-sm" onclick="event.stopPropagation();wa('${no}')">${WA_ICON}Send message</button>`;
+function waPhone(p){let d=String(p||"").replace(/\D/g,"");if(!d)return"";if(d.startsWith("254"))return d;if(d.startsWith("0"))return"254"+d.slice(1);if(d.length===9)return"254"+d;return d}
+function waDate(a){let t=a.IntDate;try{t=new Date(a.IntDate+"T00:00:00").toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long",year:"numeric"})}catch(e){}
+ if(a.IntTime){try{const[h,m]=String(a.IntTime).split(":");const d=new Date();d.setHours(+h,+m);t+=" at "+d.toLocaleTimeString("en-GB",{hour:"numeric",minute:"2-digit",hour12:true}).toUpperCase()}catch(e){}}return t}
+function wa(no){const a=S.apps.find(x=>x.AppNo===no);if(!a)return;
+ const ph=waPhone(a.Phone);if(ph.length<11||ph.length>15)return toast("No valid phone number on file for "+a.Name+". Use Edit to check the record.",1);
+ if(!a.IntDate)return toast("Set an interview date for "+a.Name+" first, then send the message.",1);
+ const msg=`Dear ${a.Parent||"Parent/Guardian"},
+We are pleased to inform you that an interview has been scheduled for your child, ${a.Name}, as part of the admission process to the next class.
+\u{1F4C5} Interview Date: ${waDate(a)}
+Kindly ensure that you accompany your child to school on the scheduled date and bring the following:
+
+1. Your National ID card \u2013 this will be used as your gate pass to access the school.
+2. A copy of your child's birth certificate.
+3. KSh 1,000 interview fee.
+
+Please ensure that you arrive on the scheduled date with all the required documents and the interview fee.
+Thank you for choosing our school. We look forward to meeting you and your child.
+Kind regards,
+School Administration
+Embakasi Garrison Comprehensive School.`;
+ window.open("https://wa.me/"+ph+"?text="+encodeURIComponent(msg),"_blank","noopener");toast("Opening WhatsApp for "+a.Parent)}
+
 /* applicants */
 function appsV(){head("Applicants",`<button class="btn btn-ghost btn-sm" onclick="csv(S.apps,'applicants')">Export to Excel</button>`);
  $("#view").innerHTML=`<div class="panel"><div class="panel-head"><h3>Find &amp; manage applicants</h3><span class="tag" id="cnt"></span></div>
@@ -769,7 +802,7 @@ function appsV(){head("Applicants",`<button class="btn btn-ghost btn-sm" onclick
  const draw=()=>{const q=$("#q").value.toLowerCase(),g=$("#fg").value,d=$("#fd").value;
   const l=S.apps.filter(a=>(!g||a.Grade===g)&&(!d||a.Decision===d)&&(!q||(a.Name+a.AppNo+a.Phone+a.Parent).toLowerCase().includes(q)));
   $("#cnt").textContent=l.length+" shown";
-  $("#tb").innerHTML=l.length?`<div style="overflow:auto"><table><thead><tr><th>No.</th><th>Learner</th><th>Grade</th><th>Parent</th><th>Phone</th><th>Interview</th><th>Attendance</th><th>Decision</th></tr></thead><tbody>${l.slice().reverse().slice(0,200).map(a=>`<tr class="click" onclick="edit('${a.AppNo}')"><td class="mono">${a.AppNo}</td><td><strong>${esc(a.Name)}</strong></td><td>${a.Grade}</td><td>${esc(a.Parent)}</td><td class="mono">${esc(a.Phone)}</td><td>${a.IntDate||"—"} ${a.IntTime||""}</td><td>${pill(a.Attendance)}</td><td>${pill(a.Decision)}</td></tr>`).join("")}</tbody></table></div>`:'<div class="empty"><h4>No applicants match</h4>Try a different search or register a new applicant.</div>'};
+  $("#tb").innerHTML=l.length?`<div style="overflow:auto"><table><thead><tr><th>No.</th><th>Learner</th><th>Grade</th><th>Parent</th><th>Phone</th><th>Interview</th><th>Attendance</th><th>Decision</th><th class="noprint">Actions</th></tr></thead><tbody>${l.slice().reverse().slice(0,200).map(a=>`<tr class="click" onclick="edit('${a.AppNo}')"><td class="mono">${a.AppNo}</td><td><strong>${esc(a.Name)}</strong></td><td>${a.Grade}</td><td>${esc(a.Parent)}</td><td class="mono">${esc(a.Phone)}</td><td>${a.IntDate||"—"} ${a.IntTime||""}</td><td>${pill(a.Attendance)}</td><td>${pill(a.Decision)}</td><td class="act noprint">${actBtns(a.AppNo)}</td></tr>`).join("")}</tbody></table></div>`:'<div class="empty"><h4>No applicants match</h4>Try a different search or register a new applicant.</div>'};
  ["q","fg","fd"].forEach(i=>$("#"+i).oninput=draw);draw()}
 function edit(no){const a=S.apps.find(x=>x.AppNo===no);
  openModal(`<h3>${esc(a.Name)} <span class="mono" style="font-size:13px;color:var(--muted);">${a.AppNo}</span></h3>
@@ -789,7 +822,7 @@ function intV(){head("Interview register",`<button class="btn btn-ghost btn-sm" 
  $("#view").innerHTML=`<div class="panel"><div class="panel-head"><h3 id="ih"></h3><input type="date" id="id" value="${d0}" style="max-width:190px;" class="noprint"></div><div id="tb"></div></div>`;
  const draw=()=>{S.idate=$("#id").value;const l=S.apps.filter(a=>a.IntDate===S.idate).sort((a,b)=>(a.IntTime||"").localeCompare(b.IntTime||""));
   $("#ih").textContent="Expected on "+S.idate+": "+l.length;
-  $("#tb").innerHTML=l.length?`<div style="overflow:auto"><table><thead><tr><th>Time</th><th>No.</th><th>Learner</th><th>Grade</th><th>Parent</th><th>Phone</th><th>Attendance</th><th class="noprint"></th></tr></thead><tbody>${l.map(a=>`<tr><td class="mono">${a.IntTime||"—"}</td><td class="mono">${a.AppNo}</td><td><strong>${esc(a.Name)}</strong></td><td>${a.Grade}</td><td>${esc(a.Parent)}</td><td class="mono">${esc(a.Phone)}</td><td>${pill(a.Attendance)}</td><td class="noprint"><button class="btn btn-ghost btn-sm" onclick="edit('${a.AppNo}')">Update</button></td></tr>`).join("")}</tbody></table></div>`:'<div class="empty"><h4>Nobody is scheduled</h4>Set interview dates from the Applicants page.</div>'};
+  $("#tb").innerHTML=l.length?`<div style="overflow:auto"><table><thead><tr><th>Time</th><th>No.</th><th>Learner</th><th>Grade</th><th>Parent</th><th>Phone</th><th>Attendance</th><th class="noprint"></th></tr></thead><tbody>${l.map(a=>`<tr><td class="mono">${a.IntTime||"—"}</td><td class="mono">${a.AppNo}</td><td><strong>${esc(a.Name)}</strong></td><td>${a.Grade}</td><td>${esc(a.Parent)}</td><td class="mono">${esc(a.Phone)}</td><td>${pill(a.Attendance)}</td><td class="noprint"><button class="btn btn-ghost btn-sm" onclick="edit('${a.AppNo}')">Update</button> <button class="btn btn-wa btn-sm" onclick="wa('${a.AppNo}')"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.15c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.25-8.23 4.54 0 8.23 3.69 8.23 8.23s-3.7 8.24-8.23 8.24zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.42h-.48c-.17 0-.43.06-.66.31-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.23-.16-.48-.29z"/></svg>Send message</button></td></tr>`).join("")}</tbody></table></div>`:'<div class="empty"><h4>Nobody is scheduled</h4>Set interview dates from the Applicants page.</div>'};
  $("#id").oninput=draw;draw()}
 
 /* reports */
