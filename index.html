@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#050B2E">
+<meta name="theme-color" content="#0E0A22">
 <title>Embakasi Garrison Comprehensive School — Admission Portal 2027</title>
 <link rel="icon" type="image/png" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -512,6 +512,114 @@ td.mono{color:#8DD9FF}
 #loginBtn.busy:not(:empty){}
 @media(prefers-reduced-motion:reduce){.login-btn.busy::after{animation:none;width:100%}}
 .lgspin{position:absolute;left:calc(50% - 74px);top:50%;width:18px;height:18px;margin-top:-9px;border:3px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;opacity:0;animation:spin .7s linear infinite;pointer-events:none}.login-btn.busy .lgspin{opacity:1}</style>
+<style id="aurora-theme">
+/* ===== AURORA THEME: deep violet ink + teal / emerald / rose / amber ===== */
+:root{
+  --paper:#0E0A22;--card:#1B1145;--charcoal:#E9E4FF;--ink:#F4F0FF;--muted:#A99CD6;
+  --line:rgba(190,160,255,.16);--glass-line:rgba(190,160,255,.2);
+  --leaf:#34D399;--leaf-soft:rgba(52,211,153,.16);--rust:#FB7185;--rust-soft:rgba(251,113,133,.16);--sky:#38BDF8;
+  --glass:linear-gradient(160deg,rgba(70,45,140,.46),rgba(28,17,68,.62));
+  --shadow:0 1px 0 rgba(255,255,255,.05) inset,0 18px 44px -16px rgba(0,0,0,.7);
+  --shadow-lg:0 1px 0 rgba(255,255,255,.07) inset,0 30px 64px -18px rgba(0,0,0,.8),0 0 0 1px rgba(45,212,191,.28);
+}
+body{background:
+  radial-gradient(900px 620px at 100% -8%,rgba(45,212,191,.24),transparent 60%),
+  radial-gradient(820px 620px at -8% 108%,rgba(244,63,94,.2),transparent 60%),
+  radial-gradient(700px 500px at 55% 45%,rgba(139,92,246,.16),transparent 65%),
+  linear-gradient(180deg,#0E0A22,#150D35 55%,#0C0820);background-attachment:fixed;color:var(--charcoal)}
+body::before{background:#14B8A6;opacity:.3}
+body::after{background:#EC4899;opacity:.28}
+::selection{background:#2DD4BF;color:#06231f}
+::-webkit-scrollbar-thumb{background:rgba(190,160,255,.3)}
+
+/* sidebar */
+.sidebar{background:radial-gradient(260px 240px at 0% 0%,rgba(45,212,191,.3),transparent 70%),radial-gradient(280px 280px at 100% 100%,rgba(236,72,153,.3),transparent 70%),linear-gradient(180deg,#1A0F3E,#090518);border-right:1px solid var(--glass-line)}
+.brand .stamp{border-color:#2DD4BF;box-shadow:0 0 0 4px rgba(45,212,191,.18),0 0 26px rgba(45,212,191,.5);animation:glowring2 3.5s ease-in-out infinite}
+@keyframes glowring2{50%{box-shadow:0 0 0 7px rgba(236,72,153,.1),0 0 36px rgba(236,72,153,.55)}}
+.brand p{color:#9A8BD0}
+nav.navlist button{color:#CFC4F5}
+nav.navlist button:hover{background:rgba(190,160,255,.12)}
+nav.navlist button.active{background:linear-gradient(100deg,#8B5CF6,#EC4899);color:#fff;box-shadow:0 10px 28px -8px rgba(236,72,153,.7)}
+nav.navlist button.active .ic{background:rgba(255,255,255,.22);color:#fff}
+#nav button:nth-child(1) .ic{background:rgba(56,189,248,.22);color:#7DD3FC}
+#nav button:nth-child(2) .ic{background:rgba(45,212,191,.22);color:#5EEAD4}
+#nav button:nth-child(3) .ic{background:rgba(167,139,250,.24);color:#C4B5FD}
+#nav button:nth-child(4) .ic{background:rgba(251,191,36,.22);color:#FCD34D}
+#nav button:nth-child(5) .ic{background:rgba(244,114,182,.22);color:#F9A8D4}
+#nav button:nth-child(6) .ic{background:rgba(52,211,153,.22);color:#6EE7B7}
+#nav button:nth-child(7) .ic{background:rgba(251,146,60,.22);color:#FDBA74}
+.sidebar-foot{background:rgba(0,0,0,.3);color:#9A8BD0}.sidebar-foot b{color:#F4F0FF}
+
+/* topbar */
+.topbar{background:rgba(20,11,52,.72);border-bottom:1px solid var(--glass-line)}
+.topbar::after{background:linear-gradient(90deg,#2DD4BF,#34D399,#FBBF24,#FB7185,#A78BFA,#2DD4BF);background-size:200% 100%}
+
+/* panels & cards */
+.panel,.modal{border:1px solid var(--glass-line)}
+.panel{--pc1:#2DD4BF;--pc2:#34D399}
+.grid>.panel:nth-child(2){--pc1:#A78BFA;--pc2:#F472B6}
+.grid>.panel:nth-child(3){--pc1:#FBBF24;--pc2:#FB923C}
+.view>.panel:nth-child(2n){--pc1:#38BDF8;--pc2:#818CF8}
+.view>.panel:nth-child(3n){--pc1:#FB7185;--pc2:#FBBF24}
+.stat-card{background:linear-gradient(150deg,color-mix(in srgb,var(--c) 26%,#1B1145),rgba(24,14,60,.75) 72%);border-color:color-mix(in srgb,var(--c) 45%,transparent)}
+.grid>.stat-card:nth-child(1){--c:#38BDF8;--c2:#818CF8}
+.grid>.stat-card:nth-child(2){--c:#A78BFA;--c2:#F472B6}
+.grid>.stat-card:nth-child(3){--c:#2DD4BF;--c2:#34D399}
+.grid>.stat-card:nth-child(4){--c:#A3E635;--c2:#34D399}
+.grid>.stat-card:nth-child(5){--c:#FBBF24;--c2:#FB923C}
+.grid>.stat-card:nth-child(6){--c:#FB7185;--c2:#F43F5E}
+.prog{background:rgba(190,160,255,.15)}
+
+/* chart */
+.chart-bars .bar-wrap:nth-child(6n+1){--bc1:#38BDF8;--bc2:#4338CA}
+.chart-bars .bar-wrap:nth-child(6n+2){--bc1:#2DD4BF;--bc2:#0F766E}
+.chart-bars .bar-wrap:nth-child(6n+3){--bc1:#A3E635;--bc2:#15803D}
+.chart-bars .bar-wrap:nth-child(6n+4){--bc1:#A78BFA;--bc2:#6D28D9}
+.chart-bars .bar-wrap:nth-child(6n+5){--bc1:#F472B6;--bc2:#9D174D}
+.chart-bars .bar-wrap:nth-child(6n){--bc1:#FBBF24;--bc2:#C2410C}
+
+/* buttons & forms */
+.btn-primary{background:linear-gradient(100deg,#14B8A6,#34D399);color:#052b24;box-shadow:0 8px 22px -8px rgba(20,184,166,.8)}
+.btn-primary:hover{background:linear-gradient(100deg,#2DD4BF,#6EE7B7);box-shadow:0 12px 28px -8px rgba(45,212,191,.9)}
+.btn-ghost{background:rgba(190,160,255,.09);border:1px solid var(--glass-line)}
+.btn-ghost:hover{background:rgba(236,72,153,.16);border-color:rgba(244,114,182,.55)}
+input[type=text],input[type=number],input[type=date],input[type=time],input[type=tel],input[type=month],input[type=search],input[type=password],select,textarea{background:rgba(14,8,44,.7);border:1.5px solid rgba(190,160,255,.24);color:#F4F0FF}
+input::placeholder,textarea::placeholder{color:#7E70B0}
+input:focus,select:focus,textarea:focus{border-color:#2DD4BF;box-shadow:0 0 0 4px rgba(45,212,191,.2),0 0 22px rgba(45,212,191,.22)}
+option{background:#1B1145;color:#F4F0FF}
+label{color:#D5CCF8}
+
+/* tables, tags */
+thead th{background:linear-gradient(90deg,#1E1250,#2A1766);color:#B9ABF0}
+tbody tr:nth-child(even){background:rgba(190,160,255,.045)}
+tbody tr:hover{background:rgba(45,212,191,.09);box-shadow:inset 3px 0 0 #2DD4BF}
+td.mono{color:#7DD3FC}.kv .v{color:#5EEAD4}.kv:hover{background:rgba(190,160,255,.08)}
+.tag:not(.gold):not(.warn):not(.mute){background:rgba(45,212,191,.16);color:#5EEAD4}
+.panel-head .tag:not(.gold):not(.warn):not(.mute){background:rgba(167,139,250,.2);color:#C4B5FD}
+.tag.gold{background:rgba(251,191,36,.18);color:#FCD34D}
+.tag.warn{background:rgba(251,113,133,.18);color:#FDA4AF}
+.tag.mute{background:rgba(169,156,214,.16);color:#C3B8EA}
+
+/* modal, toast, loading */
+.modal-bg{background:rgba(8,4,28,.72)}
+.modal{background:linear-gradient(160deg,#2A1A70,#170E46)}
+.toast{background:linear-gradient(100deg,#2A1A70,#1B1145);border-left-color:#2DD4BF}
+.loading-screen{background:#0E0A22}
+.spinner{border-color:rgba(190,160,255,.2);border-top-color:#2DD4BF;box-shadow:0 0 26px rgba(45,212,191,.45)}
+
+/* login */
+.lgshade{background:radial-gradient(55% 45% at 50% 38%,rgba(45,212,191,.22),transparent 70%),linear-gradient(180deg,rgba(14,8,40,.35),rgba(14,8,40,.82))}
+.formside{background:radial-gradient(circle at 90% 8%,rgba(45,212,191,.22),transparent 45%),radial-gradient(circle at 5% 95%,rgba(236,72,153,.2),transparent 45%),#0E0A22}
+.login-box{background:linear-gradient(160deg,rgba(60,38,130,.78),rgba(24,14,62,.88));border:1px solid var(--glass-line);border-top:6px solid transparent;box-shadow:0 30px 70px -20px rgba(0,0,0,.85),0 0 70px -20px rgba(139,92,246,.55)}
+.login-box::before{background:linear-gradient(90deg,#2DD4BF,#34D399,#FBBF24,#FB7185,#A78BFA);background-size:200% 100%}
+.pw button{color:#5EEAD4}
+.login-btn,.login-btn.busy{background-image:linear-gradient(100deg,#8B5CF6,#EC4899,#FBBF24,#34D399,#2DD4BF,#8B5CF6);background-size:300% 100%;color:#fff}
+.login-btn.busy{color:transparent}
+.login-btn{box-shadow:0 10px 28px -8px rgba(236,72,153,.65)}
+.login-btn:hover{box-shadow:0 14px 34px -8px rgba(251,191,36,.6)}
+@keyframes btnpulse{50%{box-shadow:0 0 0 8px rgba(236,72,153,.18),0 14px 34px -8px rgba(236,72,153,.8)}}
+.login-error{background:var(--rust-soft);border-color:rgba(251,113,133,.45);color:#FDA4AF}
+</style>
 </head>
 <body>
 <div id="loginScreen">
