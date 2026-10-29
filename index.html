@@ -302,324 +302,6 @@ tbody tr:hover{background:#F4F7FF;box-shadow:inset 3px 0 0 var(--sky)}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
 </style>
-<style id="midnight-theme">
-/* ===== MIDNIGHT BLUE THEME ===== */
-:root{
-  --paper:#050B2E;--card:#0C1A5C;--charcoal:#DCE5FF;--ink:#EAF0FF;--muted:#8D9FD8;
-  --line:rgba(130,160,255,.16);--leaf-soft:rgba(79,140,255,.16);--leaf:#5EEAD4;
-  --rust:#FF7A93;--rust-soft:rgba(255,92,122,.16);--sky:#4F8CFF;
-  --glass:linear-gradient(160deg,rgba(24,44,140,.55),rgba(9,22,86,.62));
-  --glass-line:rgba(130,170,255,.18);
-  --shadow:0 1px 0 rgba(255,255,255,.04) inset,0 16px 40px -14px rgba(0,0,0,.65);
-  --shadow-lg:0 1px 0 rgba(255,255,255,.06) inset,0 28px 60px -16px rgba(0,0,0,.75),0 0 0 1px rgba(110,160,255,.22);
-  color-scheme:dark;
-}
-body{color:var(--charcoal);background:
-  radial-gradient(900px 600px at 105% -10%,rgba(56,120,255,.28),transparent 60%),
-  radial-gradient(800px 600px at -10% 110%,rgba(124,77,255,.22),transparent 60%),
-  linear-gradient(180deg,#050B2E,#07123F 60%,#050B2E);background-attachment:fixed}
-body::before,body::after{content:"";position:fixed;z-index:0;pointer-events:none;border-radius:50%;filter:blur(90px);opacity:.35}
-body::before{width:420px;height:420px;left:25%;top:-140px;background:#2563EB;animation:orb1 18s ease-in-out infinite alternate}
-body::after{width:380px;height:380px;right:5%;bottom:-120px;background:#7C3AED;animation:orb2 22s ease-in-out infinite alternate}
-@keyframes orb1{to{transform:translate(160px,120px) scale(1.2)}}
-@keyframes orb2{to{transform:translate(-200px,-100px) scale(1.15)}}
-#app,.loading-screen{position:relative;z-index:1}
-h1,h2,h3,h4{color:var(--ink)}
-::selection{background:#4F8CFF;color:#fff}
-::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-thumb{background:rgba(120,160,255,.28);border-radius:9px}::-webkit-scrollbar-track{background:transparent}
-
-/* sidebar */
-.sidebar{background:radial-gradient(240px 220px at 0% 0%,rgba(79,140,255,.38),transparent 70%),radial-gradient(260px 260px at 100% 100%,rgba(124,58,237,.35),transparent 70%),linear-gradient(180deg,#07104A,#030824);border-right:1px solid var(--glass-line);box-shadow:8px 0 40px -12px rgba(0,0,0,.7)}
-.brand .stamp{border-color:#4F8CFF;box-shadow:0 0 0 4px rgba(79,140,255,.18),0 0 24px rgba(79,140,255,.45);animation:glowring 3.5s ease-in-out infinite}
-@keyframes glowring{50%{box-shadow:0 0 0 7px rgba(79,140,255,.08),0 0 34px rgba(34,211,238,.55)}}
-.brand p{color:#7F95E0}
-nav.navlist button{color:#B6C5F5;position:relative;overflow:hidden}
-nav.navlist button .ic{background:rgba(120,160,255,.12);transition:transform .3s,background .3s}
-nav.navlist button:hover{background:rgba(120,160,255,.1);color:#fff}
-nav.navlist button:hover .ic{transform:rotate(-8deg) scale(1.12)}
-nav.navlist button.active{background:linear-gradient(100deg,#2F6BFF,#22D3EE);color:#021033;box-shadow:0 10px 26px -8px rgba(34,211,238,.65)}
-nav.navlist button.active .ic{background:rgba(2,16,51,.18)}
-.sidebar-foot{background:rgba(0,0,0,.28);color:#7F95E0}.sidebar-foot b{color:#E4ECFF}
-
-/* topbar */
-.topbar{background:rgba(6,14,64,.72);border-bottom:1px solid var(--glass-line)}
-.topbar::after{background:linear-gradient(90deg,#4F8CFF,#22D3EE,#A78BFA,#F472B6,#F5B942);background-size:200% 100%;animation:flow 8s linear infinite}
-@keyframes flow{to{background-position:-200% 0}}
-.topbar .sub{color:var(--muted)}
-
-/* cards */
-.panel,.stat-card,.modal{background:var(--glass);border:1px solid var(--glass-line);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
-.panel{box-shadow:var(--shadow)}
-.panel:hover{box-shadow:var(--shadow-lg)}
-.stat-card{background:var(--glass);box-shadow:var(--shadow)}
-.stat-card .label{color:var(--muted)}
-.stat-card .value{color:#fff;text-shadow:0 0 24px color-mix(in srgb,var(--c) 70%,transparent)}
-.stat-card .delta{color:var(--muted)}
-.stat-card::before{background:linear-gradient(180deg,var(--c),var(--c2,var(--c)))}
-.stat-card::after{background:radial-gradient(circle,color-mix(in srgb,var(--c) 38%,transparent),transparent 70%)}
-.grid>.stat-card:nth-child(1){--c:#4F8CFF;--c2:#22D3EE}
-.grid>.stat-card:nth-child(2){--c:#A78BFA;--c2:#F472B6}
-.grid>.stat-card:nth-child(3){--c:#22D3EE;--c2:#34D399}
-.grid>.stat-card:nth-child(4){--c:#34D399;--c2:#A3E635}
-.grid>.stat-card:nth-child(5){--c:#F5B942;--c2:#FB923C}
-.grid>.stat-card:nth-child(6){--c:#F472B6;--c2:#FB7185}
-
-/* progress bars */
-.prog{position:relative;z-index:1;height:8px;margin-top:12px;border-radius:99px;background:rgba(130,160,255,.14);overflow:hidden}
-.prog i{display:block;height:100%;width:var(--w,0%);border-radius:inherit;position:relative;
-  background:linear-gradient(90deg,var(--c1,var(--c)),var(--c2,var(--c)));box-shadow:0 0 14px color-mix(in srgb,var(--c1,var(--c)) 70%,transparent);
-  animation:fill 1.4s cubic-bezier(.2,.8,.2,1) both .3s}
-.prog i::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.45) 50%,transparent 70%);background-size:200% 100%;animation:shine 2.6s ease-in-out infinite 1.6s}
-.prog.sm{height:5px;margin-top:6px}
-.prog-pct{position:relative;z-index:1;display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:6px;font-weight:600}
-.prog-pct b{color:var(--c);font-weight:700}
-@keyframes fill{from{width:0}}
-@keyframes shine{from{background-position:200% 0}to{background-position:-200% 0}}
-
-/* chart */
-.chart-bars .bar{background:linear-gradient(180deg,var(--bc1,#4F8CFF),var(--bc2,#1D3FBF));box-shadow:0 0 18px -2px color-mix(in srgb,var(--bc1,#4F8CFF) 65%,transparent)}
-.chart-bars .bar-wrap:nth-child(6n+1){--bc1:#4F8CFF;--bc2:#1E40AF}.chart-bars .bar-wrap:nth-child(6n+2){--bc1:#22D3EE;--bc2:#0E7490}
-.chart-bars .bar-wrap:nth-child(6n+3){--bc1:#34D399;--bc2:#047857}.chart-bars .bar-wrap:nth-child(6n+4){--bc1:#A78BFA;--bc2:#5B21B6}
-.chart-bars .bar-wrap:nth-child(6n+5){--bc1:#F472B6;--bc2:#9D174D}.chart-bars .bar-wrap:nth-child(6n){--bc1:#F5B942;--bc2:#B45309}
-.chart-bars .bar-val{color:#fff}.chart-bars .bar-label{color:var(--muted)}
-
-/* buttons & forms */
-.btn-primary{background:linear-gradient(100deg,#3B82F6,#22D3EE);color:#021033;box-shadow:0 8px 22px -8px rgba(34,211,238,.7)}
-.btn-primary:hover{background:linear-gradient(100deg,#5B9BFF,#67E8F9);box-shadow:0 12px 28px -8px rgba(34,211,238,.85)}
-.btn-ghost{background:rgba(120,160,255,.08);color:var(--ink);border:1px solid var(--glass-line)}
-.btn-ghost:hover{background:rgba(120,160,255,.18);border-color:rgba(130,170,255,.4)}
-.btn-danger{background:var(--rust-soft);color:var(--rust)}
-.btn.busy::after{border-color:#021033;border-top-color:transparent}
-input[type=text],input[type=number],input[type=date],input[type=time],input[type=tel],input[type=month],input[type=search],input[type=password],select,textarea{background:rgba(4,12,60,.65);border:1.5px solid rgba(130,160,255,.2);color:#EAF0FF}
-input::placeholder,textarea::placeholder{color:#6B7DB8}
-input:focus,select:focus,textarea:focus{border-color:#4F8CFF;box-shadow:0 0 0 4px rgba(79,140,255,.22),0 0 20px rgba(79,140,255,.25)}
-option{background:#0A1650;color:#EAF0FF}
-label{color:#B6C5F5}
-input[type=date]::-webkit-calendar-picker-indicator,input[type=time]::-webkit-calendar-picker-indicator{filter:invert(.8)}
-
-/* tables & tags */
-thead th{background:#0A1760;color:#8D9FD8;border-bottom:2px solid var(--glass-line)}
-tbody td{border-bottom:1px solid var(--line);color:var(--charcoal)}
-tbody tr:hover{background:rgba(79,140,255,.1);box-shadow:inset 3px 0 0 #22D3EE}
-.kv:hover{background:rgba(79,140,255,.08)}
-.tag{background:rgba(79,140,255,.18);color:#8DB6FF}
-.tag.gold{background:rgba(245,185,66,.16);color:#F7C95F}
-.tag.warn{background:rgba(255,92,122,.16);color:#FF8CA3}
-.tag.mute{background:rgba(141,159,216,.14);color:#A9B8E6}
-.tag:not(.gold):not(.warn):not(.mute)[class]{box-shadow:0 0 12px -4px currentColor}
-.balance-ok{color:#5EEAD4}.balance-low{color:#FF7A93}
-.empty{color:var(--muted)}
-
-/* modal, toast, loading */
-.modal-bg{background:rgba(2,6,32,.7)}
-.modal{background:linear-gradient(160deg,#10236F,#091760);box-shadow:var(--shadow-lg)}
-.toast{background:linear-gradient(100deg,#10236F,#0A1760);color:#fff;border:1px solid var(--glass-line);border-left:4px solid #22D3EE}
-.toast.error{border-left-color:#FF5C7A}
-.loading-screen{background:#050B2E}
-.spinner{border-color:rgba(130,160,255,.2);border-top-color:#22D3EE;box-shadow:0 0 24px rgba(34,211,238,.4)}
-.ok-box .big{color:#fff}
-
-/* login */
-.lgshade{background:radial-gradient(55% 45% at 50% 38%,rgba(120,170,255,.28),transparent 70%),linear-gradient(180deg,rgba(3,8,36,.35),rgba(3,8,36,.8))}
-.lgbands i:nth-child(1){background-image:linear-gradient(90deg,#3b1d8f,#5b2fc9,#3b1d8f,#5b2fc9,#3b1d8f)}
-.formside{background:radial-gradient(circle at 90% 8%,rgba(56,120,255,.25),transparent 45%),radial-gradient(circle at 5% 95%,rgba(124,58,237,.2),transparent 45%),#050B2E}
-.login-box{background:linear-gradient(160deg,rgba(20,40,130,.75),rgba(8,20,80,.85));border:1px solid var(--glass-line);border-top:6px solid transparent;box-shadow:0 30px 70px -20px rgba(0,0,0,.8),0 0 60px -20px rgba(79,140,255,.5)}
-.login-box::before{background:linear-gradient(90deg,#4F8CFF,#22D3EE,#A78BFA,#F472B6);background-size:200% 100%;animation:flow 6s linear infinite}
-.login-box h2{color:#fff}.login-box .mu{color:var(--muted)}
-.pw button{color:#67E8F9}
-.login-btn{background:linear-gradient(100deg,#2F6BFF,#22D3EE,#7C3AED);background-size:200% 100%;color:#fff;box-shadow:0 10px 26px -8px rgba(47,107,255,.7)}
-.login-btn:hover{box-shadow:0 14px 32px -8px rgba(34,211,238,.7)}
-.login-error{background:var(--rust-soft);border-color:rgba(255,92,122,.4);color:#FF9DB0}
-
-@media print{body{background:#fff;color:#000}body::before,body::after{display:none}.panel{background:#fff;border-color:#ccc}h1,h2,h3,h4,td,th,.kv .v{color:#000}}
-</style>
-<style id="colorful-accents">
-/* ===== COLORFUL ACCENTS on dark blue ===== */
-:root{--green:#34D399;--green2:#10B981;--violet:#A78BFA;--pink:#F472B6;--orange:#FB923C;--gold:#F5B942;--cyan:#22D3EE}
-
-/* sidebar: every nav icon its own color */
-#nav button:nth-child(1) .ic{background:rgba(79,140,255,.25);color:#7FB0FF}
-#nav button:nth-child(2) .ic{background:rgba(52,211,153,.22);color:#5EEAB4}
-#nav button:nth-child(3) .ic{background:rgba(167,139,250,.25);color:#C4B0FF}
-#nav button:nth-child(4) .ic{background:rgba(251,146,60,.22);color:#FDBA74}
-#nav button:nth-child(5) .ic{background:rgba(244,114,182,.22);color:#F9A8D4}
-#nav button:nth-child(6) .ic{background:rgba(34,211,238,.22);color:#67E8F9}
-#nav button:nth-child(7) .ic{background:rgba(245,185,66,.22);color:#FCD34D}
-nav.navlist button.active{background:linear-gradient(100deg,#10B981,#22D3EE);box-shadow:0 10px 26px -8px rgba(16,185,129,.7)}
-nav.navlist button.active .ic{color:#022c22}
-
-/* panels: colored top accent that cycles */
-.panel{position:relative;overflow:hidden;--pc1:#34D399;--pc2:#22D3EE}
-.panel::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,var(--pc1),var(--pc2));box-shadow:0 0 16px var(--pc1)}
-.grid>.panel:nth-child(2){--pc1:#A78BFA;--pc2:#F472B6}
-.grid>.panel:nth-child(3){--pc1:#FB923C;--pc2:#F5B942}
-.view>.panel:nth-child(2n){--pc1:#4F8CFF;--pc2:#A78BFA}
-.view>.panel:nth-child(3n){--pc1:#F472B6;--pc2:#FB923C}
-.panel-head h3::before{content:"";display:inline-block;width:9px;height:9px;margin-right:9px;border-radius:50%;background:var(--pc1);box-shadow:0 0 10px var(--pc1);vertical-align:middle}
-
-/* stat cards: tinted with their own color */
-.stat-card{background:linear-gradient(150deg,color-mix(in srgb,var(--c) 22%,#0C1A5C),rgba(9,22,86,.7) 70%);border-color:color-mix(in srgb,var(--c) 40%,transparent)}
-.stat-card .label{color:color-mix(in srgb,var(--c) 55%,#fff)}
-
-/* buttons */
-.btn-primary{background:linear-gradient(100deg,#10B981,#22D3EE);color:#02221a;box-shadow:0 8px 22px -8px rgba(16,185,129,.8)}
-.btn-primary:hover{background:linear-gradient(100deg,#34D399,#67E8F9);box-shadow:0 12px 28px -8px rgba(16,185,129,.9)}
-.btn-ghost:hover{background:rgba(167,139,250,.18);border-color:rgba(167,139,250,.55);color:#fff}
-.btn-danger:hover{background:rgba(255,92,122,.3)}
-
-/* inputs focus: green glow */
-input:focus,select:focus,textarea:focus{border-color:#34D399;box-shadow:0 0 0 4px rgba(52,211,153,.2),0 0 20px rgba(52,211,153,.2)}
-label{color:#C4D2FF}
-
-/* status tags: green = good, gold = pending, pink/red = bad, violet = counts */
-.tag:not(.gold):not(.warn):not(.mute){background:rgba(52,211,153,.16);color:#5EEAB4}
-.panel-head .tag:not(.gold):not(.warn):not(.mute){background:rgba(167,139,250,.18);color:#C4B0FF}
-.tag.gold{background:rgba(245,185,66,.18);color:#FCD34D}
-.tag.warn{background:rgba(244,114,182,.18);color:#F9A8D4}
-
-/* tables */
-thead th{color:#9FB4F5;background:linear-gradient(90deg,#0A1760,#0E1F7A)}
-tbody tr:nth-child(even){background:rgba(79,140,255,.04)}
-tbody tr:hover{box-shadow:inset 3px 0 0 #34D399;background:rgba(52,211,153,.08)}
-td.mono{color:#8DD9FF}
-.kv .v{color:#5EEAB4}
-.balance-ok{color:#34D399}
-
-/* chart bars add a soft top glow */
-.chart-bars .bar-val{color:#fff;text-shadow:0 0 10px currentColor}
-.chart-bars .bar.today{background:linear-gradient(180deg,#FDE68A,#F59E0B)}
-
-/* toast + success */
-.toast{border-left-color:#34D399}
-.ok-box .tick{background:linear-gradient(135deg,#34D399,#10B981)}
-
-/* ===== LOGIN BUTTON: loading animation ===== */
-.login-btn{background:linear-gradient(100deg,#2F6BFF,#22D3EE,#34D399,#A78BFA,#2F6BFF);background-size:300% 100%;animation:btnflow 6s linear infinite;overflow:hidden;transition:transform .15s,box-shadow .25s,letter-spacing .25s}
-.login-btn:hover{letter-spacing:.14em;background-position:inherit}
-@keyframes btnflow{to{background-position:-300% 0}}
-.login-btn::before{content:"SIGNING IN";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding-left:26px;letter-spacing:.14em;opacity:0;transform:translateY(100%);transition:opacity .25s,transform .3s;color:#fff;font-weight:700;font-size:14px}
-.login-btn::after{content:"";position:absolute;left:0;bottom:0;height:4px;width:0;background:linear-gradient(90deg,#fff,#FDE68A,#fff);box-shadow:0 0 14px #fff;opacity:0}
-.login-btn.busy{pointer-events:none;opacity:1;color:transparent;animation:btnflow 1.6s linear infinite,btnpulse 1.4s ease-in-out infinite;letter-spacing:.08em}
-.login-btn.busy::before{opacity:1;transform:none;animation:dots 1.4s steps(1) infinite}
-.login-btn.busy::after{opacity:1;animation:loadbar 1.5s ease-in-out infinite}
-.login-btn.busy .spin,.login-btn.busy{--sp:1}
-@keyframes loadbar{0%{left:-40%;width:40%}100%{left:100%;width:40%}}
-@keyframes btnpulse{50%{box-shadow:0 0 0 8px rgba(34,211,238,.18),0 14px 34px -8px rgba(34,211,238,.8)}}
-@keyframes dots{0%{content:"SIGNING IN"}25%{content:"SIGNING IN ."}50%{content:"SIGNING IN .."}75%{content:"SIGNING IN ..."}}
-/* spinner ring beside the text */
-.login-btn.busy{background-image:linear-gradient(100deg,#2F6BFF,#22D3EE,#34D399,#A78BFA,#2F6BFF)}
-#loginBtn.busy{position:relative}
-#loginBtn.busy:not(:empty){}
-@media(prefers-reduced-motion:reduce){.login-btn.busy::after{animation:none;width:100%}}
-.lgspin{position:absolute;left:calc(50% - 74px);top:50%;width:18px;height:18px;margin-top:-9px;border:3px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;opacity:0;animation:spin .7s linear infinite;pointer-events:none}.login-btn.busy .lgspin{opacity:1}</style>
-<style id="aurora-theme">
-/* ===== AURORA THEME: deep violet ink + teal / emerald / rose / amber ===== */
-:root{
-  --paper:#0E0A22;--card:#1B1145;--charcoal:#E9E4FF;--ink:#F4F0FF;--muted:#A99CD6;
-  --line:rgba(190,160,255,.16);--glass-line:rgba(190,160,255,.2);
-  --leaf:#34D399;--leaf-soft:rgba(52,211,153,.16);--rust:#FB7185;--rust-soft:rgba(251,113,133,.16);--sky:#38BDF8;
-  --glass:linear-gradient(160deg,rgba(70,45,140,.46),rgba(28,17,68,.62));
-  --shadow:0 1px 0 rgba(255,255,255,.05) inset,0 18px 44px -16px rgba(0,0,0,.7);
-  --shadow-lg:0 1px 0 rgba(255,255,255,.07) inset,0 30px 64px -18px rgba(0,0,0,.8),0 0 0 1px rgba(45,212,191,.28);
-}
-body{background:
-  radial-gradient(900px 620px at 100% -8%,rgba(45,212,191,.24),transparent 60%),
-  radial-gradient(820px 620px at -8% 108%,rgba(244,63,94,.2),transparent 60%),
-  radial-gradient(700px 500px at 55% 45%,rgba(139,92,246,.16),transparent 65%),
-  linear-gradient(180deg,#0E0A22,#150D35 55%,#0C0820);background-attachment:fixed;color:var(--charcoal)}
-body::before{background:#14B8A6;opacity:.3}
-body::after{background:#EC4899;opacity:.28}
-::selection{background:#2DD4BF;color:#06231f}
-::-webkit-scrollbar-thumb{background:rgba(190,160,255,.3)}
-
-/* sidebar */
-.sidebar{background:radial-gradient(260px 240px at 0% 0%,rgba(45,212,191,.3),transparent 70%),radial-gradient(280px 280px at 100% 100%,rgba(236,72,153,.3),transparent 70%),linear-gradient(180deg,#1A0F3E,#090518);border-right:1px solid var(--glass-line)}
-.brand .stamp{border-color:#2DD4BF;box-shadow:0 0 0 4px rgba(45,212,191,.18),0 0 26px rgba(45,212,191,.5);animation:glowring2 3.5s ease-in-out infinite}
-@keyframes glowring2{50%{box-shadow:0 0 0 7px rgba(236,72,153,.1),0 0 36px rgba(236,72,153,.55)}}
-.brand p{color:#9A8BD0}
-nav.navlist button{color:#CFC4F5}
-nav.navlist button:hover{background:rgba(190,160,255,.12)}
-nav.navlist button.active{background:linear-gradient(100deg,#8B5CF6,#EC4899);color:#fff;box-shadow:0 10px 28px -8px rgba(236,72,153,.7)}
-nav.navlist button.active .ic{background:rgba(255,255,255,.22);color:#fff}
-#nav button:nth-child(1) .ic{background:rgba(56,189,248,.22);color:#7DD3FC}
-#nav button:nth-child(2) .ic{background:rgba(45,212,191,.22);color:#5EEAD4}
-#nav button:nth-child(3) .ic{background:rgba(167,139,250,.24);color:#C4B5FD}
-#nav button:nth-child(4) .ic{background:rgba(251,191,36,.22);color:#FCD34D}
-#nav button:nth-child(5) .ic{background:rgba(244,114,182,.22);color:#F9A8D4}
-#nav button:nth-child(6) .ic{background:rgba(52,211,153,.22);color:#6EE7B7}
-#nav button:nth-child(7) .ic{background:rgba(251,146,60,.22);color:#FDBA74}
-.sidebar-foot{background:rgba(0,0,0,.3);color:#9A8BD0}.sidebar-foot b{color:#F4F0FF}
-
-/* topbar */
-.topbar{background:rgba(20,11,52,.72);border-bottom:1px solid var(--glass-line)}
-.topbar::after{background:linear-gradient(90deg,#2DD4BF,#34D399,#FBBF24,#FB7185,#A78BFA,#2DD4BF);background-size:200% 100%}
-
-/* panels & cards */
-.panel,.modal{border:1px solid var(--glass-line)}
-.panel{--pc1:#2DD4BF;--pc2:#34D399}
-.grid>.panel:nth-child(2){--pc1:#A78BFA;--pc2:#F472B6}
-.grid>.panel:nth-child(3){--pc1:#FBBF24;--pc2:#FB923C}
-.view>.panel:nth-child(2n){--pc1:#38BDF8;--pc2:#818CF8}
-.view>.panel:nth-child(3n){--pc1:#FB7185;--pc2:#FBBF24}
-.stat-card{background:linear-gradient(150deg,color-mix(in srgb,var(--c) 26%,#1B1145),rgba(24,14,60,.75) 72%);border-color:color-mix(in srgb,var(--c) 45%,transparent)}
-.grid>.stat-card:nth-child(1){--c:#38BDF8;--c2:#818CF8}
-.grid>.stat-card:nth-child(2){--c:#A78BFA;--c2:#F472B6}
-.grid>.stat-card:nth-child(3){--c:#2DD4BF;--c2:#34D399}
-.grid>.stat-card:nth-child(4){--c:#A3E635;--c2:#34D399}
-.grid>.stat-card:nth-child(5){--c:#FBBF24;--c2:#FB923C}
-.grid>.stat-card:nth-child(6){--c:#FB7185;--c2:#F43F5E}
-.prog{background:rgba(190,160,255,.15)}
-
-/* chart */
-.chart-bars .bar-wrap:nth-child(6n+1){--bc1:#38BDF8;--bc2:#4338CA}
-.chart-bars .bar-wrap:nth-child(6n+2){--bc1:#2DD4BF;--bc2:#0F766E}
-.chart-bars .bar-wrap:nth-child(6n+3){--bc1:#A3E635;--bc2:#15803D}
-.chart-bars .bar-wrap:nth-child(6n+4){--bc1:#A78BFA;--bc2:#6D28D9}
-.chart-bars .bar-wrap:nth-child(6n+5){--bc1:#F472B6;--bc2:#9D174D}
-.chart-bars .bar-wrap:nth-child(6n){--bc1:#FBBF24;--bc2:#C2410C}
-
-/* buttons & forms */
-.btn-primary{background:linear-gradient(100deg,#14B8A6,#34D399);color:#052b24;box-shadow:0 8px 22px -8px rgba(20,184,166,.8)}
-.btn-primary:hover{background:linear-gradient(100deg,#2DD4BF,#6EE7B7);box-shadow:0 12px 28px -8px rgba(45,212,191,.9)}
-.btn-ghost{background:rgba(190,160,255,.09);border:1px solid var(--glass-line)}
-.btn-ghost:hover{background:rgba(236,72,153,.16);border-color:rgba(244,114,182,.55)}
-input[type=text],input[type=number],input[type=date],input[type=time],input[type=tel],input[type=month],input[type=search],input[type=password],select,textarea{background:rgba(14,8,44,.7);border:1.5px solid rgba(190,160,255,.24);color:#F4F0FF}
-input::placeholder,textarea::placeholder{color:#7E70B0}
-input:focus,select:focus,textarea:focus{border-color:#2DD4BF;box-shadow:0 0 0 4px rgba(45,212,191,.2),0 0 22px rgba(45,212,191,.22)}
-option{background:#1B1145;color:#F4F0FF}
-label{color:#D5CCF8}
-
-/* tables, tags */
-thead th{background:linear-gradient(90deg,#1E1250,#2A1766);color:#B9ABF0}
-tbody tr:nth-child(even){background:rgba(190,160,255,.045)}
-tbody tr:hover{background:rgba(45,212,191,.09);box-shadow:inset 3px 0 0 #2DD4BF}
-td.mono{color:#7DD3FC}.kv .v{color:#5EEAD4}.kv:hover{background:rgba(190,160,255,.08)}
-.tag:not(.gold):not(.warn):not(.mute){background:rgba(45,212,191,.16);color:#5EEAD4}
-.panel-head .tag:not(.gold):not(.warn):not(.mute){background:rgba(167,139,250,.2);color:#C4B5FD}
-.tag.gold{background:rgba(251,191,36,.18);color:#FCD34D}
-.tag.warn{background:rgba(251,113,133,.18);color:#FDA4AF}
-.tag.mute{background:rgba(169,156,214,.16);color:#C3B8EA}
-
-/* modal, toast, loading */
-.modal-bg{background:rgba(8,4,28,.72)}
-.modal{background:linear-gradient(160deg,#2A1A70,#170E46)}
-.toast{background:linear-gradient(100deg,#2A1A70,#1B1145);border-left-color:#2DD4BF}
-.loading-screen{background:#0E0A22}
-.spinner{border-color:rgba(190,160,255,.2);border-top-color:#2DD4BF;box-shadow:0 0 26px rgba(45,212,191,.45)}
-
-/* login */
-.lgshade{background:radial-gradient(55% 45% at 50% 38%,rgba(45,212,191,.22),transparent 70%),linear-gradient(180deg,rgba(14,8,40,.35),rgba(14,8,40,.82))}
-.formside{background:radial-gradient(circle at 90% 8%,rgba(45,212,191,.22),transparent 45%),radial-gradient(circle at 5% 95%,rgba(236,72,153,.2),transparent 45%),#0E0A22}
-.login-box{background:linear-gradient(160deg,rgba(60,38,130,.78),rgba(24,14,62,.88));border:1px solid var(--glass-line);border-top:6px solid transparent;box-shadow:0 30px 70px -20px rgba(0,0,0,.85),0 0 70px -20px rgba(139,92,246,.55)}
-.login-box::before{background:linear-gradient(90deg,#2DD4BF,#34D399,#FBBF24,#FB7185,#A78BFA);background-size:200% 100%}
-.pw button{color:#5EEAD4}
-.login-btn,.login-btn.busy{background-image:linear-gradient(100deg,#8B5CF6,#EC4899,#FBBF24,#34D399,#2DD4BF,#8B5CF6);background-size:300% 100%;color:#fff}
-.login-btn.busy{color:transparent}
-.login-btn{box-shadow:0 10px 28px -8px rgba(236,72,153,.65)}
-.login-btn:hover{box-shadow:0 14px 34px -8px rgba(251,191,36,.6)}
-@keyframes btnpulse{50%{box-shadow:0 0 0 8px rgba(236,72,153,.18),0 14px 34px -8px rgba(236,72,153,.8)}}
-.login-error{background:var(--rust-soft);border-color:rgba(251,113,133,.45);color:#FDA4AF}
-</style>
 <style id="wa-actions">
 .act{white-space:nowrap}.act .btn,td.noprint .btn{margin-right:6px}
 .btn-wa{background:linear-gradient(100deg,#25D366,#128C7E);color:#04210f;font-weight:700;border:0;box-shadow:0 6px 18px -8px rgba(37,211,102,.8)}
@@ -627,6 +309,204 @@ td.mono{color:#7DD3FC}.kv .v{color:#5EEAD4}.kv:hover{background:rgba(190,160,255
 .btn-wa:active{transform:translateY(1px)}
 tr.click:hover .btn-ghost{border-color:rgba(45,212,191,.5)}
 @media print{.act{display:none}}
+</style>
+<style id="workflow-ui">
+/* ===== workflow, teacher portal and countdown ===== */
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.alertbar{border:1px solid #F6A5B5;background:#FFF1F3;color:#9F1239;border-radius:12px;padding:12px 16px;margin-bottom:16px;font-weight:600}
+.infobar{border:1px solid #F7C873;background:#FFFBEB;color:#92400E;border-radius:12px;padding:12px 16px;margin-bottom:16px;font-weight:600}
+.over{color:#BE123C;font-weight:700}
+.timer{text-align:center;padding:28px 16px 22px;border-radius:20px;border:2px solid #A7E3CB;background:linear-gradient(160deg,#FFFFFF,#EAFBF4);box-shadow:var(--shadow);transition:background .4s,border-color .4s}
+.timer .tml{font-size:13.5px;color:var(--muted);font-weight:600}
+.timer .tm{font-family:'IBM Plex Mono',monospace;font-size:clamp(40px,9vw,84px);font-weight:600;letter-spacing:.02em;color:#0F2A24;line-height:1.15;margin:6px 0 4px;font-variant-numeric:tabular-nums}
+.timer .prog{max-width:420px;margin:12px auto 0}
+.timer .prog-pct{max-width:420px;margin:6px auto 0}
+.timer.amber{border-color:#F59E0B;background:linear-gradient(160deg,#FFFBEB,#FEF3C7)}.timer.amber .tm{color:#B45309}
+.timer.urgent{border-color:#EA580C;background:linear-gradient(160deg,#FFF7ED,#FFEDD5);animation:urg 1s ease-in-out infinite}.timer.urgent .tm{color:#C2410C}
+.timer.expired{border-color:#E11D48;background:linear-gradient(160deg,#FFF1F3,#FFE0E6)}.timer.expired .tm{color:#BE123C}
+@keyframes urg{50%{box-shadow:0 0 0 10px rgba(234,88,12,.18)}}
+.mk-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0 12px}
+@media(max-width:560px){.mk-grid{grid-template-columns:1fr}}
+.sbtn{white-space:nowrap}
+.hlist{max-height:170px;overflow:auto;margin-top:10px;font-size:12.5px}
+.hlist div{padding:6px 0;border-bottom:1px solid var(--line)}
+.hlist b{color:var(--ink)}
+</style>
+<style id="bright-theme">
+/* ===== BRIGHT THEME: clean light surfaces, emerald sidebar, vivid accents (all animations kept) ===== */
+:root{
+  --paper:#F2F7F5;--card:#FFFFFF;--ink:#0F2A24;--ink-2:#14403A;--ink-3:#06231C;--charcoal:#1E2D2A;--muted:#566B66;
+  --line:#D9E6E1;--leaf:#047857;--leaf-soft:#D1FAE5;--rust:#BE123C;--rust-soft:#FFE4E9;--sky:#0284C7;
+  --maize:#F59E0B;--maize-dark:#B45309;--maroon:#BE123C;--navy:#6D28D9;
+  --shadow:0 1px 2px rgba(15,42,36,.05),0 10px 28px -10px rgba(15,42,36,.16);
+  --shadow-lg:0 2px 4px rgba(15,42,36,.06),0 24px 48px -14px rgba(15,42,36,.24);
+  color-scheme:light;
+}
+body{color:var(--charcoal);background:
+  radial-gradient(900px 560px at 100% -8%,rgba(14,165,233,.14),transparent 60%),
+  radial-gradient(800px 560px at -8% 108%,rgba(16,185,129,.16),transparent 60%),
+  radial-gradient(600px 420px at 60% 45%,rgba(245,158,11,.07),transparent 65%),
+  linear-gradient(180deg,#F6FAF8,#EEF5F2);background-attachment:fixed}
+/* drifting colour orbs behind the page */
+body::before,body::after{content:"";position:fixed;z-index:0;pointer-events:none;border-radius:50%;filter:blur(90px);opacity:.28}
+body::before{width:420px;height:420px;left:25%;top:-140px;background:#38BDF8;animation:orb1 18s ease-in-out infinite alternate}
+body::after{width:380px;height:380px;right:5%;bottom:-120px;background:#34D399;animation:orb2 22s ease-in-out infinite alternate}
+@keyframes orb1{to{transform:translate(160px,120px) scale(1.2)}}
+@keyframes orb2{to{transform:translate(-200px,-100px) scale(1.15)}}
+#app{position:relative;z-index:1}
+h1,h2,h3,h4{color:var(--ink)}
+::selection{background:#10B981;color:#fff}
+::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-thumb{background:rgba(5,120,87,.3);border-radius:9px}::-webkit-scrollbar-track{background:transparent}
+
+/* sidebar */
+.sidebar{background:radial-gradient(240px 220px at 0% 0%,rgba(250,204,21,.28),transparent 70%),radial-gradient(260px 260px at 100% 100%,rgba(56,189,248,.34),transparent 70%),linear-gradient(180deg,#059669,#0F766E);border-right:0;box-shadow:6px 0 28px -10px rgba(6,95,70,.45)}
+.brand{border-bottom:1px solid rgba(255,255,255,.2)}
+.brand .stamp{background:#fff;border:2px solid #FBBF24;box-shadow:0 0 0 4px rgba(251,191,36,.25),0 0 22px rgba(251,191,36,.5);animation:glowring 3.5s ease-in-out infinite}
+@keyframes glowring{50%{box-shadow:0 0 0 7px rgba(251,191,36,.12),0 0 32px rgba(125,211,252,.7)}}
+.brand h1{color:#fff}.brand p{color:#D1FAE5}
+nav.navlist button{color:#ECFDF5;position:relative;overflow:hidden;border-radius:10px;transition:background .2s,transform .2s,box-shadow .2s}
+nav.navlist button .ic{width:26px;height:26px;display:grid;place-items:center;border-radius:8px;font-size:13px;color:#fff;background:rgba(255,255,255,.18);transition:transform .3s,background .3s}
+nav.navlist button:hover{background:rgba(255,255,255,.16);color:#fff;transform:translateX(3px)}
+nav.navlist button:hover .ic{transform:rotate(-8deg) scale(1.12)}
+#nav button:nth-child(1) .ic{background:rgba(125,211,252,.5)}#nav button:nth-child(2) .ic{background:rgba(253,224,71,.5)}
+#nav button:nth-child(3) .ic{background:rgba(196,181,253,.55)}#nav button:nth-child(4) .ic{background:rgba(253,186,116,.55)}
+#nav button:nth-child(5) .ic{background:rgba(249,168,212,.55)}#nav button:nth-child(6) .ic{background:rgba(167,243,208,.5)}
+#nav button:nth-child(7) .ic{background:rgba(253,230,138,.55)}
+nav.navlist button.active{background:#fff;color:#065F46;font-weight:700;box-shadow:0 10px 24px -8px rgba(6,40,30,.5)}
+nav.navlist button.active .ic{background:#D1FAE5;color:#047857}
+.sidebar-foot{background:rgba(0,0,0,.14);border-top:1px solid rgba(255,255,255,.2);color:#D1FAE5}.sidebar-foot b{color:#fff}
+
+/* top bar */
+.topbar{background:rgba(255,255,255,.88);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);border-bottom:1px solid var(--line)}
+.topbar::after{background:linear-gradient(90deg,#10B981,#0EA5E9,#8B5CF6,#F43F5E,#F59E0B,#10B981);background-size:200% 100%;animation:flow 8s linear infinite}
+@keyframes flow{to{background-position:-200% 0}}
+.topbar .sub{color:var(--muted)}
+
+/* panels & cards */
+.panel,.modal{background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
+.panel{position:relative;overflow:hidden;--pc1:#10B981;--pc2:#0EA5E9}
+.panel:hover{box-shadow:var(--shadow-lg)}
+.panel::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,var(--pc1),var(--pc2))}
+.grid>.panel:nth-child(2){--pc1:#8B5CF6;--pc2:#EC4899}.grid>.panel:nth-child(3){--pc1:#F59E0B;--pc2:#F97316}
+.view>.panel:nth-child(2n){--pc1:#0EA5E9;--pc2:#6366F1}.view>.panel:nth-child(3n){--pc1:#F43F5E;--pc2:#F59E0B}
+.panel-head h3::before{content:"";display:inline-block;width:9px;height:9px;margin-right:9px;border-radius:50%;background:var(--pc1);vertical-align:middle}
+.stat-card{background:linear-gradient(150deg,color-mix(in srgb,var(--c) 13%,#fff),#fff 72%);border:1px solid color-mix(in srgb,var(--c) 35%,#fff);box-shadow:var(--shadow)}
+.stat-card::before{background:linear-gradient(180deg,var(--c),var(--c2,var(--c)))}
+.stat-card::after{background:radial-gradient(circle,color-mix(in srgb,var(--c) 26%,transparent),transparent 70%)}
+.stat-card .label{color:color-mix(in srgb,var(--c) 70%,#000)}
+.stat-card .value{color:var(--ink)}.stat-card .delta{color:var(--muted)}
+.grid>.stat-card:nth-child(1){--c:#0284C7;--c2:#38BDF8}.grid>.stat-card:nth-child(2){--c:#7C3AED;--c2:#C084FC}
+.grid>.stat-card:nth-child(3){--c:#0D9488;--c2:#34D399}.grid>.stat-card:nth-child(4){--c:#16A34A;--c2:#84CC16}
+.grid>.stat-card:nth-child(5){--c:#D97706;--c2:#FBBF24}.grid>.stat-card:nth-child(6){--c:#E11D48;--c2:#FB7185}
+
+/* animated progress bars */
+.prog{position:relative;z-index:1;height:8px;margin-top:12px;border-radius:99px;background:rgba(15,42,36,.09);overflow:hidden}
+.prog i{display:block;height:100%;width:var(--w,0%);border-radius:inherit;position:relative;background:linear-gradient(90deg,var(--c1,var(--c)),var(--c2,var(--c)));animation:fill 1.4s cubic-bezier(.2,.8,.2,1) both .3s}
+.prog i::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%);background-size:200% 100%;animation:shine 2.6s ease-in-out infinite 1.6s}
+.prog.sm{height:5px;margin-top:6px}
+.prog-pct{position:relative;z-index:1;display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:6px;font-weight:600}
+.prog-pct b{color:color-mix(in srgb,var(--c) 80%,#000);font-weight:700}
+@keyframes fill{from{width:0}}
+@keyframes shine{from{background-position:200% 0}to{background-position:-200% 0}}
+
+/* chart */
+.chart-bars .bar{background:linear-gradient(180deg,var(--bc1,#0EA5E9),var(--bc2,#0369A1));box-shadow:0 8px 16px -8px color-mix(in srgb,var(--bc1,#0EA5E9) 80%,transparent)}
+.chart-bars .bar-wrap:nth-child(6n+1){--bc1:#38BDF8;--bc2:#0369A1}.chart-bars .bar-wrap:nth-child(6n+2){--bc1:#2DD4BF;--bc2:#0F766E}
+.chart-bars .bar-wrap:nth-child(6n+3){--bc1:#4ADE80;--bc2:#15803D}.chart-bars .bar-wrap:nth-child(6n+4){--bc1:#A78BFA;--bc2:#6D28D9}
+.chart-bars .bar-wrap:nth-child(6n+5){--bc1:#F472B6;--bc2:#BE185D}.chart-bars .bar-wrap:nth-child(6n){--bc1:#FBBF24;--bc2:#C2410C}
+.chart-bars .bar-val{color:var(--ink)}.chart-bars .bar-label{color:var(--muted)}
+
+/* buttons & forms */
+.btn-primary{background:linear-gradient(100deg,#047857,#059669);color:#fff;box-shadow:0 8px 20px -8px rgba(4,120,87,.75)}
+.btn-primary:hover{background:linear-gradient(100deg,#059669,#10B981);box-shadow:0 12px 26px -8px rgba(4,120,87,.85)}
+.btn-ghost{background:#fff;color:var(--ink);border:1px solid #C3D6CF}
+.btn-ghost:hover{background:#ECFDF5;border-color:#10B981;color:#065F46}
+.btn-danger{background:var(--rust-soft);color:#9F1239;border:1px solid #FBC4CF}.btn-danger:hover{background:#FFD0D9}
+.btn.busy::after{border-color:currentColor;border-top-color:transparent}
+input[type=text],input[type=number],input[type=date],input[type=time],input[type=tel],input[type=month],input[type=search],input[type=password],select,textarea{background:#fff;border:1.5px solid #C3D6CF;color:var(--ink)}
+input::placeholder,textarea::placeholder{color:#82948F}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#059669;box-shadow:0 0 0 4px rgba(16,185,129,.2)}
+label{color:#24413A}
+
+/* tables & tags */
+thead th{background:#E6F4EE;color:#2F4F46;border-bottom:2px solid #BFDCD0}
+tbody td{border-bottom:1px solid var(--line);color:var(--charcoal)}
+tbody tr:nth-child(even){background:rgba(5,150,105,.035)}
+tbody tr:hover{background:#E9FBF3;box-shadow:inset 3px 0 0 #10B981}
+td.mono{color:#0369A1}.kv:hover{background:#F0FAF6}.kv .v{color:var(--ink)}
+.tag{background:#D1FAE5;color:#065F46}
+.panel-head .tag:not(.gold):not(.warn):not(.mute){background:#EDE9FE;color:#5B21B6}
+.tag.gold{background:#FEF3C7;color:#92400E}.tag.warn{background:#FFE4E9;color:#9F1239}.tag.mute{background:#E8EEEC;color:#475C57}
+.balance-ok{color:#047857}.balance-low{color:#BE123C}
+.empty{color:var(--muted)}
+
+/* modal, toast, loading */
+.modal-bg{background:rgba(10,40,32,.45)}
+.modal{box-shadow:var(--shadow-lg)}
+.toast{background:#fff;color:var(--ink);border:1px solid var(--line);border-left:5px solid #10B981;box-shadow:var(--shadow-lg);font-weight:600}
+.toast.error{border-left-color:#E11D48}
+.loading-screen{background:var(--paper)}
+.spinner{border-color:#D9E6E1;border-top-color:#10B981}
+.ok-box .tick{background:linear-gradient(135deg,#34D399,#059669);animation:tickpop .5s cubic-bezier(.2,.9,.3,1.4) both,pulse 2s .6s infinite}
+.ok-box .big{color:var(--ink)}
+
+/* login screen */
+.lgbands i:nth-child(1){background-image:linear-gradient(90deg,#0D9488,#14B8A6,#0D9488,#14B8A6,#0D9488)}
+.lgbands i:nth-child(2){background-image:linear-gradient(90deg,#0284C7,#38BDF8,#0284C7,#38BDF8,#0284C7)}
+.lgbands i:nth-child(3){background-image:linear-gradient(90deg,#059669,#10B981,#059669,#10B981,#059669)}
+.lgshade{background:radial-gradient(55% 45% at 50% 38%,rgba(255,255,255,.3),transparent 70%),linear-gradient(180deg,rgba(2,44,34,.1),rgba(2,44,34,.5))}
+.hero .stamp-line{background:rgba(4,47,36,.5);color:#FDE68A;border-color:#FCD34D}
+.formside{background:radial-gradient(circle at 90% 8%,rgba(14,165,233,.16),transparent 45%),radial-gradient(circle at 5% 95%,rgba(16,185,129,.18),transparent 45%),var(--paper)}
+.login-box{background:#fff;border:1px solid var(--line);border-top:6px solid transparent;box-shadow:0 30px 60px -22px rgba(6,70,52,.35)}
+.login-box::before{background:linear-gradient(90deg,#10B981,#0EA5E9,#8B5CF6,#F43F5E,#F59E0B,#10B981);background-size:200% 100%;animation:flow 6s linear infinite}
+.login-box h2{color:var(--ink)}.login-box .mu{color:var(--muted)}
+.pw button{color:#047857}
+.login-error{background:var(--rust-soft);border-color:#F6B8C5;color:#9F1239}
+
+/* login button: flowing colour + "SIGNING IN..." loader */
+.login-btn{background:linear-gradient(100deg,#047857,#0369A1,#6D28D9,#047857);background-size:300% 100%;color:#fff;animation:btnflow 6s linear infinite;overflow:hidden;box-shadow:0 10px 24px -8px rgba(4,120,87,.7);transition:transform .15s,box-shadow .25s,letter-spacing .25s}
+.login-btn:hover{letter-spacing:.14em;box-shadow:0 14px 30px -8px rgba(3,105,161,.7)}
+@keyframes btnflow{to{background-position:-300% 0}}
+.login-btn::before{content:"SIGNING IN";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding-left:26px;letter-spacing:.14em;opacity:0;transform:translateY(100%);transition:opacity .25s,transform .3s;color:#fff;font-weight:700;font-size:14px}
+.login-btn::after{content:"";position:absolute;left:0;bottom:0;height:4px;width:0;background:linear-gradient(90deg,#fff,#FDE68A,#fff);box-shadow:0 0 14px #fff;opacity:0}
+.login-btn.busy{pointer-events:none;opacity:1;color:transparent;animation:btnflow 1.6s linear infinite,btnpulse 1.4s ease-in-out infinite;letter-spacing:.08em}
+.login-btn.busy::before{opacity:1;transform:none;animation:dots 1.4s steps(1) infinite}
+.login-btn.busy::after{opacity:1;animation:loadbar 1.5s ease-in-out infinite}
+@keyframes loadbar{0%{left:-40%;width:40%}100%{left:100%;width:40%}}
+@keyframes btnpulse{50%{box-shadow:0 0 0 8px rgba(16,185,129,.2),0 14px 34px -8px rgba(4,120,87,.8)}}
+@keyframes dots{0%{content:"SIGNING IN"}25%{content:"SIGNING IN ."}50%{content:"SIGNING IN .."}75%{content:"SIGNING IN ..."}}
+.lgspin{position:absolute;left:calc(50% - 74px);top:50%;width:18px;height:18px;margin-top:-9px;border:3px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;opacity:0;animation:spin .7s linear infinite;pointer-events:none}.login-btn.busy .lgspin{opacity:1}
+@media(prefers-reduced-motion:reduce){.login-btn.busy::after{animation:none;width:100%}}
+
+/* ===== new in this version ===== */
+.btn-wa-done{background:#ECFDF5;color:#065F46;border:1.5px solid #34D399;font-weight:700}
+.btn-wa-done:hover{background:#D1FAE5}
+.btn-wa-stale{background:#FFFBEB;color:#92400E;border:1.5px solid #F59E0B;font-weight:700}
+.btn-wa-stale:hover{background:#FEF3C7}
+.wa-note{display:block;font-size:11px;font-weight:600;margin-top:4px;color:#047857;animation:rise .4s both}
+.wa-note.stale{color:#B45309}
+.sent-pop{animation:tickpop .45s cubic-bezier(.2,.9,.3,1.4) both}
+.cdc{display:inline-block;margin-left:6px;padding:2px 9px;border-radius:999px;font-family:ui-monospace,Consolas,monospace;font-weight:700;font-size:12px;letter-spacing:.3px;white-space:nowrap;font-variant-numeric:tabular-nums;background:#D1FAE5;color:#065F46}
+.cdc.amber{background:#FEF3C7;color:#92400E}
+.cdc.urgent{background:#FFE4E9;color:#9F1239;animation:cdpulse 1s ease-in-out infinite}
+.cdc.over{background:#BE123C;color:#fff;animation:cdpulse 1s ease-in-out infinite}
+@keyframes cdpulse{50%{opacity:.55}}
+.pwcell{display:flex;align-items:center;gap:8px;white-space:nowrap}
+.pwchip{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:13px;background:#FEF3C7;color:#78350F;border:1px dashed #F59E0B;border-radius:8px;padding:3px 9px;user-select:all}
+.pwnone{color:var(--muted);font-size:12px}
+.gen-row{display:flex;gap:8px;align-items:stretch}.gen-row input{flex:1}
+.search-row.sortbar select{flex:0 0 260px;max-width:none}
+
+/* refinements */
+.login-box{border:1px solid var(--line)}
+.login-box::before{top:0;height:6px}
+.search-row select{width:auto;flex:0 0 190px;min-width:150px}
+#nav button:nth-child(1) .ic{background:#E0F2FE;color:#0369A1}#nav button:nth-child(2) .ic{background:#FEF9C3;color:#A16207}
+#nav button:nth-child(3) .ic{background:#EDE9FE;color:#6D28D9}#nav button:nth-child(4) .ic{background:#FFEDD5;color:#C2410C}
+#nav button:nth-child(5) .ic{background:#FCE7F3;color:#BE185D}#nav button:nth-child(6) .ic{background:#DCFCE7;color:#15803D}
+#nav button:nth-child(7) .ic{background:#FEF3C7;color:#B45309}#nav button:nth-child(n+8) .ic{background:rgba(255,255,255,.22)}
+nav.navlist button.active .ic{background:#D1FAE5!important;color:#047857!important}
+@media print{body{background:#fff;color:#000}body::before,body::after{display:none}.panel{background:#fff;border-color:#ccc}h1,h2,h3,h4,td,th,.kv .v{color:#000}}
 </style>
 </head>
 <body>
@@ -637,10 +517,10 @@ tr.click:hover .btn-ghost{border-color:rgba(45,212,191,.5)}
       <div class="lgring r2"><b></b></div><div class="lgring"><b></b></div><div class="lgglow"></div>
       <img class="lglogo" src="logo.png" alt="Embakasi Garrison Comprehensive School crest">
       <div class="lgshadow"></div>
-      <div class="lgorb o1"><svg viewBox="0 0 24 24" fill="none" stroke="#8e1b4a" stroke-width="2" stroke-linejoin="round"><path d="M2 5c3-1 7-1 10 2 3-3 7-3 10-2v14c-3-1-7-1-10 2-3-3-7-3-10-2z"/><path d="M12 7v14"/></svg></div>
-      <div class="lgorb o2"><svg viewBox="0 0 24 24" fill="#0b1e9c"><path d="M12 3 1 9l11 6 9-4.9V17h2V9zM5 13.2V17c0 2 3 4 7 4s7-2 7-4v-3.8l-7 3.8z"/></svg></div>
+      <div class="lgorb o1"><svg viewBox="0 0 24 24" fill="none" stroke="#E11D48" stroke-width="2" stroke-linejoin="round"><path d="M2 5c3-1 7-1 10 2 3-3 7-3 10-2v14c-3-1-7-1-10 2-3-3-7-3-10-2z"/><path d="M12 7v14"/></svg></div>
+      <div class="lgorb o2"><svg viewBox="0 0 24 24" fill="#6D28D9"><path d="M12 3 1 9l11 6 9-4.9V17h2V9zM5 13.2V17c0 2 3 4 7 4s7-2 7-4v-3.8l-7 3.8z"/></svg></div>
       <div class="lgorb o3"><svg viewBox="0 0 24 24" fill="#e0b92f"><path d="m12 2 3 6.5 7 .8-5.2 4.8 1.4 7L12 17.6 5.8 21l1.4-7L2 9.3l7-.8z"/></svg></div>
-      <div class="lgorb o4"><svg viewBox="0 0 24 24" fill="none" stroke="#1e88e5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1-5L17 3l4 4L9 19z"/><path d="M14 6l4 4"/></svg></div>
+      <div class="lgorb o4"><svg viewBox="0 0 24 24" fill="none" stroke="#0284C7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1-5L17 3l4 4L9 19z"/><path d="M14 6l4 4"/></svg></div>
     </div>
     <h1>Embakasi Garrison Comprehensive School</h1>
     <p>Admission Portal for the 2027 intake. Register applicants, schedule interviews and track decisions in one place.</p>
@@ -680,27 +560,19 @@ tr.click:hover .btn-ghost{border-color:rgba(45,212,191,.5)}
 <div class="toast-wrap" id="toastWrap"></div>
 
 <script>
-const API="https://script.google.com/macros/s/AKfycbwn1K2qbFUbqXuLCTCjAjQYb1qcoT3wfCLNmOL7U39zxCUqmm2xXQOKyl8JwGBFDXXi3Q/exec";
+const API="https://script.google.com/macros/s/AKfycbwi4oHjVLRNhW9R5bMPjVqrM16m2MsI8AuFKNzXK13ITfGlcqibN2hqfgnWG2I4gwR1/exec";
 const GRADES=["PP1","PP2","Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9"];
-const DEC=["Pending","Recommended","Waitlisted","Not recommended"],ATT=["Pending","Present","Absent","Rescheduled"];
-const NAV_ITEMS=[
-  {id:"dash",label:"Dashboard",icon:"&#9670;"},
-  {id:"reg",label:"Register applicant",icon:"&#10010;"},
-  {id:"apps",label:"Applicants",icon:"&#9787;"},
-  {id:"int",label:"Interview register",icon:"&#9783;"},
-  {id:"rep",label:"Reports",icon:"&#9636;"},
-  {id:"aud",label:"Activity log",icon:"&#9998;"},
-  {id:"set",label:"Settings",icon:"&#9881;"},
-];
-const SUBS={dash:"Admissions at a glance",reg:"Add a new applicant to the 2027 intake",apps:"Search, filter and update applicants",int:"Who is expected on a given day",rep:"Summaries, grade breakdowns and successful applicants",aud:"Who changed what, and when",set:"Password, vacancies and access"};
-const TITLES={dash:"Dashboard",reg:"Register applicant",apps:"Applicants",int:"Interview register",rep:"Reports",aud:"Activity log",set:"Settings"};
-let S={token:sessionStorage.getItem("egt"),user:null,apps:[],vac:{},cur:"dash"};
+const NAVS={staff:[["dash","Dashboard","&#9670;"],["reg","Register applicant","&#10010;"],["apps","Applicants","&#9787;"],["pay","Payments","&#164;"],["iv","Interviews","&#9201;"],["mark","Marking","&#9998;"],["dec","Decisions","&#10003;"],["int","Interview register","&#9783;"],["rep","Reports","&#9636;"],["aud","Activity log","&#9776;"],["set","Settings","&#9881;"]],
+ teacher:[["th","Interview portal","&#9201;"]]};
+const SUBS={dash:"Admissions at a glance",reg:"Add a new applicant to the 2027 intake",apps:"Search, open and update applicants",pay:"Confirm fees and record references",iv:"Interview queue, assignments and live sessions",mark:"Papers awaiting marks and verification",dec:"Final admission outcomes",int:"Who is expected on a given day",rep:"Printable reports, exportable to Excel",aud:"Who changed what, and when",set:"Password, vacancies and staff accounts",th:"Learners assigned to you",tses:"Two-hour interview countdown"};
+let S={token:sessionStorage.getItem("egt"),user:null,apps:[],vac:{},cur:"dash",off:0,teachers:[],sections:[],max:{},pass:45,fee:1500,al:{}};
 const $=s=>document.querySelector(s),esc=x=>String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const today=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
 function toast(m,err){const t=document.createElement("div");t.className="toast"+(err?" error":"");t.textContent=m;$("#toastWrap").append(t);setTimeout(()=>t.remove(),3800)}
 async function api(action,data={}){
  try{const r=await fetch(API,{method:"POST",body:JSON.stringify({action,token:S.token,...data})});const t=await r.text();let j;try{j=JSON.parse(t)}catch(_){return{ok:false,error:"The portal server is not set up correctly. Re-deploy Code.gs as a Web app (access: Anyone) and paste its URL into index.html."}}
-  if(j.expired){logout(true)}return j}catch(e){return{ok:false,error:"No connection. Check your internet and try again."}}}
+  if(j.expired){logout(true)}
+  if(j.error==="Unknown action")j.error="The server (Code.gs) is out of date. Open Apps Script > Deploy > Manage deployments > pencil > Version: New version > Deploy, then reload this page.";return j}catch(e){return{ok:false,error:"No connection. Check your internet and try again."}}}
 async function busy(b,fn){b.classList.add("busy");try{return await fn()}finally{b.classList.remove("busy")}}
 function openModal(html,onMount){const r=$("#modalRoot");r.innerHTML=`<div class="modal-bg" id="modalBg"><div class="modal">${html}</div></div>`;
  $("#modalBg").addEventListener("mousedown",e=>{if(e.target.id==="modalBg")closeModal()});if(onMount)onMount(r)}
@@ -714,44 +586,9 @@ $("#loginBtn").onclick=e=>busy(e.target,async()=>{
  if(!$("#loginUser").value.trim()||!$("#loginPass").value){loginErr("Enter your username and password.");return}
  const j=await api("login",{u:$("#loginUser").value,p:$("#loginPass").value});
  if(!j.ok){loginErr(j.error);return}
- S.token=j.token;sessionStorage.setItem("egt",j.token);S.user=j.user;toast("Welcome, "+j.user.name);start()});
+ S.token=j.token;sessionStorage.setItem("egt",j.token);S.user=j.user;S.pw0=j.defaultPw;toast("Welcome, "+j.user.name);start()});
 ["loginUser","loginPass"].forEach(i=>$("#"+i).addEventListener("keydown",e=>{if(e.key==="Enter")$("#loginBtn").click()}));
-function logout(exp){$("#loginPass").value="";sessionStorage.removeItem("egt");S.token=null;$("#app").classList.add("hide");$("#loading").classList.add("hide");$("#loginScreen").classList.remove("hidden");if(exp)toast("Session expired. Please sign in again.",1)}
-async function start(){
- $("#loginScreen").classList.add("hidden");$("#loading").classList.remove("hide");
- const j=await api("load");$("#loading").classList.add("hide");
- if(!j.ok){logout();return}
- S.apps=j.apps;S.vac=j.vac;S.user=j.user;$("#mn").textContent=j.user.name;$("#mr").textContent=j.user.role;
- $("#app").classList.remove("hide");renderNav();go(S.cur)}
-function renderNav(){const n=$("#nav");
- n.innerHTML=NAV_ITEMS.map(it=>`<button data-v="${it.id}" class="${S.cur===it.id?"active":""}"><span class="ic">${it.icon}</span>${it.label}</button>`).join("");
- n.querySelectorAll("button").forEach(b=>b.onclick=()=>{go(b.dataset.v);$("#sidebar").classList.remove("open")})}
-function go(v){S.cur=v;renderNav();({dash,reg,apps:appsV,int:intV,rep,aud,set:setV})[v]()}
-/* topbar: renders title + actions, returns "" so views can keep concatenating */
-function head(t,x=""){
- $("#topbar").innerHTML=`<div class="tleft"><button class="btn btn-ghost btn-sm menu-btn" id="menuBtn">Menu</button><div><h2>${t}</h2><div class="sub">${SUBS[S.cur]||""}</div></div></div><div class="tright">${x}<button class="btn btn-ghost btn-sm" id="outBtn">Logout</button></div>`;
- $("#menuBtn").onclick=()=>$("#sidebar").classList.toggle("open");$("#outBtn").onclick=()=>logout();return""}
-const pill=v=>{const k=String(v).split(" ")[0];const c=({Recommended:"",Present:"",Waitlisted:"gold",Rescheduled:"gold",Not:"warn",Absent:"warn"})[k];return`<span class="tag ${c===undefined?"mute":c}">${esc(v)}</span>`};
-const opts=(a,s)=>a.map(x=>`<option${x===s?" selected":""}>${x}</option>`).join("");
-
-/* dashboard */
-const vc=(r,v)=>{const p=v?r/v:0;return p>1?["#FF5C7A","#FB7185"]:p>=.85?["#F5B942","#FB923C"]:p>=.5?["#22D3EE","#34D399"]:["#4F8CFF","#A78BFA"]};
-function counts(list){const c={tot:list.length,sch:0,done:0,rec:0,wl:0,nr:0};list.forEach(a=>{if(a.IntDate)c.sch++;if(a.Attendance==="Present")c.done++;if(a.Decision==="Recommended")c.rec++;if(a.Decision==="Waitlisted")c.wl++;if(a.Decision==="Not recommended")c.nr++});return c}
-function dash(){head("Dashboard",`<span class="tag gold">${new Date().toDateString()}</span>`);
- const c=counts(S.apps),t=S.apps.filter(a=>a.IntDate===today()).length;
- const per=GRADES.map(g=>[g,S.apps.filter(a=>a.Grade===g).length]),mx=Math.max(1,...per.map(p=>p[1]));
- const stats=[["Applicants",c.tot,"registered for 2027"],["Interviews today",t,"scheduled for today"],["Interviews scheduled",c.sch,"with a date set"],["Attended",c.done,"of "+c.sch+" scheduled"],["Recommended",c.rec,"places offered"],["Waitlisted",c.wl,"awaiting a place"]];
- const tv=Object.values(S.vac).reduce((a,b)=>a+(+b||0),0),pc=(a,b)=>b?Math.min(100,Math.round(a/b*100)):0,pcts=[pc(c.tot,tv),pc(t,c.sch),pc(c.sch,c.tot),pc(c.done,c.sch),pc(c.rec,tv),pc(c.wl,c.tot)];
- $("#view").innerHTML=`<div class="grid cols-3" style="margin-bottom:18px;">
- ${stats.map((s,i)=>`<div class="stat-card"><div class="label">${s[0]}</div><div class="value" data-n="${s[1]}">0</div><div class="delta">${s[2]}</div><div class="prog"><i style="--w:${pcts[i]}%"></i></div><div class="prog-pct"><span>progress</span><b>${pcts[i]}%</b></div></div>`).join("")}</div>
- <div class="grid cols-2">
-  <div class="panel"><div class="panel-head"><h3>Applicants per grade</h3><span class="tag">2027 intake</span></div>
-   <div class="chart-bars">${per.map(p=>`<div class="bar-wrap"><div class="bar-val">${p[1]||""}</div><div class="bar" style="height:${Math.max(4,p[1]/mx*110)}px;"></div><div class="bar-label">${p[0].replace("Grade ","G")}</div></div>`).join("")}</div></div>
-  <div class="panel"><div class="panel-head"><h3>Vacancies vs recommended</h3><span class="tag gold">By grade</span></div>
-   <div style="overflow:auto"><table><thead><tr><th>Grade</th><th>Vacancies</th><th>Recommended</th><th>Left</th></tr></thead><tbody>${GRADES.map(g=>{const v=S.vac[g]||0,r=S.apps.filter(a=>a.Grade===g&&a.Decision==="Recommended").length;return`<tr><td>${g}</td><td class="mono">${v}</td><td class="mono">${r}<div class="prog sm"><i style="--w:${v?Math.min(100,r/v*100):0}%;--c1:${vc(r,v)[0]};--c2:${vc(r,v)[1]}"></i></div></td><td class="${v-r<0?"balance-low":"balance-ok"}">${v-r}</td></tr>`}).join("")}</tbody></table></div></div>
- </div>`;
- document.querySelectorAll("[data-n]").forEach(e=>{const n=+e.dataset.n;let i=0;const st=Math.max(1,Math.ceil(n/25));const iv=setInterval(()=>{i=Math.min(n,i+st);e.textContent=i;if(i>=n)clearInterval(iv)},25)})}
-
+function logout(exp){clearInterval(S.poll);clearInterval(S.tk);closeModal();$("#loginPass").value="";sessionStorage.removeItem("egt");S.token=null;$("#app").classList.add("hide");$("#loading").classList.add("hide");$("#loginScreen").classList.remove("hidden");if(exp)toast("Session expired. Please sign in again.",1)}
 /* register */
 function reg(){head("Register applicant");
  $("#view").innerHTML=`<div class="panel" style="max-width:760px;"><div class="panel-head"><h3>Applicant details</h3><span class="tag">New</span></div>
@@ -771,13 +608,28 @@ function reg(){head("Register applicant");
 
 /* whatsapp click-to-chat */
 const WA_ICON=`<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.15c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.25-8.23 4.54 0 8.23 3.69 8.23 8.23s-3.7 8.24-8.23 8.24zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.42h-.48c-.17 0-.43.06-.66.31-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.23-.16-.48-.29z"/></svg>`;
-const actBtns=no=>`<button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();edit('${no}')">&#9998; Edit</button><button class="btn btn-wa btn-sm" onclick="event.stopPropagation();wa('${no}')">${WA_ICON}Send message</button>`;
+const waKey=a=>(a.IntDate||"")+"|"+(a.IntTime||"");
+const waState=a=>!a.WaSentAt?0:(a.WaSentFor===waKey(a)?2:1);
+const waWhen=a=>tfmt(a.WaSentAt)+(a.WaSentBy?" by "+a.WaSentBy:"");
+function waBtn(a){const st=waState(a),no=a.AppNo;
+ if(st===0)return`<button class="btn btn-wa btn-sm" onclick="event.stopPropagation();wa('${no}')">${WA_ICON}Send message</button>`;
+ if(st===2)return`<button class="btn btn-wa-done btn-sm" title="Sent ${esc(waWhen(a))}" onclick="event.stopPropagation();wa('${no}')"><span class="sent-pop">&#10003;</span>&nbsp;Sent</button><span class="wa-note">Sent ${esc(tfmt(a.WaSentAt))}</span>`;
+ return`<button class="btn btn-wa-stale btn-sm" title="The interview date or time changed after the last message" onclick="event.stopPropagation();wa('${no}')">${WA_ICON}Resend</button><span class="wa-note stale">Date changed since ${esc(tfmt(a.WaSentAt))}</span>`}
+const actBtns=no=>{const a=S.apps.find(x=>x.AppNo===no);return`<button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();prof('${no}')">Open</button><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();edit('${no}')">Edit</button>${waBtn(a)}`};
+/* local backup so "Sent" shows instantly and survives a refresh even if the server is slow or out of date */
+const WA_LS="egcs_wa_sent";
+function waLoc(){try{return JSON.parse(localStorage.getItem(WA_LS)||"{}")}catch(e){return{}}}
+function waLocSet(a){try{const m=waLoc();m[a.AppNo]={at:a.WaSentAt,by:a.WaSentBy,f:a.WaSentFor};localStorage.setItem(WA_LS,JSON.stringify(m))}catch(e){}}
+function waMerge(){const m=waLoc();S.apps.forEach(a=>{const l=m[a.AppNo];if(l&&(!a.WaSentAt||+l.at>+a.WaSentAt)){a.WaSentAt=l.at;a.WaSentBy=l.by;a.WaSentFor=l.f}})}
 function waPhone(p){let d=String(p||"").replace(/\D/g,"");if(!d)return"";if(d.startsWith("254"))return d;if(d.startsWith("0"))return"254"+d.slice(1);if(d.length===9)return"254"+d;return d}
 function waDate(a){let t=a.IntDate;try{t=new Date(a.IntDate+"T00:00:00").toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long",year:"numeric"})}catch(e){}
  if(a.IntTime){try{const[h,m]=String(a.IntTime).split(":");const d=new Date();d.setHours(+h,+m);t+=" at "+d.toLocaleTimeString("en-GB",{hour:"numeric",minute:"2-digit",hour12:true}).toUpperCase()}catch(e){}}return t}
 function wa(no){const a=S.apps.find(x=>x.AppNo===no);if(!a)return;
  const ph=waPhone(a.Phone);if(ph.length<11||ph.length>15)return toast("No valid phone number on file for "+a.Name+". Use Edit to check the record.",1);
- if(!a.IntDate)return toast("Set an interview date for "+a.Name+" first, then send the message.",1);
+ if(!a.IntDate)return toast("Set an interview date for "+a.Name+" first (use Edit), then send the message.",1);
+ if(waState(a)===2)return mod("Message already sent",`<p>The invitation for <b>${esc(a.Name)}</b> was already sent <b>${esc(waWhen(a))}</b>.</p><div class="helptext">Send it again only if the parent did not receive it.</div>`,"Send again",b=>{closeModal();waOpen(a,ph)});
+ waOpen(a,ph)}
+async function waOpen(a,ph){
  const msg=`Dear ${a.Parent||"Parent/Guardian"},
 We are pleased to inform you that an interview has been scheduled for your child, ${a.Name}, as part of the admission process to the next class.
 \u{1F4C5} Interview Date: ${waDate(a)}
@@ -786,82 +638,354 @@ Kindly ensure that you accompany your child to school on the scheduled date and 
 1. Your National ID card \u2013 this will be used as your gate pass to access the school.
 2. A copy of your child's birth certificate.
 
-
 Please ensure that you arrive on the scheduled date with all the required documents
 Thank you for choosing our school. We look forward to meeting you and your child.
 Kind regards,
 School Administration
 Embakasi Garrison Comprehensive School.`;
- window.open("https://wa.me/"+ph+"?text="+encodeURIComponent(msg),"_blank","noopener");toast("Opening WhatsApp for "+a.Parent)}
+ window.open("https://wa.me/"+ph+"?text="+encodeURIComponent(msg),"_blank","noopener");
+ a.WaSentAt=Date.now();a.WaSentBy=S.user.name;a.WaSentFor=waKey(a);waLocSet(a);
+ toast("\u2713 Marked as sent to "+(a.Parent||"parent"));
+ if(S.cur==="apps"&&S.drawApps)S.drawApps();
+ const j=await api("wasent",{no:a.AppNo});
+ if(!j.ok)return toast("Shown as sent on this device only (server did not save it): "+j.error,1);
+ upd(j);waLocSet(S.apps.find(x=>x.AppNo===a.AppNo)||a);
+ if(S.cur==="apps"&&S.drawApps)S.drawApps()}
 
-/* applicants */
-function appsV(){head("Applicants",`<button class="btn btn-ghost btn-sm" onclick="csv(S.apps,'applicants')">Export to Excel</button>`);
- $("#view").innerHTML=`<div class="panel"><div class="panel-head"><h3>Find &amp; manage applicants</h3><span class="tag" id="cnt"></span></div>
- <div class="search-row"><input type="search" class="grow" id="q" placeholder="Search name, number or phone…"><select id="fg"><option value="">All grades</option>${opts(GRADES)}</select><select id="fd"><option value="">All decisions</option>${opts(DEC)}</select></div>
- <div id="tb"></div></div>`;
- const draw=()=>{const q=$("#q").value.toLowerCase(),g=$("#fg").value,d=$("#fd").value;
-  const l=S.apps.filter(a=>(!g||a.Grade===g)&&(!d||a.Decision===d)&&(!q||(a.Name+a.AppNo+a.Phone+a.Parent).toLowerCase().includes(q)));
-  $("#cnt").textContent=l.length+" shown";
-  $("#tb").innerHTML=l.length?`<div style="overflow:auto"><table><thead><tr><th>No.</th><th>Learner</th><th>Grade</th><th>Parent</th><th>Phone</th><th>Interview</th><th>Attendance</th><th>Decision</th><th class="noprint">Actions</th></tr></thead><tbody>${l.slice().reverse().slice(0,200).map(a=>`<tr class="click" onclick="edit('${a.AppNo}')"><td class="mono">${a.AppNo}</td><td><strong>${esc(a.Name)}</strong></td><td>${a.Grade}</td><td>${esc(a.Parent)}</td><td class="mono">${esc(a.Phone)}</td><td>${a.IntDate||"—"} ${a.IntTime||""}</td><td>${pill(a.Attendance)}</td><td>${pill(a.Decision)}</td><td class="act noprint">${actBtns(a.AppNo)}</td></tr>`).join("")}</tbody></table></div>`:'<div class="empty"><h4>No applicants match</h4>Try a different search or register a new applicant.</div>'};
- ["q","fg","fd"].forEach(i=>$("#"+i).oninput=draw);draw()}
-function edit(no){const a=S.apps.find(x=>x.AppNo===no);
- openModal(`<h3>${esc(a.Name)} <span class="mono" style="font-size:13px;color:var(--muted);">${a.AppNo}</span></h3>
- <div class="helptext" style="margin:-6px 0 14px;">${a.Grade} · ${esc(a.Parent)} · ${esc(a.Phone)} · from ${esc(a.PrevSchool||"—")}</div>
- <div class="field-row"><div class="field"><label>Interview date</label><input type="date" id="e_d" value="${a.IntDate}"></div><div class="field"><label>Interview time</label><input type="time" id="e_t" value="${a.IntTime}"></div></div>
- <div class="field-row"><div class="field"><label>Attendance</label><select id="e_a">${opts(ATT,a.Attendance)}</select></div><div class="field"><label>Decision</label><select id="e_c">${opts(DEC,a.Decision)}</select></div></div>
- <div class="field"><label>Interviewer's comments</label><textarea id="e_m" rows="3">${esc(a.Comments)}</textarea></div>
- <div class="helptext">Last updated by ${esc(a.UpdatedBy||"—")}</div>
- <div class="modal-actions"><button class="btn btn-ghost" id="e_x">Close</button><button class="btn btn-primary" id="e_s">Save changes</button></div>`,()=>{
- $("#e_x").onclick=closeModal;
- $("#e_s").onclick=e=>busy(e.target,async()=>{const f={IntDate:$("#e_d").value,IntTime:$("#e_t").value,Attendance:$("#e_a").value,Decision:$("#e_c").value,Comments:$("#e_m").value};
-  Object.assign(a,f,{UpdatedBy:S.user.name});closeModal();go(S.cur);const j=await api("update",{no,fields:f});
-  j.ok?toast("Changes saved for "+no):toast(j.error+" Refresh to see the saved data.",1)})})}
-
-/* interviews */
-function intV(){head("Interview register",`<button class="btn btn-ghost btn-sm" onclick="window.print()">Print</button>`);const d0=S.idate||today();
- $("#view").innerHTML=`<div class="panel"><div class="panel-head"><h3 id="ih"></h3><input type="date" id="id" value="${d0}" style="max-width:190px;" class="noprint"></div><div id="tb"></div></div>`;
- const draw=()=>{S.idate=$("#id").value;const l=S.apps.filter(a=>a.IntDate===S.idate).sort((a,b)=>(a.IntTime||"").localeCompare(b.IntTime||""));
-  $("#ih").textContent="Expected on "+S.idate+": "+l.length;
-  $("#tb").innerHTML=l.length?`<div style="overflow:auto"><table><thead><tr><th>Time</th><th>No.</th><th>Learner</th><th>Grade</th><th>Parent</th><th>Phone</th><th>Attendance</th><th class="noprint"></th></tr></thead><tbody>${l.map(a=>`<tr><td class="mono">${a.IntTime||"—"}</td><td class="mono">${a.AppNo}</td><td><strong>${esc(a.Name)}</strong></td><td>${a.Grade}</td><td>${esc(a.Parent)}</td><td class="mono">${esc(a.Phone)}</td><td>${pill(a.Attendance)}</td><td class="noprint"><button class="btn btn-ghost btn-sm" onclick="edit('${a.AppNo}')">Update</button> <button class="btn btn-wa btn-sm" onclick="wa('${a.AppNo}')"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.15c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.25-8.23 4.54 0 8.23 3.69 8.23 8.23s-3.7 8.24-8.23 8.24zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.42h-.48c-.17 0-.43.06-.66.31-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.23-.16-.48-.29z"/></svg>Send message</button></td></tr>`).join("")}</tbody></table></div>`:'<div class="empty"><h4>Nobody is scheduled</h4>Set interview dates from the Applicants page.</div>'};
- $("#id").oninput=draw;draw()}
-
-/* reports */
-function rep(){head("Reports",`<button class="btn btn-ghost btn-sm" onclick="window.print()">Print</button><button class="btn btn-primary btn-sm" id="xl">Export to Excel</button>`);
- $("#view").innerHTML=`<div class="search-row"><select id="rt"><option value="sum">Admission summary</option><option value="gr">Grade-by-grade</option><option value="ok">Successful applicants</option></select>
- <input type="date" id="ra" value="${S.ra||""}" title="From"><input type="date" id="rb" value="${S.rb||""}" title="To"></div><div id="rr"></div>`;
- let cur=[];const draw=()=>{S.ra=$("#ra").value;S.rb=$("#rb").value;const L=S.apps.filter(a=>(!S.ra||a.RegDate>=S.ra)&&(!S.rb||a.RegDate<=S.rb)),c=counts(L),t=$("#rt").value;
-  const hd=`<div class="panel"><div class="panel-head"><h3>Embakasi Garrison Comprehensive School — ${$("#rt").selectedOptions[0].text}</h3><span class="tag gold">2027 intake</span></div><div class="helptext" style="margin:-8px 0 14px;">${S.ra||"start"} to ${S.rb||"today"} · generated ${today()}</div>`;
-  const tbl=rows=>`<div style="overflow:auto"><table><thead><tr>${Object.keys(rows[0]).map(k=>`<th>${k}</th>`).join("")}</tr></thead><tbody>${rows.map(r=>`<tr>${Object.values(r).map(v=>`<td>${esc(v)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
-  if(t==="sum"){cur=[{Measure:"Applicants",Value:c.tot},{Measure:"Interviews scheduled",Value:c.sch},{Measure:"Interviews attended",Value:c.done},{Measure:"Completion rate",Value:(c.sch?Math.round(c.done/c.sch*100):0)+"%"},{Measure:"Recommended",Value:c.rec},{Measure:"Waitlisted",Value:c.wl},{Measure:"Not recommended",Value:c.nr}];
-   $("#rr").innerHTML=hd+cur.map(r=>`<div class="kv"><span class="k">${r.Measure}</span><span class="v">${r.Value}</span></div>`).join("")+"</div>"}
-  if(t==="gr"){cur=GRADES.map(g=>{const x=L.filter(a=>a.Grade===g),v=S.vac[g]||0,r=x.filter(a=>a.Decision==="Recommended").length;return{Grade:g,Applicants:x.length,Interviewed:x.filter(a=>a.Attendance==="Present").length,Recommended:r,Waitlisted:x.filter(a=>a.Decision==="Waitlisted").length,Vacancies:v,"Places left":v-r}});
-   $("#rr").innerHTML=hd+tbl(cur)+"</div>"}
-  if(t==="ok"){cur=L.filter(a=>a.Decision==="Recommended").map(a=>({"App No":a.AppNo,Learner:a.Name,"Joining grade":a.Grade,Parent:a.Parent,Phone:a.Phone}));
-   $("#rr").innerHTML=hd+(cur.length?tbl(cur):'<div class="empty"><h4>No recommended applicants yet</h4>Nothing in this date range.</div>')+"</div>"}};
- ["rt","ra","rb"].forEach(i=>$("#"+i).oninput=draw);$("#xl").onclick=()=>csv(cur,"report");draw()}
 function csv(rows,name){if(!rows.length)return toast("There is nothing to export.",1);const k=Object.keys(rows[0]);
  const s=[k,...rows.map(r=>k.map(x=>r[x]))].map(r=>r.map(v=>'"'+String(v??"").replace(/"/g,'""')+'"').join(",")).join("\n");
  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+s],{type:"text/csv"}));a.download=`EGCS-${name}-${today()}.csv`;a.click();toast("Excel file downloaded")}
 
-/* audit */
+/* ===== session start, polling, navigation ===== */
+const isT=()=>!!S.user&&S.user.role==="teacher",isP=()=>!!S.user&&["admin","deputy"].includes(S.user.role);
+function ingest(j){S.apps=j.apps;waMerge();S.vac=j.vac||{};S.user=j.user;S.off=j.now-Date.now();S.fee=j.fee||1500;S.sections=j.sections||[];S.max=j.max||{};S.pass=j.pass||45;S.teachers=j.teachers||[]}
+async function start(){
+ $("#loginScreen").classList.add("hidden");$("#loading").classList.remove("hide");
+ const j=await api("load");$("#loading").classList.add("hide");
+ if(!j.ok){logout();return}
+ ingest(j);$("#mn").textContent=j.user.name;$("#mr").textContent=j.user.role;
+ $("#app").classList.remove("hide");S.cur=isT()?"th":"dash";S.arg=null;renderNav();go(S.cur);
+ if(S.pw0)toast("You are still using the default password. Please change it in Settings.",1);
+ clearInterval(S.poll);S.poll=setInterval(refresh,30000)}
+async function refresh(){
+ if(!S.token||document.hidden)return;const j=await api("load");if(!j.ok)return;
+ const cnt=()=>({a:S.apps.filter(x=>stage(x)==="AwaitingMarking").length,o:S.apps.filter(isOver).length}),was=cnt();
+ ingest(j);const n=cnt();
+ if(!isT()){if(n.a>was.a)toast("A paper has been submitted for marking.");if(n.o>was.o)toast("An interview has passed its two-hour limit.",1)}
+ const ae=document.activeElement,typing=ae&&["INPUT","SELECT","TEXTAREA"].includes(ae.tagName);
+ if(!$("#modalRoot").innerHTML&&!typing&&!["reg","set","tses","rep"].includes(S.cur))go(S.cur,S.arg)}
+function renderNav(){
+ const L=(isT()?NAVS.teacher:NAVS.staff).filter(it=>!(S.user.role==="secretary"&&["dec","aud"].includes(it[0])));
+ const n=$("#nav");n.innerHTML=L.map(it=>`<button data-v="${it[0]}" class="${S.cur===it[0]||(S.cur==="tses"&&it[0]==="th")?"active":""}"><span class="ic">${it[2]}</span>${it[1]}</button>`).join("");
+ n.querySelectorAll("button").forEach(b=>b.onclick=()=>{go(b.dataset.v);$("#sidebar").classList.remove("open")})}
+function go(v,arg){clearInterval(S.tk);S.cur=v;S.arg=arg;renderNav();VIEWS[v](arg);S.tk=setInterval(tick,1000);tick()}
+function head(t,x=""){
+ const pw=S.pw0&&!isT()?`<button class="btn btn-danger btn-sm" onclick="go('set')">Change default password</button>`:"";
+ $("#topbar").innerHTML=`<div class="tleft"><button class="btn btn-ghost btn-sm menu-btn" id="menuBtn">Menu</button><div><h2>${t}</h2><div class="sub">${SUBS[S.cur]||""}</div></div></div><div class="tright">${x}${pw}<button class="btn btn-ghost btn-sm" id="outBtn">Logout</button></div>`;
+ $("#menuBtn").onclick=()=>$("#sidebar").classList.toggle("open");$("#outBtn").onclick=()=>logout();return""}
+
+/* ===== shared helpers ===== */
+const STG={Registered:["Awaiting payment","mute"],Paid:["Paid, not yet queued","gold"],Queued:["In interview queue",""],InProgress:["Interview in progress",""],Stopped:["Stopped, not submitted","gold"],AwaitingMarking:["Awaiting marking","gold"],Marking:["Marking in progress",""],MarksEntered:["Awaiting verification","gold"],ReadyForDecision:["Ready for decision",""],Decided:["Decided",""]};
+const stage=a=>a.Stage||"Registered",nowS=()=>Date.now()+(S.off||0),isOver=a=>stage(a)==="InProgress"&&+a.DeadlineAt<nowS();
+const cdCls=r=>"cdc"+(r<0?" over":r<=6e5?" urgent":r<=18e5?" amber":""),cdTxt=r=>"\u23F1 "+(r<0?"Over ":"")+fmtR(r);
+const cdc=a=>{if(stage(a)!=="InProgress"||!a.DeadlineAt)return"";const r=+a.DeadlineAt-nowS();return`<span class="${cdCls(r)}" data-cd="${a.DeadlineAt}">${cdTxt(r)}</span>`};
+const spill=a=>{if(isOver(a))return'<span class="tag warn">Overdue</span>'+cdc(a);const s=STG[stage(a)]||[stage(a),"mute"];return`<span class="tag ${s[1]}">${s[0]}</span>${cdc(a)}`};
+const pill=v=>{const k=String(v).split(" ")[0];const c=({Recommended:"",Present:"",Waitlisted:"gold",Rescheduled:"gold",Not:"warn",Absent:"warn"})[k];return`<span class="tag ${c===undefined?"mute":c}">${esc(v)}</span>`};
+const opts=(a,s)=>a.map(x=>`<option${x===s?" selected":""}>${x}</option>`).join("");
+const by=s=>S.apps.filter(a=>stage(a)===s),money=n=>"KSh "+Number(n||0).toLocaleString("en-KE");
+const tfmt=ms=>ms?new Date(+ms).toLocaleString("en-GB",{day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit",hour12:false,timeZone:"Africa/Nairobi"}):"—";
+const dkey=ms=>new Date(+ms+108e5).toISOString().slice(0,10),phn=p=>{const d=String(p||"").replace(/\D/g,"");return d.length===9?"0"+d:d};
+const fmtR=ms=>{const s=Math.floor(Math.abs(ms)/1000),p=n=>String(n).padStart(2,"0");return(ms<0?"+":"")+p(Math.floor(s/3600))+":"+p(Math.floor(s%3600/60))+":"+p(s%60)};
+const mk=a=>{try{const m=JSON.parse(a.Marks);return S.sections.map(s=>s+" "+m[s]+"/"+(S.max[s]||"?")).join(", ")}catch(e){return""}};
+const kv=(k,v)=>`<div class="kv"><span class="k">${k}</span><span class="v">${v===""||v==null?"—":v}</span></div>`;
+function upd(j){if(j.now)S.off=j.now-Date.now();if(j.rec){const i=S.apps.findIndex(x=>x.AppNo===j.rec.AppNo);i<0?S.apps.push(j.rec):S.apps[i]=j.rec}}
+const act=(b,action,data,msg)=>busy(b,async()=>{const j=await api(action,data);if(!j.ok)return toast(j.error,1);upd(j);closeModal();go(S.cur,S.arg);toast(msg||"Saved")});
+function mod(t,body,label,fn,cls="btn-primary"){openModal(`<h3>${t}</h3>${body}<div class="modal-actions"><button class="btn btn-ghost" id="mx">Cancel</button><button class="btn ${cls}" id="mg">${label}</button></div>`,()=>{$("#mx").onclick=closeModal;$("#mg").onclick=e=>fn(e.target)})}
+function beep(){try{const c=new(window.AudioContext||window.webkitAudioContext)(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=880;g.gain.value=.15;o.start();setTimeout(()=>{o.stop();c.close()},900)}catch(e){}}
+function tick(){
+ document.querySelectorAll("[data-cd]").forEach(e=>{const r=+e.dataset.cd-nowS();e.textContent=cdTxt(r);e.className=cdCls(r)});
+ document.querySelectorAll("[data-dl]").forEach(e=>{const r=+e.dataset.dl-nowS();e.textContent=fmtR(r);e.classList.toggle("over",r<0)});
+ if(S.cur==="tses"&&$("#tm"))tmUpdate()}
+const tblOf=rows=>{const k=Object.keys(rows[0]);return`<div style="overflow:auto"><table><thead><tr>${k.map(c=>`<th>${esc(c)}</th>`).join("")}</tr></thead><tbody>${rows.map(r=>`<tr>${k.map(c=>`<td>${esc(r[c])}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`};
+
+/* ===== dashboard ===== */
+function dash(){head("Dashboard",`<span class="tag gold">${new Date().toDateString()}</span>`);
+ const A=S.apps,n=A.length,pd=A.filter(a=>a.PayStatus==="Confirmed").length,ov=A.filter(isOver);
+ const stats=[["Registered",n,"applicants for 2027"],["Payments confirmed",pd,"of "+n+" registered"],["Awaiting interview",by("Queued").length,"in the interview queue"],["Interviews in progress",by("InProgress").length,"running now ("+ov.length+" overdue)"],["Awaiting marking",by("AwaitingMarking").length+by("Marking").length+by("MarksEntered").length,"papers in the marking queue"],["Decisions pending",by("ReadyForDecision").length,"verified and ready for decision"]];
+ const pc=x=>n?Math.min(100,Math.round(x/n*100)):0,pcts=[100,pc(pd),pc(by("Queued").length),pc(by("InProgress").length),pc(by("AwaitingMarking").length+by("Marking").length+by("MarksEntered").length),pc(by("ReadyForDecision").length)];
+ const per=GRADES.map(g=>[g,A.filter(a=>a.Grade===g).length]),mx=Math.max(1,...per.map(p=>p[1]));
+ const vc=(r,v)=>{const p=v?r/v:0;return p>1?["#E11D48","#FB7185"]:p>=.85?["#F59E0B","#F97316"]:p>=.5?["#0D9488","#34D399"]:["#0284C7","#38BDF8"]};
+ const need=[];if(ov.length)need.push(`<div class="alertbar">${ov.length} interview${ov.length>1?"s have":" has"} passed the two-hour limit: ${ov.map(a=>`<a href="#" style="color:inherit" onclick="prof('${a.AppNo}');return false">${esc(a.Name)}</a> (${esc(a.TeacherName)})`).join(", ")}</div>`);
+ const wait=by("Registered").length,pq=by("Paid").length,rd=by("ReadyForDecision").length;
+ if(pq)need.push(`<div class="infobar">${pq} paid learner${pq>1?"s are":" is"} waiting to be sent to interview. <a href="#" style="color:inherit" onclick="go('iv');return false">Open Interviews</a></div>`);
+ if(rd&&isP())need.push(`<div class="infobar">${rd} learner${rd>1?"s are":" is"} ready for a final decision. <a href="#" style="color:inherit" onclick="go('dec');return false">Open Decisions</a></div>`);
+ $("#view").innerHTML=need.join("")+`<div class="grid cols-3" style="margin-bottom:18px;">
+ ${stats.map((s,i)=>`<div class="stat-card"><div class="label">${s[0]}</div><div class="value" data-n="${s[1]}">0</div><div class="delta">${s[2]}</div><div class="prog"><i style="--w:${pcts[i]}%"></i></div><div class="prog-pct"><span>of registered</span><b>${pcts[i]}%</b></div></div>`).join("")}</div>
+ <div class="grid cols-2">
+  <div class="panel"><div class="panel-head"><h3>Applicants per grade</h3><span class="tag">2027 intake</span></div>
+   <div class="chart-bars">${per.map(p=>`<div class="bar-wrap"><div class="bar-val">${p[1]||""}</div><div class="bar" style="height:${Math.max(4,p[1]/mx*110)}px;"></div><div class="bar-label">${p[0].replace("Grade ","G")}</div></div>`).join("")}</div>
+   <div class="helptext">${wait} learner${wait===1?"":"s"} still awaiting payment confirmation.</div></div>
+  <div class="panel"><div class="panel-head"><h3>Vacancies vs admitted</h3><span class="tag gold">By grade</span></div>
+   <div style="overflow:auto"><table><thead><tr><th>Grade</th><th>Vacancies</th><th>Recommended</th><th>Left</th></tr></thead><tbody>${GRADES.map(g=>{const v=S.vac[g]||0,r=A.filter(a=>a.Grade===g&&a.Decision==="Recommended").length;return`<tr><td>${g}</td><td class="mono">${v}</td><td class="mono">${r}<div class="prog sm"><i style="--w:${v?Math.min(100,r/v*100):0}%;--c1:${vc(r,v)[0]};--c2:${vc(r,v)[1]}"></i></div></td><td class="${v-r<0?"balance-low":"balance-ok"}">${v-r}</td></tr>`}).join("")}</tbody></table></div></div>
+ </div>`;
+ document.querySelectorAll("[data-n]").forEach(e=>{const n=+e.dataset.n;let i=0;const st=Math.max(1,Math.ceil(n/25));const iv=setInterval(()=>{i=Math.min(n,i+st);e.textContent=i;if(i>=n)clearInterval(iv)},25)})}
+
+/* ===== applicants & profile ===== */
+function appsV(){head("Applicants",`<button class="btn btn-ghost btn-sm" onclick="csv(S.apps.map(a=>({AppNo:a.AppNo,Name:a.Name,Grade:a.Grade,Parent:a.Parent,Phone:phn(a.Phone),Status:(STG[stage(a)]||[stage(a)])[0],Payment:a.PayStatus,Decision:a.Decision})),'applicants')">Export to Excel</button>`);
+ $("#view").innerHTML=`<div class="panel"><div class="panel-head"><h3>Find &amp; manage applicants</h3><span class="tag" id="cnt"></span></div>
+ <div class="search-row"><input type="search" class="grow" id="q" placeholder="Search name, application number, parent or phone…" value="${esc(S.aq||"")}"><select id="fg"><option value="">All grades</option>${opts(GRADES,S.afg)}</select><select id="fd"><option value="">All stages</option>${Object.keys(STG).map(k=>`<option value="${k}"${S.afd===k?" selected":""}>${STG[k][0]}</option>`).join("")}</select></div>
+ <div id="tb"></div></div>`;
+ const draw=()=>{if(!$("#q"))return;S.aq=$("#q").value;S.afg=$("#fg").value;S.afd=$("#fd").value;const q=S.aq.toLowerCase(),g=S.afg,d=S.afd;
+  const l=S.apps.filter(a=>(!g||a.Grade===g)&&(!d||stage(a)===d)&&(!q||(a.Name+a.AppNo+phn(a.Phone)+a.Parent).toLowerCase().includes(q)));
+  $("#cnt").textContent=l.length+" shown";
+  $("#tb").innerHTML=l.length?`<div style="overflow:auto"><table><thead><tr><th>No.</th><th>Learner</th><th>Grade</th><th>Parent</th><th>Phone</th><th>Stage</th><th>Fee</th><th class="noprint">Actions</th></tr></thead><tbody>${l.slice().reverse().slice(0,200).map(a=>`<tr class="click" onclick="prof('${a.AppNo}')"><td class="mono">${a.AppNo}</td><td><strong>${esc(a.Name)}</strong></td><td>${a.Grade}</td><td>${esc(a.Parent)}</td><td class="mono">${esc(phn(a.Phone))}</td><td>${spill(a)}</td><td>${a.PayStatus==="Confirmed"?'<span class="tag">Paid</span>':'<span class="tag mute">'+esc(a.PayStatus||"Pending")+'</span>'}</td><td class="act noprint">${actBtns(a.AppNo)}</td></tr>`).join("")}</tbody></table></div>`:'<div class="empty"><h4>No applicants match</h4>Try a different search or register a new applicant.</div>'};
+ ["q","fg","fd"].forEach(i=>$("#"+i).oninput=draw);S.drawApps=draw;draw()}
+
+function prof(no){const a=S.apps.find(x=>x.AppNo===no);if(!a)return;const st=stage(a),P=isP(),R=S.user.role;
+ const b=(l,fn,c="btn-ghost")=>`<button class="btn ${c} btn-sm" onclick="${fn}('${no}')">${l}</button>`,x=[];
+ if(st==="Registered")x.push(b("Confirm payment","payM","btn-primary"));
+ if(st==="Paid"){x.push(b("Send to interview","queueM","btn-primary"));if(P)x.push(b("Reverse payment","voidM","btn-danger"))}
+ if(st==="Queued"){x.push(b("Reassign teacher / room","queueM"));x.push(b("Print interview card","printCard"));if(P)x.push(b("Reverse payment","voidM","btn-danger"))}
+ if(st==="InProgress"&&P){x.push(b("Extend time","extM"));x.push(b("Reset interview","resM","btn-danger"))}
+ if(st==="Stopped"&&P)x.push(b("Reset interview","resM","btn-danger"));
+ if(st==="AwaitingMarking")x.push(b("Start marking","smark","btn-primary"));
+ if(["AwaitingMarking","Marking"].includes(st))x.push(b("Enter marks","marksM",st==="Marking"?"btn-primary":"btn-ghost"));
+ if(st==="MarksEntered"){x.push(b("Correct marks","marksM"));if(R==="admin")x.push(b("Verify marks","verM","btn-primary"))}
+ if(st==="ReadyForDecision"&&P){x.push(b("Record decision","decM","btn-primary"));x.push(b("Correct marks","marksM"))}
+ if(st==="Decided"&&R==="admin"){x.push(b("Correct marks","marksM"));x.push(b("Change decision","decM"))}
+ x.push(b("Edit details","edit"));
+ const pay=a.PayStatus==="Confirmed"?`${money(a.PayAmount)} · ${esc(a.PayMethod)} · ref ${esc(a.PayRef)} · by ${esc(a.PayBy)} · ${tfmt(a.PayAt)}`:esc(a.PayStatus||"Pending");
+ openModal(`<h3>${esc(a.Name)} <span class="mono" style="font-size:13px;color:var(--muted)">${a.AppNo}</span></h3><div style="margin:-4px 0 10px">${spill(a)}</div>
+ ${kv("Grade applied for (2027)",esc(a.Grade))}${kv("Parent / guardian",esc(a.Parent)+" · "+esc(phn(a.Phone)))}${kv("Date of birth",esc(a.DOB))}${kv("Previous school / current grade",esc(a.PrevSchool||"—")+" · "+esc(a.CurrGrade||"—"))}
+ ${kv("Interview slot",esc((a.IntDate||"")+" "+(a.IntTime||"")))}${kv("Parent message (WhatsApp)",waState(a)===2?'<span class="tag">Sent</span> '+esc(waWhen(a)):waState(a)===1?'<span class="tag gold">Resend needed</span> date changed after '+esc(tfmt(a.WaSentAt)):'<span class="tag mute">Not sent</span>')}${kv("Payment",pay)}
+ ${a.TeacherName?kv("Teacher / room / paper no.",esc(a.TeacherName)+" · "+esc(a.Room||"no room")+" · "+esc(a.PaperNo)):""}
+ ${a.StartedAt?kv("Interview",tfmt(a.StartedAt)+" to "+(a.StoppedAt?tfmt(a.StoppedAt):"running, deadline "+tfmt(a.DeadlineAt))+(a.OverdueNote?" · overdue: "+esc(a.OverdueNote):"")):""}
+ ${a.Extensions?kv("Extensions",esc(a.Extensions)):""}${a.Comments?kv("Interview notes",esc(a.Comments)):""}
+ ${a.Marks?kv("Marks","Total "+a.Total+"/100 ("+esc(mk(a))+") · "+esc(a.MarkStatus)+(a.VerifiedBy?" by "+esc(a.VerifiedBy):"")):""}
+ ${stage(a)==="Decided"?kv("Decision",esc(a.Decision)+" · "+esc(a.DecisionBy)+" · "+tfmt(a.DecisionAt)):""}
+ <div class="hlist" id="hx">Loading history…</div>
+ <div class="modal-actions" style="flex-wrap:wrap;justify-content:flex-start"><button class="btn btn-ghost btn-sm" onclick="closeModal()">Close</button>${x.join("")}</div>`,
+ async()=>{const j=await api("history",{no});if($("#hx"))$("#hx").innerHTML=j.ok&&j.log.length?"<b>History</b>"+j.log.map(r=>`<div><span class="mono">${r.Time}</span> · ${esc(r.User)} · ${esc(r.Note||r.To)}</div>`).join(""):"No history yet."})}
+
+function edit(no){const a=S.apps.find(x=>x.AppNo===no),early=["Registered","Paid","Queued"].includes(stage(a)),T=(id,l,v,t="text")=>`<div class="field"><label>${l}</label><input type="${t}" id="${id}" value="${esc(v)}"></div>`;
+ mod(esc(a.Name)+` <span class="mono" style="font-size:13px;color:var(--muted)">${a.AppNo}</span>`,
+ `<div class="field-row">${T("e_n","Learner name",a.Name)}${T("e_d","Date of birth",a.DOB,"date")}</div>
+ <div class="field-row"><div class="field"><label>Grade (2027)</label><select id="e_g"${early?"":" disabled"}>${opts(GRADES,a.Grade)}</select></div>${T("e_p","Parent / guardian",a.Parent)}</div>
+ <div class="field-row">${T("e_t","Phone",phn(a.Phone),"tel")}${T("e_s","Previous school",a.PrevSchool)}</div>
+ <div class="field-row">${T("e_c","Current grade",a.CurrGrade)}<div class="field"><label>Attendance</label><select id="e_a"${early?"":" disabled"}>${opts(["Pending","Present","Absent","Rescheduled"],a.Attendance)}</select></div></div>
+ <div class="field-row">${T("e_i","Interview date",a.IntDate,"date")}${T("e_h","Interview time",a.IntTime,"time")}</div>
+ <div class="helptext">Payment, marks and decisions cannot be edited here. They change only through the workflow. Last updated by ${esc(a.UpdatedBy||"—")}.</div>`,
+ "Save changes",b=>{const n={Name:$("#e_n").value.trim(),DOB:$("#e_d").value,Parent:$("#e_p").value.trim(),Phone:$("#e_t").value.trim(),PrevSchool:$("#e_s").value.trim(),CurrGrade:$("#e_c").value.trim(),IntDate:$("#e_i").value,IntTime:$("#e_h").value};
+  if(early){n.Grade=$("#e_g").value;n.Attendance=$("#e_a").value}
+  const f={};Object.keys(n).forEach(k=>{if(String(n[k])!==String(k==="Phone"?phn(a[k]):a[k]||""))f[k]=n[k]});
+  if(!n.Name)return toast("The learner name cannot be empty.",1);if(!n.Parent)return toast("The parent or guardian name cannot be empty.",1);
+  if(!/^[0-9+\s-]{9,15}$/.test(n.Phone))return toast("Enter a valid phone number.",1);
+  if(!Object.keys(f).length)return closeModal();act(b,"update",{no,fields:f},"Changes saved for "+no)})}
+
+/* ===== workflow modals ===== */
+function payM(no){const a=S.apps.find(x=>x.AppNo===no);
+ mod("Confirm payment: "+esc(a.Name),`<div class="field-row"><div class="field"><label>Amount received (KSh)</label><input type="number" id="p_a" value="${S.fee}" min="1"></div><div class="field"><label>Method</label><select id="p_m"><option>M-Pesa</option><option>Cash</option><option>Bank</option></select></div></div>
+ <div class="field"><label>M-Pesa code, bank slip or receipt number</label><input type="text" id="p_r" placeholder="e.g. SJK4H2L9QX" autocomplete="off"></div>
+ <label style="display:flex;gap:9px;align-items:flex-start;font-weight:500"><input type="checkbox" id="p_v" style="width:auto;margin-top:3px"> I have checked that this money has actually been received.</label>
+ <div class="helptext">KSh ${S.fee.toLocaleString()} is only the default. Learners stay at "awaiting payment" until a payment is confirmed here.</div>`,
+ "Confirm payment",b=>act(b,"pay",{no,amount:$("#p_a").value,method:$("#p_m").value,ref:$("#p_r").value,verified:$("#p_v").checked},"Payment confirmed for "+no))}
+function voidM(no){mod("Reverse payment",`<div class="field"><label>Reason</label><textarea id="x_r" rows="3"></textarea></div><div class="helptext">The learner returns to "awaiting payment" and leaves the interview queue.</div>`,"Reverse payment",b=>act(b,"voidpay",{no,reason:$("#x_r").value},"Payment reversed"),"btn-danger")}
+function queueM(no){const a=S.apps.find(x=>x.AppNo===no),re=stage(a)==="Queued";
+ if(!S.teachers.length)return toast("No teacher accounts yet. Ask the admin to add teachers in Settings.",1);
+ mod((re?"Reassign: ":"Send to interview: ")+esc(a.Name),`<div class="field"><label>Teacher</label><select id="q_t">${S.teachers.map(t=>`<option value="${t.u}"${t.u===a.TeacherId?" selected":""}>${esc(t.name)}</option>`).join("")}</select></div>
+ <div class="field"><label>Interview room</label><input type="text" id="q_r" value="${esc(a.Room||"")}" placeholder="e.g. Room 3"></div>`,
+ re?"Save assignment":"Send to interview",b=>act(b,re?"reassign":"queue",{no,teacher:$("#q_t").value,room:$("#q_r").value},re?"Assignment updated":"Sent to the interview queue"))}
+function extM(no){mod("Extend interview time",`<div class="field"><label>Extra minutes</label><select id="x_m"><option>10</option><option>15</option><option selected>30</option><option>60</option></select></div><div class="field"><label>Reason (recorded)</label><textarea id="x_r" rows="3"></textarea></div>`,"Approve extension",b=>act(b,"extend",{no,minutes:$("#x_m").value,reason:$("#x_r").value},"Time extended"))}
+function resM(no){mod("Reset interview",`<div class="field"><label>Reason (recorded)</label><textarea id="x_r" rows="3"></textarea></div><div class="helptext">The timer is cleared and the learner returns to the queue. Previous attempts stay in the history.</div>`,"Reset interview",b=>act(b,"resetint",{no,reason:$("#x_r").value},"Interview reset"),"btn-danger")}
+function smark(no){const b=document.activeElement;act(b,"startmark",{no},"Marking started")}
+const mkRes=t=>t>=S.pass?"Recommended":"Not recommended";
+function mkPrev(){let raw=0,ok=true;document.querySelectorAll("[data-s]").forEach(i=>{const v=i.value.trim(),x=+v,mx=+i.max;if(v===""||!isFinite(x)||x<0||x>mx){ok=false;i.style.borderColor=(v!==""&&(x<0||x>mx))?"#BE123C":"";}else{i.style.borderColor="";raw+=x}});
+ const e=$("#m_prev");if(!e)return;if(!ok){e.innerHTML="Enter all three marks to see the total.";e.className="helptext";return}
+ const t=raw*2,r=mkRes(t);e.className="infobar";e.innerHTML=`Raw total <b>${raw}/50</b> &times; 2 = <b>${t}/100</b> &rarr; <b>${r}</b>`}
+function marksM(no){const a=S.apps.find(x=>x.AppNo===no);let m={};try{m=JSON.parse(a.Marks)}catch(e){}
+ const corr=!!a.Marks;
+ mod((corr?"Correct marks: ":"Enter marks: ")+esc(a.Name),`<div class="mk-grid">${S.sections.map(s=>`<div class="field"><label>${s} (out of ${S.max[s]})</label><input type="number" min="0" max="${S.max[s]}" step="0.5" data-s="${s}" oninput="mkPrev()" value="${m[s]??""}"></div>`).join("")}</div>
+ <div id="m_prev" class="helptext">Enter all three marks to see the total.</div>
+ ${corr?`<div class="field"><label>Reason for the correction</label><input type="text" id="m_r"></div>`:""}<div class="helptext">Marks go to the admin for verification. After the admin verifies, the result is automatic: ${S.pass}/100 and above is Recommended, below ${S.pass} is Not recommended.</div>`,
+ "Submit marks",b=>{const mm={};document.querySelectorAll("[data-s]").forEach(i=>mm[i.dataset.s]=i.value);act(b,"marks",{no,marks:mm,reason:corr?$("#m_r").value:""},"Marks saved, awaiting admin verification")});mkPrev()}
+function verM(no){const a=S.apps.find(x=>x.AppNo===no),t=+a.Total;
+ mod("Verify marks: "+esc(a.Name),`${kv("Entered by",esc(a.MarkedBy))}${kv("Marks",esc(mk(a)))}${kv("Total (raw x 2)",t+"/100")}${kv("Automatic result","<b>"+mkRes(t)+"</b>")}<div class="helptext">Check these against the paper. When you confirm, the result is recorded automatically (${S.pass}/100 and above = Recommended).</div>`,"Verify and record result",b=>act(b,"verify",{no},"Verified. Result: "+mkRes(t)))}
+function decM(no){const a=S.apps.find(x=>x.AppNo===no),re=stage(a)==="Decided",v=S.vac[a.Grade]||0,r=S.apps.filter(x=>x.Grade===a.Grade&&x.Decision==="Recommended"&&x.AppNo!==no).length;
+ mod((re?"Change decision: ":"Admission decision: ")+esc(a.Name),`${kv("Marks","Total "+a.Total+" ("+esc(mk(a))+")")}${kv(a.Grade+" vacancies",r+" of "+v+" filled")}
+ <div class="field" style="margin-top:12px"><label>Outcome</label><select id="d_o">${opts(["Recommended","Waitlisted","Not recommended"],re?a.Decision:"Recommended")}</select></div>
+ ${re?`<div class="field"><label>Reason for changing a final decision</label><textarea id="x_r" rows="2"></textarea></div>`:""}`,
+ "Record decision",b=>act(b,"decide",{no,decision:$("#d_o").value,reason:re?$("#x_r").value:""},"Decision recorded"))}
+function printCard(no){const a=S.apps.find(x=>x.AppNo===no),w=window.open("","_blank");if(!w)return toast("Allow pop-ups to print the card.",1);
+ const r=(k,v)=>`<div class="r"><span class="k">${k}</span><b>${esc(v||"—")}</b></div>`;
+ w.document.write(`<html><head><title>Interview card ${esc(a.AppNo)}</title><style>body{font-family:Arial,sans-serif;padding:24px}.c{border:2px solid #047857;border-radius:12px;padding:22px;max-width:520px}h2{margin:0 0 4px;color:#047857}.n{font-size:30px;font-weight:700;letter-spacing:.04em;margin:12px 0}.r{display:flex;justify-content:space-between;border-bottom:1px solid #ddd;padding:8px 0}.k{color:#555}</style></head><body><div class="c"><h2>Embakasi Garrison Comprehensive School</h2><div>Admission interview card · 2027 intake</div><div class="n">${esc(a.AppNo)}</div>${r("Learner",a.Name)}${r("Grade",a.Grade)}${r("Interview date",(a.IntDate||"")+" "+(a.IntTime||""))}${r("Teacher",a.TeacherName)}${r("Room",a.Room)}${r("Paper tracking no.",a.PaperNo)}${r("Fee",a.PayStatus==="Confirmed"?"Paid, ref "+a.PayRef:"Not confirmed")}</div><script>onload=function(){print()}<\/script></body></html>`);w.document.close()}
+
+/* ===== payments ===== */
+function payV(){head("Payments");const q0=S.pq||"";
+ $("#view").innerHTML=`<div class="search-row"><input type="search" class="grow" id="pq" placeholder="Search learner, application number, parent phone or reference…" value="${esc(q0)}"></div><div id="pb"></div>`;
+ const draw=()=>{S.pq=$("#pq").value;const q=S.pq.toLowerCase(),m=a=>!q||(a.Name+a.AppNo+phn(a.Phone)+a.Parent+(a.PayRef||"")).toLowerCase().includes(q);
+  const w=S.apps.filter(a=>stage(a)==="Registered"&&m(a)),c=S.apps.filter(a=>a.PayStatus==="Confirmed"&&m(a)).sort((x,y)=>y.PayAt-x.PayAt),tot=c.reduce((s,a)=>s+(+a.PayAmount||0),0);
+  $("#pb").innerHTML=`<div class="panel"><div class="panel-head"><h3>Awaiting payment</h3><span class="tag gold">${w.length}</span></div>${w.length?`<div style="overflow:auto"><table><thead><tr><th>No.</th><th>Learner</th><th>Grade</th><th>Parent</th><th>Phone</th><th></th></tr></thead><tbody>${w.slice(0,100).map(a=>`<tr><td class="mono">${a.AppNo}</td><td><strong>${esc(a.Name)}</strong></td><td>${a.Grade}</td><td>${esc(a.Parent)}</td><td class="mono">${esc(phn(a.Phone))}</td><td><button class="btn btn-primary btn-sm" onclick="payM('${a.AppNo}')">Confirm payment</button></td></tr>`).join("")}</tbody></table></div>`:'<div class="empty">Nobody is waiting for payment confirmation.</div>'}</div>
+  <div class="panel"><div class="panel-head"><h3>Confirmed payments</h3><span class="tag">${c.length} · ${money(tot)}</span></div>${c.length?`<div style="overflow:auto"><table><thead><tr><th>No.</th><th>Learner</th><th>Amount</th><th>Method</th><th>Reference</th><th>Confirmed by</th><th>When</th></tr></thead><tbody>${c.slice(0,100).map(a=>`<tr class="click" onclick="prof('${a.AppNo}')"><td class="mono">${a.AppNo}</td><td>${esc(a.Name)}</td><td class="mono">${money(a.PayAmount)}</td><td>${esc(a.PayMethod)}</td><td class="mono">${esc(a.PayRef)}</td><td>${esc(a.PayBy)}</td><td>${tfmt(a.PayAt)}</td></tr>`).join("")}</tbody></table></div>`:'<div class="empty">No confirmed payments match.</div>'}</div>`};
+ $("#pq").oninput=draw;draw()}
+
+/* ===== interviews (queue + live monitor) ===== */
+function ivV(){head("Interviews",`<button class="btn btn-ghost btn-sm" onclick="S.rf={t:'paper'};go('rep')">Paper register (offline backup)</button>`);
+ const rank={InProgress:0,Stopped:1,Queued:2},live=S.apps.filter(a=>rank[stage(a)]!==undefined).sort((a,b)=>rank[stage(a)]-rank[stage(b)]||String(a.TeacherName).localeCompare(b.TeacherName)),paid=by("Paid");
+ $("#view").innerHTML=`<div class="panel"><div class="panel-head"><h3>Paid, ready to send to interview</h3><span class="tag gold">${paid.length}</span></div>${paid.length?`<div style="overflow:auto"><table><thead><tr><th>No.</th><th>Learner</th><th>Grade</th><th>Payment ref</th><th></th></tr></thead><tbody>${paid.map(a=>`<tr><td class="mono">${a.AppNo}</td><td><strong>${esc(a.Name)}</strong></td><td>${a.Grade}</td><td class="mono">${esc(a.PayRef)}</td><td><button class="btn btn-primary btn-sm" onclick="queueM('${a.AppNo}')">Send to interview</button></td></tr>`).join("")}</tbody></table></div>`:'<div class="empty">No paid learners are waiting.</div>'}</div>
+ <div class="panel"><div class="panel-head"><h3>Interview queue and live sessions</h3><span class="tag">${live.length}</span></div>${live.length?`<div style="overflow:auto"><table><thead><tr><th>No.</th><th>Learner</th><th>Grade</th><th>Teacher · room</th><th>Paper no.</th><th>Status</th><th>Time left</th><th></th></tr></thead><tbody>${live.map(a=>`<tr class="click" onclick="prof('${a.AppNo}')"><td class="mono">${a.AppNo}</td><td><strong>${esc(a.Name)}</strong></td><td>${a.Grade}</td><td>${esc(a.TeacherName)} · ${esc(a.Room||"—")}</td><td class="mono">${esc(a.PaperNo)}</td><td>${spill(a)}</td><td class="mono">${stage(a)==="InProgress"?`<span data-dl="${a.DeadlineAt}">…</span>`:"—"}</td><td class="act noprint"><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();prof('${a.AppNo}')">Open</button></td></tr>`).join("")}</tbody></table></div>`:'<div class="empty">No learners are queued or in interview.</div>'}</div>`}
+
+/* ===== marking ===== */
+function markV(){head("Marking");const L=S.apps.filter(a=>["AwaitingMarking","Marking","MarksEntered"].includes(stage(a))),P=isP();
+ $("#view").innerHTML=`<div class="panel"><div class="panel-head"><h3>Marking queue</h3><span class="tag">${L.length}</span></div><div class="helptext" style="margin:-6px 0 12px">Awaiting marking → marks entered → admin verifies → result recorded automatically (45/100 and above = Recommended).</div>${L.length?`<div style="overflow:auto"><table><thead><tr><th>Paper no.</th><th>Learner</th><th>Grade</th><th>Submitted</th><th>Stage</th><th>Marks</th><th></th></tr></thead><tbody>${L.map(a=>{const s=stage(a);return`<tr><td class="mono">${esc(a.PaperNo)}</td><td><strong>${esc(a.Name)}</strong><div class="helptext" style="margin:0">${a.AppNo}</div></td><td>${a.Grade}</td><td>${tfmt(a.SubmittedAt)}</td><td>${spill(a)}</td><td>${a.Marks?"Total "+a.Total+"/100<div class='helptext' style='margin:0'>by "+esc(a.MarkedBy)+"</div>":"—"}</td><td class="act noprint">${s==="AwaitingMarking"?`<button class="btn btn-ghost btn-sm" onclick="smark('${a.AppNo}')">Start marking</button><button class="btn btn-primary btn-sm" onclick="marksM('${a.AppNo}')">Enter marks</button>`:s==="Marking"?`<button class="btn btn-primary btn-sm" onclick="marksM('${a.AppNo}')">Enter marks</button>`:`<button class="btn btn-ghost btn-sm" onclick="marksM('${a.AppNo}')">Correct</button>${S.user.role==="admin"?`<button class="btn btn-primary btn-sm" onclick="verM('${a.AppNo}')">Verify</button>`:""}`}</td></tr>`}).join("")}</tbody></table></div>`:'<div class="empty"><h4>Nothing to mark</h4>Papers appear here when teachers submit them.</div>'}</div>`}
+
+/* ===== decisions ===== */
+function decV(){head("Decisions");const P=isP();
+ if(!P){$("#view").innerHTML='<div class="panel"><div class="empty"><h4>Restricted</h4>Final decisions are recorded by the principal team.</div></div>';return}
+ const rd=by("ReadyForDecision").sort((a,b)=>String(a.Grade).localeCompare(b.Grade)||(+b.Total)-(+a.Total)),dn=by("Decided").sort((a,b)=>b.DecisionAt-a.DecisionAt),rec=g=>S.apps.filter(x=>x.Grade===g&&x.Decision==="Recommended").length;
+ $("#view").innerHTML=`<div class="panel"><div class="panel-head"><h3>Ready for decision</h3><span class="tag gold">${rd.length}</span></div>${rd.length?`<div style="overflow:auto"><table><thead><tr><th>Learner</th><th>Grade</th><th>Marks</th><th>Total</th><th>Places filled</th><th></th></tr></thead><tbody>${rd.map(a=>`<tr><td><strong>${esc(a.Name)}</strong><div class="helptext" style="margin:0">${a.AppNo}</div></td><td>${a.Grade}</td><td>${esc(mk(a))}</td><td class="mono"><b>${a.Total}</b></td><td class="mono">${rec(a.Grade)} / ${S.vac[a.Grade]||0}</td><td><button class="btn btn-primary btn-sm" onclick="decM('${a.AppNo}')">Decide</button></td></tr>`).join("")}</tbody></table></div>`:'<div class="empty">(45/100 and above = Recommended).</div>'}</div>
+ <div class="panel"><div class="panel-head"><h3>Decisions recorded</h3><span class="tag">${dn.length}</span></div>${dn.length?`<div style="overflow:auto"><table><thead><tr><th>Learner</th><th>Grade</th><th>Total</th><th>Outcome</th><th>By</th><th>When</th><th></th></tr></thead><tbody>${dn.slice(0,150).map(a=>`<tr><td>${esc(a.Name)}</td><td>${a.Grade}</td><td class="mono">${a.Total!==""&&a.Total!=null?a.Total+"/100":"—"}</td><td>${pill(a.Decision)}</td><td>${esc(a.DecisionBy||"—")}</td><td>${tfmt(a.DecisionAt)}</td><td>${S.user.role==="admin"?`<button class="btn btn-ghost btn-sm" onclick="decM('${a.AppNo}')">Change</button>`:""}</td></tr>`).join("")}</tbody></table></div>`:'<div class="empty">No decisions yet.</div>'}</div>`}
+
+/* ===== interview register (by day) ===== */
+function intV(){head("Interview register",`<button class="btn btn-ghost btn-sm" onclick="window.print()">Print</button>`);const d0=S.idate||today();
+ $("#view").innerHTML=`<div class="panel"><div class="panel-head"><h3 id="ih"></h3><input type="date" id="id" value="${d0}" style="max-width:190px;" class="noprint"></div><div id="tb"></div></div>`;
+ const draw=()=>{S.idate=$("#id").value;const l=S.apps.filter(a=>a.IntDate===S.idate).sort((a,b)=>(a.IntTime||"").localeCompare(b.IntTime||""));
+  $("#ih").textContent="Expected on "+S.idate+": "+l.length;
+  $("#tb").innerHTML=l.length?`<div style="overflow:auto"><table><thead><tr><th>Time</th><th>No.</th><th>Learner</th><th>Grade</th><th>Parent</th><th>Phone</th><th>Stage</th><th class="noprint"></th></tr></thead><tbody>${l.map(a=>`<tr><td class="mono">${a.IntTime||"—"}</td><td class="mono">${a.AppNo}</td><td><strong>${esc(a.Name)}</strong></td><td>${a.Grade}</td><td>${esc(a.Parent)}</td><td class="mono">${esc(phn(a.Phone))}</td><td>${spill(a)}</td><td class="noprint"><button class="btn btn-ghost btn-sm" onclick="prof('${a.AppNo}')">Open</button></td></tr>`).join("")}</tbody></table></div>`:'<div class="empty"><h4>Nobody is scheduled</h4>Set interview dates from the Applicants page.</div>'};
+ $("#id").oninput=draw;draw()}
+
+/* ===== teacher portal ===== */
+const tpill=a=>{const s=stage(a);if(isOver(a))return'<span class="tag warn">Overdue</span>'+cdc(a);if(s==="Queued")return'<span class="tag gold">Waiting to start</span>';if(s==="InProgress")return'<span class="tag">In progress</span>'+cdc(a);if(s==="Stopped")return'<span class="tag gold">Stopped, not submitted</span>';return'<span class="tag mute">Submitted</span>'};
+function thV(){head("Teacher Interview Portal");const A=S.apps,ip=A.filter(a=>stage(a)==="InProgress");
+ const rank={InProgress:0,Stopped:1,Queued:2},gi=a=>{const i=GRADES.indexOf(a.Grade);return i<0?99:i},nm=(a,b)=>String(a.Name).localeCompare(String(b.Name),undefined,{sensitivity:"base"});
+ const SORTS={status:["Status (active first)",(a,b)=>(rank[stage(a)]??3)-(rank[stage(b)]??3)||nm(a,b)],gup:["Grade (lowest first)",(a,b)=>gi(a)-gi(b)||nm(a,b)],gdn:["Grade (highest first)",(a,b)=>gi(b)-gi(a)||nm(a,b)],name:["Name (A to Z)",nm]};
+ if(!SORTS[S.ts])S.ts="status";
+ $("#view").innerHTML=`<div class="grid cols-2" style="margin-bottom:18px"><div class="stat-card"><div class="label">Assigned to me</div><div class="value">${A.length}</div><div class="delta">Interview candidates</div></div>
+ <div class="stat-card"><div class="label">In progress</div><div class="value">${ip.length}</div><div class="delta">Active interviews</div></div></div>
+ <div class="panel"><div class="panel-head"><h3>Interview queue</h3><span class="tag" id="tcnt"></span></div>
+ <div class="search-row sortbar"><input type="search" class="grow" id="tq" placeholder="Search a learner by name or application number…" value="${esc(S.tq||"")}" autocomplete="off"><select id="ts" title="Sort learners">${Object.keys(SORTS).map(k=>`<option value="${k}"${S.ts===k?" selected":""}>Sort: ${SORTS[k][0]}</option>`).join("")}</select></div>
+ <div id="ttb"></div></div>`;
+ const draw=()=>{if(!$("#tq"))return;S.tq=$("#tq").value;S.ts=$("#ts").value;const q=S.tq.trim().toLowerCase();
+  const L=A.filter(a=>!q||(String(a.Name)+" "+a.AppNo).toLowerCase().includes(q)).sort(SORTS[S.ts][1]);
+  $("#tcnt").textContent=(q?L.length+" of "+A.length:A.length)+" learner"+(A.length===1?"":"s");
+  $("#ttb").innerHTML=L.length?`<div style="overflow:auto"><table><thead><tr><th>Learner</th><th>Grade</th><th>Status</th></tr></thead><tbody>${L.map(a=>`<tr class="click" onclick="tProf('${a.AppNo}')"><td><strong>${esc(a.Name)}</strong><div class="helptext mono" style="margin:0">${esc(a.AppNo)}</div></td><td>${esc(a.Grade)}</td><td>${tpill(a)}</td></tr>`).join("")}</tbody></table></div>`:(A.length?`<div class="empty"><h4>No learner matches "${esc(S.tq)}"</h4>Check the spelling or clear the search box.</div>`:'<div class="empty"><h4>No learners assigned yet</h4>Learners appear here once administration sends them to you.</div>')};
+ $("#tq").oninput=draw;$("#ts").onchange=draw;draw()}
+
+function tProf(no){const a=S.apps.find(x=>x.AppNo===no);if(!a)return;const st=stage(a);
+ const btn=st==="Queued"?`<button class="btn btn-primary" onclick="startI('${no}')">Start interview</button>`:["InProgress","Stopped"].includes(st)?`<button class="btn btn-primary" onclick="closeModal();go('tses','${no}')">Open session</button>`:"";
+ const prev=Math.max(0,(+a.Attempts||0)-(["InProgress","Stopped","AwaitingMarking","Marking","MarksEntered","ReadyForDecision","Decided"].includes(st)?1:0));
+ openModal(`<h3>Learner profile</h3>
+ ${kv("Application number",'<span class="mono">'+esc(a.AppNo)+"</span>")}${kv("Full name",esc(a.Name))}${kv("Date of birth",esc(a.DOB))}${kv("Grade applying for in 2027",esc(a.Grade))}
+ ${kv("Previous school",esc(a.PrevSchool||"—"))}${kv("Current grade",esc(a.CurrGrade||"—"))}${kv("Parent or guardian",esc(a.Parent)+" · "+esc(phn(a.Phone)))}
+ ${kv("Payment verification",a.PayStatus==="Confirmed"?'<span class="tag">Confirmed</span>':'<span class="tag warn">Not confirmed</span>')}${kv("Previous attempts",prev)}
+ <div class="hlist" id="hx">Loading history…</div>
+ <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal()">Close</button>${btn}</div>`,
+ async()=>{const j=await api("history",{no});if($("#hx"))$("#hx").innerHTML=j.ok&&j.log.length?"<b>Interview history</b>"+j.log.map(r=>`<div><span class="mono">${r.Time}</span> · ${esc(r.Note||r.To)}</div>`).join(""):"No interview history yet."})}
+
+function startI(no){const a=S.apps.find(x=>x.AppNo===no);
+ mod("Start interview",`<p>Start the <b>two-hour countdown</b> for <b>${esc(a.Name)}</b>?</p><div class="helptext">The timer is kept on the server. Refreshing the page, closing the browser or losing internet will not restart it, and it cannot be started a second time.</div>`,"Start now",b=>busy(b,async()=>{
+  const j=await api("tstart",{no});if(!j.ok)return toast(j.error,1);upd(j);closeModal();S.al={};go("tses",no);toast("Interview started")}))}
+
+function tses(no){const a=S.apps.find(x=>x.AppNo===no);if(!a)return go("th");head("Interview session");const st=stage(a);S.rs=st;
+ const hdr=`<div class="panel-head"><h3>Interview session</h3>${tpill(a)}</div><div class="helptext" style="margin:-6px 0 14px">Candidate #${esc(a.AppNo)} · ${esc(a.Name)} · ${esc(a.Grade)}</div>`;
+ let body="";
+ if(st==="InProgress")body=`<div class="timer" id="tmbox"><div class="tml" id="tml">Time remaining</div><div class="tm" id="tm">--:--:--</div><div class="prog"><i id="tmp" style="--w:0%"></i></div><div class="prog-pct"><span>Elapsed time</span><b id="tmpc">0%</b></div></div>
+ <div class="alertbar hide" id="exp" style="margin-top:14px">TIME EXPIRED. Ordinary interview actions are switched off. Stop the interview and record the outcome, and give a short explanation. Nothing has been deleted.</div>
+ <div class="field" style="margin-top:16px"><label>Interview notes</label><textarea id="notes" rows="5">${esc(a.Comments)}</textarea></div>
+ <div class="btn-row"><button class="btn btn-ghost" id="sv">Save notes</button><button class="btn btn-danger" id="stp">Stop interview</button></div>`;
+ else if(st==="Stopped")body=`<div class="infobar">Interview stopped at ${tfmt(a.StoppedAt)}${a.OverdueNote?" (overdue: "+esc(a.OverdueNote)+")":""}. Confirm the paper is handed in, then submit to administration.</div>
+ ${a.Comments?kv("Interview notes",esc(a.Comments)):""}<div class="field" style="margin-top:12px"><label>Paper handed in?</label><select id="sp">${opts(["Yes","No"],a.PaperSubmitted||"Yes")}</select></div><button class="btn btn-primary" id="sb">Submit to admin</button>`;
+ else body=`<div class="infobar">This interview has been submitted to administration and is now locked. You cannot edit it.</div>${kv("Stopped",tfmt(a.StoppedAt))}${kv("Paper submitted",esc(a.PaperSubmitted))}${a.Comments?kv("Interview notes",esc(a.Comments)):""}`;
+ $("#view").innerHTML=`<div class="panel" style="max-width:820px">${hdr}${body}</div><button class="btn btn-ghost btn-sm" onclick="go('th')">Back to my interviews</button>`;
+ if(st==="InProgress"){
+  $("#sv").onclick=e=>busy(e.target,async()=>{const j=await api("tnotes",{no,comments:$("#notes").value});if(!j.ok)return toast(j.error,1);upd(j);toast("Notes saved")});
+  $("#stp").onclick=()=>stopM(no)}
+ if(st==="Stopped")$("#sb").onclick=e=>busy(e.target,async()=>{const j=await api("tsubmit",{no,paper:$("#sp").value});if(!j.ok)return toast(j.error,1);upd(j);toast("Submitted to administration");go("tses",no)});
+ if(st==="InProgress")tmUpdate()}
+
+function tmUpdate(){const a=S.apps.find(x=>x.AppNo===S.arg);if(!a)return;
+ if(stage(a)!==S.rs)return go("tses",S.arg);if(stage(a)!=="InProgress"||!$("#tm"))return;
+ const r=a.DeadlineAt-nowS(),tot=Math.max(1,a.DeadlineAt-a.StartedAt),lvl=r<=0?"expired":r<=6e5?"urgent":r<=18e5?"amber":"";
+ $("#tm").textContent=r<=0?"TIME EXPIRED":fmtR(r);
+ $("#tml").textContent=r<=0?"Over time by "+fmtR(Math.abs(r)):lvl==="urgent"?"Less than 10 minutes remaining":lvl==="amber"?"30 minutes or less remaining":"Time remaining";
+ $("#tmbox").className="timer "+lvl;const el=Math.max(0,Math.min(100,Math.round((1-r/tot)*100)));$("#tmp").style.setProperty("--w",el+"%");$("#tmpc").textContent=el+"%";
+ if(r<=0){$("#exp").classList.remove("hide");$("#notes").disabled=true;$("#sv").disabled=true}
+ S.al=S.al||{};const k=a.AppNo+":"+lvl;
+ if(lvl&&!S.al[k]){S.al[k]=1;toast(lvl==="expired"?"TIME EXPIRED for "+a.Name:lvl==="urgent"?"Less than 10 minutes left for "+a.Name:"30 minutes remaining for "+a.Name,lvl!=="amber");if(lvl!=="amber")beep()}}
+
+function stopM(no){const a=S.apps.find(x=>x.AppNo===no),over=isOver(a);
+ mod("Stop interview",`<p>Stop the session for <b>${esc(a.Name)}</b> and record the outcome.</p><div class="field"><label>Was the paper submitted?</label><select id="s_p"><option>Yes</option><option>No</option></select></div>
+ <div class="field"><label>Interview notes</label><textarea id="s_c" rows="4">${esc($("#notes")?$("#notes").value:a.Comments)}</textarea></div>
+ ${over?`<div class="field"><label>The interview ran over time. Explain why</label><textarea id="s_n" rows="2"></textarea></div>`:""}`,
+ "Stop interview",b=>busy(b,async()=>{const j=await api("tstop",{no,paper:$("#s_p").value,comments:$("#s_c").value,note:over?$("#s_n").value:""});if(!j.ok)return toast(j.error,1);upd(j);closeModal();toast("Interview stopped");go("tses",no)}),"btn-danger")}
+
+/* ===== reports ===== */
+const RP={
+ sum:["Admission summary",L=>{const c=s=>L.filter(a=>stage(a)===s).length,d=x=>L.filter(a=>a.Decision===x&&stage(a)==="Decided").length,pd=L.filter(a=>a.PayStatus==="Confirmed");
+  return[["Applicants",L.length],["Payments confirmed",pd.length],["Fees confirmed (KSh)",pd.reduce((s,a)=>s+(+a.PayAmount||0),0)],["Awaiting payment",c("Registered")],["In interview queue",c("Paid")+c("Queued")],["Interviews in progress",c("InProgress")],["Overdue now",L.filter(isOver).length],["Awaiting marking / verification",c("AwaitingMarking")+c("Marking")+c("MarksEntered")],["Ready for decision",c("ReadyForDecision")],["Recommended",d("Recommended")],["Waitlisted",d("Waitlisted")],["Not recommended",d("Not recommended")]].map(r=>({Measure:r[0],Value:r[1]}))}],
+ pay:["Registration and payment",L=>{const p=L.filter(a=>a.PayStatus==="Confirmed"),r=L.map(a=>({"App no":a.AppNo,Learner:a.Name,Grade:a.Grade,Registered:a.RegDate,Payment:a.PayStatus||"Pending",Amount:a.PayStatus==="Confirmed"?+a.PayAmount:"",Method:a.PayMethod||"",Reference:a.PayRef||"","Confirmed by":a.PayBy||"","Confirmed at":a.PayAt?tfmt(a.PayAt):""}));
+  if(r.length)r.push({"App no":"TOTAL",Learner:p.length+" confirmed payments",Grade:"",Registered:"",Payment:"",Amount:p.reduce((s,a)=>s+(+a.PayAmount||0),0),Method:"",Reference:"","Confirmed by":"","Confirmed at":""});return r}],
+ que:["Interview queue by grade and teacher",L=>L.filter(a=>["Paid","Queued","InProgress","Stopped"].includes(stage(a))).sort((a,b)=>String(a.Grade).localeCompare(b.Grade)||String(a.TeacherName).localeCompare(b.TeacherName)).map(a=>({Grade:a.Grade,Teacher:a.TeacherName||"Not assigned",Room:a.Room||"","App no":a.AppNo,Learner:a.Name,"Paper no":a.PaperNo||"",Status:(STG[stage(a)]||[""])[0]}))],
+ prog:["Learners currently in progress",L=>L.filter(a=>stage(a)==="InProgress").map(a=>({"App no":a.AppNo,Learner:a.Name,Grade:a.Grade,Teacher:a.TeacherName,Room:a.Room||"",Started:tfmt(a.StartedAt),Deadline:tfmt(a.DeadlineAt),Timer:isOver(a)?"OVERDUE":"Running"}))],
+ over:["Overdue interviews and explanations",L=>L.filter(a=>/verdue/.test(a.SessionStatus||"")||isOver(a)).map(a=>({"App no":a.AppNo,Learner:a.Name,Teacher:a.TeacherName,Started:tfmt(a.StartedAt),Deadline:tfmt(a.DeadlineAt),Stopped:tfmt(a.StoppedAt),Explanation:a.OverdueNote||(isOver(a)?"Still running, no explanation yet":""),Extensions:a.Extensions||""}))],
+ done:["Interviews completed and papers submitted",L=>L.filter(a=>a.StoppedAt).map(a=>({"App no":a.AppNo,Learner:a.Name,Grade:a.Grade,Teacher:a.TeacherName,Started:tfmt(a.StartedAt),Stopped:tfmt(a.StoppedAt),"Minutes":Math.round((a.StoppedAt-a.StartedAt)/6e4),"Paper handed in":a.PaperSubmitted||"","Submitted to admin":a.SubmittedAt?tfmt(a.SubmittedAt):"Not yet"}))],
+ await:["Papers awaiting marking",L=>L.filter(a=>["AwaitingMarking","Marking","MarksEntered"].includes(stage(a))).map(a=>({"Paper no":a.PaperNo,"App no":a.AppNo,Learner:a.Name,Grade:a.Grade,Submitted:tfmt(a.SubmittedAt),Stage:(STG[stage(a)]||[""])[0],Marker:a.MarkedBy||""}))],
+ marks:["Marks entered, verified and pending",L=>L.filter(a=>["AwaitingMarking","Marking","MarksEntered","ReadyForDecision","Decided"].includes(stage(a))).map(a=>{let m={};try{m=JSON.parse(a.Marks)}catch(e){}const r={"App no":a.AppNo,Learner:a.Name,Grade:a.Grade};S.sections.forEach(s=>r[s]=m[s]??"");r.Total=a.Marks?a.Total:"";r.Status=a.MarkStatus||"Pending";r["Entered by"]=a.MarkedBy||"";r["Verified by"]=a.VerifiedBy||"";return r})],
+ res:["Passed, failed and waitlisted",L=>L.filter(a=>stage(a)==="Decided").sort((a,b)=>String(a.Decision).localeCompare(String(b.Decision))||String(a.Grade).localeCompare(b.Grade)||(+b.Total||0)-(+a.Total||0)).map(a=>({Outcome:a.Decision==="Recommended"?"Passed (recommended)":a.Decision==="Waitlisted"?"Waitlisted":"Not recommended",Learner:a.Name,"App no":a.AppNo,Grade:a.Grade,Total:a.Total||"","Decided by":a.DecisionBy||"","Decided at":a.DecisionAt?tfmt(a.DecisionAt):""}))],
+ gr:["Admissions against vacancies",L=>GRADES.map(g=>{const x=L.filter(a=>a.Grade===g),v=S.vac[g]||0,r=x.filter(a=>a.Decision==="Recommended"&&stage(a)==="Decided").length;return{Grade:g,Applicants:x.length,Paid:x.filter(a=>a.PayStatus==="Confirmed").length,Interviewed:x.filter(a=>a.StartedAt).length,Recommended:r,Waitlisted:x.filter(a=>a.Decision==="Waitlisted").length,Vacancies:v,"Places left":v-r}})],
+ ok:["Successful applicants",L=>L.filter(a=>a.Decision==="Recommended"&&stage(a)==="Decided").map(a=>({"App no":a.AppNo,Learner:a.Name,"Joining grade":a.Grade,Parent:a.Parent,Phone:phn(a.Phone)}))],
+ rec:["Daily reconciliation",L=>{const D={},K=["Registered","Payments confirmed","Amount (KSh)","Interviews started","Submitted to admin","Decided"],add=(ms,k,x)=>{if(!ms)return;const d=dkey(ms);D[d]=D[d]||{Date:d,Registered:0,"Payments confirmed":0,"Amount (KSh)":0,"Interviews started":0,"Submitted to admin":0,Decided:0,Marked:""};if(k==="Amount (KSh)")D[d][k]+=x;else D[d][k]++};
+  L.forEach(a=>{if(a.RegDate)add(new Date(a.RegDate+"T12:00:00+03:00").getTime(),"Registered");if(a.PayStatus==="Confirmed"){add(a.PayAt,"Payments confirmed");add(a.PayAt,"Amount (KSh)",+a.PayAmount||0)}add(a.StartedAt,"Interviews started");add(a.SubmittedAt,"Submitted to admin");add(a.DecisionAt,"Decided")});
+  const r=Object.values(D).sort((x,y)=>x.Date<y.Date?-1:1);if(r.length){const t={Date:"TOTAL"};K.forEach(k=>t[k]=r.reduce((s,x)=>s+x[k],0));t.Marked=L.filter(a=>a.MarkStatus).length;r.push(t)}return r}],
+ paper:["Paper register (offline backup)",L=>L.filter(a=>["Queued","InProgress","Stopped"].includes(stage(a))).map(a=>({"Candidate no":a.AppNo,"Paper no":a.PaperNo||"",Learner:a.Name,Grade:a.Grade,Teacher:a.TeacherName||"",Room:a.Room||"","Start time":"","Stop time":"","Paper in (Y/N)":"","Teacher signature":""}))],
+ audit:["Full audit report",null]};
+function rep(){head("Reports",`<button class="btn btn-ghost btn-sm" onclick="window.print()">Print / save as PDF</button><button class="btn btn-primary btn-sm" id="xl">Export to Excel</button>`);
+ const f=S.rf=S.rf||{t:"sum"};
+ $("#view").innerHTML=`<div class="search-row noprint"><select id="rt">${Object.keys(RP).map(k=>`<option value="${k}"${f.t===k?" selected":""}>${RP[k][0]}</option>`).join("")}</select>
+ <input type="date" id="ra" value="${f.a||""}" title="Registered from"><input type="date" id="rb" value="${f.b||""}" title="Registered to">
+ <select id="rg"><option value="">All grades</option>${opts(GRADES,f.g)}</select>
+ <select id="rc"><option value="">All teachers</option>${S.teachers.map(t=>`<option value="${t.u}"${f.c===t.u?" selected":""}>${esc(t.name)}</option>`).join("")}</select>
+ <select id="rs"><option value="">All statuses</option>${Object.keys(STG).map(k=>`<option value="${k}"${f.s===k?" selected":""}>${STG[k][0]}</option>`).join("")}</select></div><div id="rr"></div>`;
+ let cur=[];
+ const draw=async()=>{Object.assign(f,{t:$("#rt").value,a:$("#ra").value,b:$("#rb").value,g:$("#rg").value,c:$("#rc").value,s:$("#rs").value});
+  const L=S.apps.filter(a=>(!f.a||a.RegDate>=f.a)&&(!f.b||a.RegDate<=f.b)&&(!f.g||a.Grade===f.g)&&(!f.c||a.TeacherId===f.c)&&(!f.s||stage(a)===f.s));
+  const hd=`<div class="panel"><div class="panel-head"><h3>Embakasi Garrison Comprehensive School: ${RP[f.t][0]}</h3><span class="tag gold">2027 intake</span></div><div class="helptext" style="margin:-8px 0 14px">${f.a||"start"} to ${f.b||"today"}${f.g?" · "+f.g:""}${f.c?" · teacher filter":""}${f.s?" · "+STG[f.s][0]:""} · generated ${today()}</div>`;
+  if(f.t==="audit"){$("#rr").innerHTML=hd+'<div class="empty">Loading…</div></div>';const j=await api("audit",{limit:3000});if(!j.ok){$("#rr").innerHTML=hd+`<div class="empty">${esc(j.error)}</div></div>`;return}
+   cur=j.log.filter(r=>(!f.a||r.Time.slice(0,10)>=f.a)&&(!f.b||r.Time.slice(0,10)<=f.b))}
+  else cur=RP[f.t][1](L);
+  $("#rr").innerHTML=hd+(cur.length?tblOf(cur):'<div class="empty"><h4>Nothing to show</h4>No records match these filters.</div>')+"</div>"};
+ ["rt","ra","rb","rg","rc","rs"].forEach(i=>$("#"+i).oninput=draw);$("#xl").onclick=()=>csv(cur,f.t);draw()}
+
+/* ===== audit ===== */
 async function aud(){head("Activity log");
  if(S.user.role==="secretary"){$("#view").innerHTML='<div class="panel"><div class="empty"><h4>Restricted</h4>The activity log is available to the principal team.</div></div>';return}
  $("#view").innerHTML='<div class="panel"><div class="empty">Loading…</div></div>';const j=await api("audit");if(!j.ok)return toast(j.error,1);
- $("#view").innerHTML=`<div class="panel"><div class="panel-head"><h3>Recent activity</h3><span class="tag">${j.log.length} entries</span></div><div style="overflow:auto"><table><thead><tr><th>Time</th><th>User</th><th>Action</th><th>Reference</th></tr></thead><tbody>${j.log.map(r=>`<tr><td class="mono">${r.Time}</td><td>${esc(r.User)}</td><td>${esc(r.Action)}</td><td class="mono">${esc(r.Reference)}</td></tr>`).join("")}</tbody></table></div></div>`}
+ $("#view").innerHTML=`<div class="panel"><div class="panel-head"><h3>Recent activity</h3><span class="tag">${j.log.length} entries</span></div><div style="overflow:auto"><table><thead><tr><th>Time</th><th>User</th><th>Action</th><th>Reference</th></tr></thead><tbody>${j.log.map(r=>`<tr><td class="mono">${esc(r.Time)}</td><td>${esc(r.User)}</td><td>${esc(r.Action)}</td><td class="mono">${esc(r.Reference)}</td></tr>`).join("")}</tbody></table></div></div>`}
 
-/* settings */
-function setV(){head("Settings");const adm=S.user.role==="admin",pr=S.user.role!=="secretary";
+/* ===== settings ===== */
+const genPw=()=>{const c="abcdefghjkmnpqrstuvwxyz23456789";let p="";const a=new Uint32Array(8);(window.crypto||{getRandomValues:x=>x.forEach((_,i)=>x[i]=Math.random()*4e9)}).getRandomValues(a);a.forEach(n=>p+=c[n%c.length]);return p};
+async function setV(){head("Settings");const adm=S.user.role==="admin",pr=isP();
  $("#view").innerHTML=`<div class="grid cols-2" style="align-items:start;">
  <div class="panel"><div class="panel-head"><h3>Change my password</h3></div>
-  <div class="field"><label>Current password</label><input type="password" id="p0"></div>
-  <div class="field"><label>New password</label><input type="password" id="p1"></div>
-  <div class="field"><label>Confirm new password</label><input type="password" id="p2"></div>
+  <div class="field"><label>Current password</label><input type="password" id="p0"></div><div class="field"><label>New password</label><input type="password" id="p1"></div><div class="field"><label>Confirm new password</label><input type="password" id="p2"></div>
   <div class="modal-actions"><button class="btn btn-primary" id="pb">Update password</button></div></div>
- ${pr?`<div class="panel"><div class="panel-head"><h3>Vacancies per grade</h3></div>${GRADES.map(g=>`<div class="field" style="display:flex;gap:10px;align-items:center;"><label style="width:80px;margin:0;">${g}</label><input type="number" min="0" data-v="${g}" value="${S.vac[g]||0}"></div>`).join("")}<div class="modal-actions"><button class="btn btn-primary" id="vb">Save vacancies</button></div></div>`:""}
- ${adm?`<div class="panel"><div class="panel-head"><h3>Reset a user's password</h3></div><div class="field"><label>User</label><select id="ru">${opts(["deputy1","deputy2","secretary"])}</select></div><div class="field"><label>New password</label><input type="text" id="rp"></div><div class="modal-actions"><button class="btn btn-primary" id="rb2">Reset password</button></div></div>`:""}</div>`;
- $("#pb").onclick=e=>{if($("#p1").value!==$("#p2").value)return toast("The new passwords do not match.",1);busy(e.target,async()=>{const j=await api("passwd",{old:$("#p0").value,pw:$("#p1").value});j.ok?(toast("Password updated"),["p0","p1","p2"].forEach(i=>$("#"+i).value="")):toast(j.error,1)})};
+ ${pr?`<div class="panel"><div class="panel-head"><h3>Approved vacancies per grade</h3></div>${GRADES.map(g=>`<div class="field" style="display:flex;gap:10px;align-items:center;"><label style="width:80px;margin:0;">${g}</label><input type="number" min="0" data-v="${g}" value="${S.vac[g]||0}"></div>`).join("")}<div class="modal-actions"><button class="btn btn-primary" id="vb">Save vacancies</button></div></div>`:""}
+ ${adm?`<div class="panel" style="grid-column:1/-1"><div class="panel-head"><h3>Staff accounts</h3><button class="btn btn-ghost btn-sm" id="bk">Create backup now</button></div><div id="ul"><div class="empty">Loading…</div></div>
+  <div class="field-row" style="margin-top:14px"><div class="field"><label>Username</label><input type="text" id="n_u" autocapitalize="none"></div><div class="field"><label>Full name</label><input type="text" id="n_n"></div><div class="field"><label>Role</label><select id="n_r"><option value="teacher">teacher</option><option value="secretary">secretary</option><option value="deputy">deputy</option><option value="admin">admin</option></select></div><div class="field"><label>Temporary password</label><div class="gen-row"><input type="text" id="n_p" autocomplete="off"><button type="button" class="btn btn-ghost btn-sm" id="n_g">Generate</button></div></div></div>
+  <div class="modal-actions"><button class="btn btn-primary" id="nb">Add staff account</button></div></div>`:""}</div>`;
+ $("#pb").onclick=e=>{if($("#p1").value!==$("#p2").value)return toast("The new passwords do not match.",1);busy(e.target,async()=>{const j=await api("passwd",{old:$("#p0").value,pw:$("#p1").value});if(j.ok){S.pw0=false;toast("Password updated");["p0","p1","p2"].forEach(i=>$("#"+i).value="");head("Settings")}else toast(j.error,1)})};
  if(pr)$("#vb").onclick=e=>busy(e.target,async()=>{const v={};document.querySelectorAll("[data-v][type=number]").forEach(i=>v[i.dataset.v]=+i.value);const j=await api("vacancies",{vac:v});if(j.ok){S.vac=v;toast("Vacancies saved")}else toast(j.error,1)});
- if(adm)$("#rb2").onclick=e=>busy(e.target,async()=>{const j=await api("resetpw",{username:$("#ru").value,pw:$("#rp").value});j.ok?toast("Password reset for "+$("#ru").value):toast(j.error,1)})}
+ if(!adm)return;
+ const users=async()=>{const j=await api("users");if(!j.ok)return toast(j.error,1);S.teachers=j.users.filter(u=>u.Role==="teacher"&&u.Active).map(u=>({u:u.Username,name:u.Name}));
+  $("#ul").innerHTML=`<div style="overflow:auto"><table><thead><tr><th>Username</th><th>Name</th><th>Role</th><th>Temporary password</th><th>Status</th><th></th></tr></thead><tbody>${j.users.map(u=>`<tr><td class="mono">${esc(u.Username)}</td><td>${esc(u.Name)}</td><td>${esc(u.Role)}</td><td>${u.TempPw?`<div class="pwcell"><span class="pwchip">${esc(u.TempPw)}</span><button class="btn btn-ghost btn-sm" data-cp="${esc(u.TempPw)}">Copy</button></div>`:'<span class="pwnone">Own password set</span>'}</td><td>${u.Active?'<span class="tag">Active</span>':'<span class="tag warn">Disabled</span>'}</td><td class="act"><button class="btn btn-ghost btn-sm" data-rp="${esc(u.Username)}">Reset password</button>${u.Username!==S.user.username?`<button class="btn btn-ghost btn-sm" data-ac="${esc(u.Username)}" data-on="${u.Active?0:1}">${u.Active?"Disable":"Enable"}</button>`:""}</td></tr>`).join("")}</tbody></table></div>`;
+  document.querySelectorAll("[data-cp]").forEach(b=>b.onclick=()=>{const t=b.dataset.cp;(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>toast("Password copied"),()=>toast("Select the password and copy it manually.",1))});
+  document.querySelectorAll("[data-rp]").forEach(b=>b.onclick=()=>{const un=b.dataset.rp;mod("Reset password: "+esc(un),`<div class="field"><label>New temporary password (6+ characters)</label><div class="gen-row"><input type="text" id="x_p" autocomplete="off"><button type="button" class="btn btn-ghost btn-sm" id="x_g">Generate</button></div></div><div class="helptext">It will be shown in the staff list until the user sets their own password.</div>`,"Reset password",bb=>busy(bb,async()=>{const r=await api("resetpw",{username:un,pw:$("#x_p").value});if(r.ok){closeModal();toast("Password reset for "+un);users()}else toast(r.error,1)}));$("#x_g").onclick=()=>{$("#x_p").value=genPw()}});
+  document.querySelectorAll("[data-ac]").forEach(b=>b.onclick=()=>busy(b,async()=>{const r=await api("setactive",{username:b.dataset.ac,active:b.dataset.on==="1"});r.ok?users():toast(r.error,1)}))};
+ users();
+ $("#n_g").onclick=()=>{$("#n_p").value=genPw()};
+ $("#nb").onclick=e=>busy(e.target,async()=>{const j=await api("adduser",{username:$("#n_u").value,name:$("#n_n").value,role:$("#n_r").value,pw:$("#n_p").value});if(!j.ok)return toast(j.error,1);toast("Account created. Temporary password: "+$("#n_p").value);["n_u","n_n","n_p"].forEach(i=>$("#"+i).value="");users()});
+ $("#bk").onclick=e=>busy(e.target,async()=>{const j=await api("backup");j.ok?toast("Backup saved to Drive: "+j.name):toast(j.error,1)})}
+
+const VIEWS={dash,reg,apps:appsV,pay:payV,iv:ivV,mark:markV,dec:decV,int:intV,rep,aud,set:setV,th:thV,tses};
 if(S.token)start();
 </script>
 <script>
