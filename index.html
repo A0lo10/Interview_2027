@@ -508,6 +508,20 @@ td.mono{color:#0369A1}.kv:hover{background:#F0FAF6}.kv .v{color:var(--ink)}
 nav.navlist button.active .ic{background:#D1FAE5!important;color:#047857!important}
 @media print{body{background:#fff;color:#000}body::before,body::after{display:none}.panel{background:#fff;border-color:#ccc}h1,h2,h3,h4,td,th,.kv .v{color:#000}}
 </style>
+<style id="fast-track">
+.btn-pay{background:linear-gradient(180deg,#FCD34D,#F59E0B);color:#3B2A00;border:0;font-weight:800;box-shadow:0 6px 16px -8px rgba(245,158,11,.9);white-space:nowrap;padding:10px 16px;border-radius:12px;cursor:pointer;font-size:14px}
+.btn-pay:hover{filter:brightness(1.05)}.btn-pay.paying{opacity:.9;cursor:progress}
+.btn-paid{background:linear-gradient(180deg,#22C55E,#16A34A);color:#fff;border:0;font-weight:800;white-space:nowrap;padding:10px 16px;border-radius:12px;opacity:1!important;cursor:default;font-size:14px;animation:popin .25s ease-out}
+.spin{display:inline-block;width:12px;height:12px;border:2px solid rgba(59,42,0,.35);border-top-color:#3B2A00;border-radius:50%;animation:sp .7s linear infinite;vertical-align:-2px}
+@keyframes sp{to{transform:rotate(360deg)}}@keyframes popin{from{transform:scale(.92)}to{transform:scale(1)}}
+.bigsearch{font-size:18px!important;padding:14px 16px!important}
+.stop-pop{text-align:center;padding:4px 0 2px;animation:stopin .28s cubic-bezier(.2,.9,.3,1.2)}
+.stop-pop p{font-size:16px;margin:6px 0 8px}
+.stop-ic{width:62px;height:62px;margin:0 auto 8px;border-radius:50%;background:#FFF1F3;color:#E11D48;display:flex;align-items:center;justify-content:center;font-size:30px;box-shadow:0 0 0 8px rgba(225,29,72,.08);animation:stopring 1.6s ease-in-out infinite}
+.modal:has(.stop-pop){animation:stopin .28s cubic-bezier(.2,.9,.3,1.2);max-width:440px}
+@keyframes stopin{from{opacity:0;transform:translateY(14px) scale(.94)}to{opacity:1;transform:none}}
+@keyframes stopring{50%{box-shadow:0 0 0 14px rgba(225,29,72,.04)}}
+</style>
 </head>
 <body>
 <div id="loginScreen">
@@ -562,10 +576,10 @@ nav.navlist button.active .ic{background:#D1FAE5!important;color:#047857!importa
 <script>
 const API="https://script.google.com/macros/s/AKfycbwi4oHjVLRNhW9R5bMPjVqrM16m2MsI8AuFKNzXK13ITfGlcqibN2hqfgnWG2I4gwR1/exec";
 const GRADES=["PP1","PP2","Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Grade 6","Grade 7","Grade 8","Grade 9"];
-const NAVS={staff:[["dash","Dashboard","&#9670;"],["reg","Register applicant","&#10010;"],["apps","Applicants","&#9787;"],["pay","Payments","&#164;"],["iv","Interviews","&#9201;"],["mark","Marking","&#9998;"],["dec","Decisions","&#10003;"],["int","Interview register","&#9783;"],["rep","Reports","&#9636;"],["aud","Activity log","&#9776;"],["set","Settings","&#9881;"]],
+const NAVS={staff:[["pay","Payment desk","&#164;"],["dash","Dashboard","&#9670;"],["reg","Register applicant","&#10010;"],["apps","Applicants","&#9787;"],["iv","Live interviews","&#9201;"],["mark","Marking","&#9998;"],["dec","Decisions","&#10003;"],["rep","Reports","&#9636;"],["aud","Activity log","&#9776;"],["set","Settings","&#9881;"]],
  teacher:[["th","Interview portal","&#9201;"]]};
-const SUBS={dash:"Admissions at a glance",reg:"Add a new applicant to the 2027 intake",apps:"Search, open and update applicants",pay:"Confirm fees and record references",iv:"Interview queue, assignments and live sessions",mark:"Papers awaiting marks and verification",dec:"Final admission outcomes",int:"Who is expected on a given day",rep:"Printable reports, exportable to Excel",aud:"Who changed what, and when",set:"Password, vacancies and staff accounts",th:"Learners assigned to you",tses:"Two-hour interview countdown"};
-let S={token:sessionStorage.getItem("egt"),user:null,apps:[],vac:{},cur:"dash",off:0,teachers:[],sections:[],max:{},pass:45,fee:1500,al:{}};
+const SUBS={dash:"Admissions at a glance",reg:"Add a new applicant to the 2027 intake",apps:"Search, open and update applicants",pay:"Find the learner and click Verify payment",iv:"Who is waiting and who is being interviewed now",mark:"Papers awaiting marks and verification",dec:"Final admission outcomes",int:"Who is expected on a given day",rep:"Printable reports, exportable to Excel",aud:"Who changed what, and when",set:"Password, vacancies and staff accounts",th:"Pick a learner and press Start",tses:"Two-hour interview countdown"};
+let S={token:sessionStorage.getItem("egt"),user:null,apps:[],vac:{},cur:"dash",off:0,teachers:[],sections:[],max:{},pass:60,fee:1500,al:{}};
 const $=s=>document.querySelector(s),esc=x=>String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const today=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
 function toast(m,err){const t=document.createElement("div");t.className="toast"+(err?" error":"");t.textContent=m;$("#toastWrap").append(t);setTimeout(()=>t.remove(),3800)}
@@ -658,22 +672,23 @@ function csv(rows,name){if(!rows.length)return toast("There is nothing to export
 
 /* ===== session start, polling, navigation ===== */
 const isT=()=>!!S.user&&S.user.role==="teacher",isP=()=>!!S.user&&["admin","deputy"].includes(S.user.role);
-function ingest(j){S.apps=j.apps;waMerge();S.vac=j.vac||{};S.user=j.user;S.off=j.now-Date.now();S.fee=j.fee||1500;S.sections=j.sections||[];S.max=j.max||{};S.pass=j.pass||45;S.teachers=j.teachers||[]}
+function ingest(j){S.apps=j.apps;waMerge();S.vac=j.vac||{};S.user=j.user;S.off=j.now-Date.now();S.fee=j.fee||1500;S.sections=j.sections||[];S.max=j.max||{};S.pass=j.pass||60;S.teachers=j.teachers||[]}
 async function start(){
  $("#loginScreen").classList.add("hidden");$("#loading").classList.remove("hide");
  const j=await api("load");$("#loading").classList.add("hide");
  if(!j.ok){logout();return}
  ingest(j);$("#mn").textContent=j.user.name;$("#mr").textContent=j.user.role;
- $("#app").classList.remove("hide");S.cur=isT()?"th":"dash";S.arg=null;renderNav();go(S.cur);
+ $("#app").classList.remove("hide");S.cur=isT()?"th":"pay";S.arg=null;renderNav();go(S.cur);
  if(S.pw0)toast("You are still using the default password. Please change it in Settings.",1);
- clearInterval(S.poll);S.poll=setInterval(refresh,30000)}
+ clearInterval(S.poll);S.poll=setInterval(refresh,isT()?10000:30000)}
 async function refresh(){
  if(!S.token||document.hidden)return;const j=await api("load");if(!j.ok)return;
  const cnt=()=>({a:S.apps.filter(x=>stage(x)==="AwaitingMarking").length,o:S.apps.filter(isOver).length}),was=cnt();
  ingest(j);const n=cnt();
  if(!isT()){if(n.a>was.a)toast("A paper has been submitted for marking.");if(n.o>was.o)toast("An interview has passed its two-hour limit.",1)}
  const ae=document.activeElement,typing=ae&&["INPUT","SELECT","TEXTAREA"].includes(ae.tagName);
- if(!$("#modalRoot").innerHTML&&!typing&&!["reg","set","tses","rep"].includes(S.cur))go(S.cur,S.arg)}
+ if(isT()&&S.cur==="th"&&S.drawT&&!$("#modalRoot").innerHTML){S.drawT();return}
+ if(!$("#modalRoot").innerHTML&&!typing&&!["reg","set","tses","rep","pay"].includes(S.cur))go(S.cur,S.arg)}
 function renderNav(){
  const L=(isT()?NAVS.teacher:NAVS.staff).filter(it=>!(S.user.role==="secretary"&&["dec","aud"].includes(it[0])));
  const n=$("#nav");n.innerHTML=L.map(it=>`<button data-v="${it[0]}" class="${S.cur===it[0]||(S.cur==="tses"&&it[0]==="th")?"active":""}"><span class="ic">${it[2]}</span>${it[1]}</button>`).join("");
@@ -688,7 +703,7 @@ function head(t,x=""){
 const STG={Registered:["Awaiting payment","mute"],Paid:["Paid, not yet queued","gold"],Queued:["In interview queue",""],InProgress:["Interview in progress",""],Stopped:["Stopped, not submitted","gold"],AwaitingMarking:["Awaiting marking","gold"],Marking:["Marking in progress",""],MarksEntered:["Awaiting verification","gold"],ReadyForDecision:["Ready for decision",""],Decided:["Decided",""]};
 const stage=a=>a.Stage||"Registered",nowS=()=>Date.now()+(S.off||0),isOver=a=>stage(a)==="InProgress"&&+a.DeadlineAt<nowS();
 const cdCls=r=>"cdc"+(r<0?" over":r<=6e5?" urgent":r<=18e5?" amber":""),cdTxt=r=>"\u23F1 "+(r<0?"Over ":"")+fmtR(r);
-const cdc=a=>{if(stage(a)!=="InProgress"||!a.DeadlineAt)return"";const r=+a.DeadlineAt-nowS();return`<span class="${cdCls(r)}" data-cd="${a.DeadlineAt}">${cdTxt(r)}</span>`};
+const cdc=a=>{if(stage(a)!=="InProgress"||!a.DeadlineAt)return"";const r=+a.DeadlineAt-nowS();return`<span class="${cdCls(r)}" data-cd="${a.DeadlineAt}" data-k="${esc(a.AppNo)}" data-n="${esc(a.Name)}">${cdTxt(r)}</span>`};
 const spill=a=>{if(isOver(a))return'<span class="tag warn">Overdue</span>'+cdc(a);const s=STG[stage(a)]||[stage(a),"mute"];return`<span class="tag ${s[1]}">${s[0]}</span>${cdc(a)}`};
 const pill=v=>{const k=String(v).split(" ")[0];const c=({Recommended:"",Present:"",Waitlisted:"gold",Rescheduled:"gold",Not:"warn",Absent:"warn"})[k];return`<span class="tag ${c===undefined?"mute":c}">${esc(v)}</span>`};
 const opts=(a,s)=>a.map(x=>`<option${x===s?" selected":""}>${x}</option>`).join("");
@@ -703,7 +718,8 @@ const act=(b,action,data,msg)=>busy(b,async()=>{const j=await api(action,data);i
 function mod(t,body,label,fn,cls="btn-primary"){openModal(`<h3>${t}</h3>${body}<div class="modal-actions"><button class="btn btn-ghost" id="mx">Cancel</button><button class="btn ${cls}" id="mg">${label}</button></div>`,()=>{$("#mx").onclick=closeModal;$("#mg").onclick=e=>fn(e.target)})}
 function beep(){try{const c=new(window.AudioContext||window.webkitAudioContext)(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=880;g.gain.value=.15;o.start();setTimeout(()=>{o.stop();c.close()},900)}catch(e){}}
 function tick(){
- document.querySelectorAll("[data-cd]").forEach(e=>{const r=+e.dataset.cd-nowS();e.textContent=cdTxt(r);e.className=cdCls(r)});
+ document.querySelectorAll("[data-cd]").forEach(e=>{const r=+e.dataset.cd-nowS();e.textContent=cdTxt(r);e.className=cdCls(r);
+  if(isT()&&r<0&&e.dataset.k){S.al=S.al||{};const k=e.dataset.k+":exp";if(!S.al[k]){S.al[k]=1;toast("TIME EXPIRED for "+e.dataset.n,1);beep()}}});
  document.querySelectorAll("[data-dl]").forEach(e=>{const r=+e.dataset.dl-nowS();e.textContent=fmtR(r);e.classList.toggle("over",r<0)});
  if(S.cur==="tses"&&$("#tm"))tmUpdate()}
 const tblOf=rows=>{const k=Object.keys(rows[0]);return`<div style="overflow:auto"><table><thead><tr>${k.map(c=>`<th>${esc(c)}</th>`).join("")}</tr></thead><tbody>${rows.map(r=>`<tr>${k.map(c=>`<td>${esc(r[c])}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`};
@@ -743,22 +759,20 @@ function appsV(){head("Applicants",`<button class="btn btn-ghost btn-sm" onclick
 
 function prof(no){const a=S.apps.find(x=>x.AppNo===no);if(!a)return;const st=stage(a),P=isP(),R=S.user.role;
  const b=(l,fn,c="btn-ghost")=>`<button class="btn ${c} btn-sm" onclick="${fn}('${no}')">${l}</button>`,x=[];
- if(st==="Registered")x.push(b("Confirm payment","payM","btn-primary"));
- if(st==="Paid"){x.push(b("Send to interview","queueM","btn-primary"));if(P)x.push(b("Reverse payment","voidM","btn-danger"))}
- if(st==="Queued"){x.push(b("Reassign teacher / room","queueM"));x.push(b("Print interview card","printCard"));if(P)x.push(b("Reverse payment","voidM","btn-danger"))}
+ if(st==="Registered")x.push(b("Verify payment","payM","btn-primary"));
+ if(st==="Paid"||st==="Queued"){if(P&&!a.TeacherId)x.push(b("Reverse payment","voidM","btn-danger"))}
  if(st==="InProgress"&&P){x.push(b("Extend time","extM"));x.push(b("Reset interview","resM","btn-danger"))}
  if(st==="Stopped"&&P)x.push(b("Reset interview","resM","btn-danger"));
- if(st==="AwaitingMarking")x.push(b("Start marking","smark","btn-primary"));
- if(["AwaitingMarking","Marking"].includes(st))x.push(b("Enter marks","marksM",st==="Marking"?"btn-primary":"btn-ghost"));
+ if(["AwaitingMarking","Marking"].includes(st))x.push(b("Enter marks","marksM","btn-primary"));
  if(st==="MarksEntered"){x.push(b("Correct marks","marksM"));if(R==="admin")x.push(b("Verify marks","verM","btn-primary"))}
  if(st==="ReadyForDecision"&&P){x.push(b("Record decision","decM","btn-primary"));x.push(b("Correct marks","marksM"))}
  if(st==="Decided"&&R==="admin"){x.push(b("Correct marks","marksM"));x.push(b("Change decision","decM"))}
  x.push(b("Edit details","edit"));
- const pay=a.PayStatus==="Confirmed"?`${money(a.PayAmount)} · ${esc(a.PayMethod)} · ref ${esc(a.PayRef)} · by ${esc(a.PayBy)} · ${tfmt(a.PayAt)}`:esc(a.PayStatus||"Pending");
+ const pay=a.PayStatus==="Confirmed"?`${money(a.PayAmount)} · verified by ${esc(a.PayBy)} · ${tfmt(a.PayAt)}`:esc(a.PayStatus||"Pending");
  openModal(`<h3>${esc(a.Name)} <span class="mono" style="font-size:13px;color:var(--muted)">${a.AppNo}</span></h3><div style="margin:-4px 0 10px">${spill(a)}</div>
  ${kv("Grade applied for (2027)",esc(a.Grade))}${kv("Parent / guardian",esc(a.Parent)+" · "+esc(phn(a.Phone)))}${kv("Date of birth",esc(a.DOB))}${kv("Previous school / current grade",esc(a.PrevSchool||"—")+" · "+esc(a.CurrGrade||"—"))}
  ${kv("Interview slot",esc((a.IntDate||"")+" "+(a.IntTime||"")))}${kv("Parent message (WhatsApp)",waState(a)===2?'<span class="tag">Sent</span> '+esc(waWhen(a)):waState(a)===1?'<span class="tag gold">Resend needed</span> date changed after '+esc(tfmt(a.WaSentAt)):'<span class="tag mute">Not sent</span>')}${kv("Payment",pay)}
- ${a.TeacherName?kv("Teacher / room / paper no.",esc(a.TeacherName)+" · "+esc(a.Room||"no room")+" · "+esc(a.PaperNo)):""}
+ ${a.TeacherName?kv("Teacher",esc(a.TeacherName)):""}
  ${a.StartedAt?kv("Interview",tfmt(a.StartedAt)+" to "+(a.StoppedAt?tfmt(a.StoppedAt):"running, deadline "+tfmt(a.DeadlineAt))+(a.OverdueNote?" · overdue: "+esc(a.OverdueNote):"")):""}
  ${a.Extensions?kv("Extensions",esc(a.Extensions)):""}${a.Comments?kv("Interview notes",esc(a.Comments)):""}
  ${a.Marks?kv("Marks","Total "+a.Total+"/100 ("+esc(mk(a))+") · "+esc(a.MarkStatus)+(a.VerifiedBy?" by "+esc(a.VerifiedBy):"")):""}
@@ -783,18 +797,8 @@ function edit(no){const a=S.apps.find(x=>x.AppNo===no),early=["Registered","Paid
   if(!Object.keys(f).length)return closeModal();act(b,"update",{no,fields:f},"Changes saved for "+no)})}
 
 /* ===== workflow modals ===== */
-function payM(no){const a=S.apps.find(x=>x.AppNo===no);
- mod("Confirm payment: "+esc(a.Name),`<div class="field-row"><div class="field"><label>Amount received (KSh)</label><input type="number" id="p_a" value="${S.fee}" min="1"></div><div class="field"><label>Method</label><select id="p_m"><option>M-Pesa</option><option>Cash</option><option>Bank</option></select></div></div>
- <div class="field"><label>M-Pesa code, bank slip or receipt number</label><input type="text" id="p_r" placeholder="e.g. SJK4H2L9QX" autocomplete="off"></div>
- <label style="display:flex;gap:9px;align-items:flex-start;font-weight:500"><input type="checkbox" id="p_v" style="width:auto;margin-top:3px"> I have checked that this money has actually been received.</label>
- <div class="helptext">KSh ${S.fee.toLocaleString()} is only the default. Learners stay at "awaiting payment" until a payment is confirmed here.</div>`,
- "Confirm payment",b=>act(b,"pay",{no,amount:$("#p_a").value,method:$("#p_m").value,ref:$("#p_r").value,verified:$("#p_v").checked},"Payment confirmed for "+no))}
+function payM(no){const b=document.activeElement;act(b,"pay",{no,amount:S.fee},"Payment verified. The learner is in the teachers' queue")}
 function voidM(no){mod("Reverse payment",`<div class="field"><label>Reason</label><textarea id="x_r" rows="3"></textarea></div><div class="helptext">The learner returns to "awaiting payment" and leaves the interview queue.</div>`,"Reverse payment",b=>act(b,"voidpay",{no,reason:$("#x_r").value},"Payment reversed"),"btn-danger")}
-function queueM(no){const a=S.apps.find(x=>x.AppNo===no),re=stage(a)==="Queued";
- if(!S.teachers.length)return toast("No teacher accounts yet. Ask the admin to add teachers in Settings.",1);
- mod((re?"Reassign: ":"Send to interview: ")+esc(a.Name),`<div class="field"><label>Teacher</label><select id="q_t">${S.teachers.map(t=>`<option value="${t.u}"${t.u===a.TeacherId?" selected":""}>${esc(t.name)}</option>`).join("")}</select></div>
- <div class="field"><label>Interview room</label><input type="text" id="q_r" value="${esc(a.Room||"")}" placeholder="e.g. Room 3"></div>`,
- re?"Save assignment":"Send to interview",b=>act(b,re?"reassign":"queue",{no,teacher:$("#q_t").value,room:$("#q_r").value},re?"Assignment updated":"Sent to the interview queue"))}
 function extM(no){mod("Extend interview time",`<div class="field"><label>Extra minutes</label><select id="x_m"><option>10</option><option>15</option><option selected>30</option><option>60</option></select></div><div class="field"><label>Reason (recorded)</label><textarea id="x_r" rows="3"></textarea></div>`,"Approve extension",b=>act(b,"extend",{no,minutes:$("#x_m").value,reason:$("#x_r").value},"Time extended"))}
 function resM(no){mod("Reset interview",`<div class="field"><label>Reason (recorded)</label><textarea id="x_r" rows="3"></textarea></div><div class="helptext">The timer is cleared and the learner returns to the queue. Previous attempts stay in the history.</div>`,"Reset interview",b=>act(b,"resetint",{no,reason:$("#x_r").value},"Interview reset"),"btn-danger")}
 function smark(no){const b=document.activeElement;act(b,"startmark",{no},"Marking started")}
@@ -816,28 +820,31 @@ function decM(no){const a=S.apps.find(x=>x.AppNo===no),re=stage(a)==="Decided",v
  <div class="field" style="margin-top:12px"><label>Outcome</label><select id="d_o">${opts(["Recommended","Waitlisted","Not recommended"],re?a.Decision:"Recommended")}</select></div>
  ${re?`<div class="field"><label>Reason for changing a final decision</label><textarea id="x_r" rows="2"></textarea></div>`:""}`,
  "Record decision",b=>act(b,"decide",{no,decision:$("#d_o").value,reason:re?$("#x_r").value:""},"Decision recorded"))}
-function printCard(no){const a=S.apps.find(x=>x.AppNo===no),w=window.open("","_blank");if(!w)return toast("Allow pop-ups to print the card.",1);
- const r=(k,v)=>`<div class="r"><span class="k">${k}</span><b>${esc(v||"—")}</b></div>`;
- w.document.write(`<html><head><title>Interview card ${esc(a.AppNo)}</title><style>body{font-family:Arial,sans-serif;padding:24px}.c{border:2px solid #047857;border-radius:12px;padding:22px;max-width:520px}h2{margin:0 0 4px;color:#047857}.n{font-size:30px;font-weight:700;letter-spacing:.04em;margin:12px 0}.r{display:flex;justify-content:space-between;border-bottom:1px solid #ddd;padding:8px 0}.k{color:#555}</style></head><body><div class="c"><h2>Embakasi Garrison Comprehensive School</h2><div>Admission interview card · 2027 intake</div><div class="n">${esc(a.AppNo)}</div>${r("Learner",a.Name)}${r("Grade",a.Grade)}${r("Interview date",(a.IntDate||"")+" "+(a.IntTime||""))}${r("Teacher",a.TeacherName)}${r("Room",a.Room)}${r("Paper tracking no.",a.PaperNo)}${r("Fee",a.PayStatus==="Confirmed"?"Paid, ref "+a.PayRef:"Not confirmed")}</div><script>onload=function(){print()}<\/script></body></html>`);w.document.close()}
-
 /* ===== payments ===== */
-function payV(){head("Payments");const q0=S.pq||"";
- $("#view").innerHTML=`<div class="search-row"><input type="search" class="grow" id="pq" placeholder="Search learner, application number, parent phone or reference…" value="${esc(q0)}"></div><div id="pb"></div>`;
- const draw=()=>{S.pq=$("#pq").value;const q=S.pq.toLowerCase(),m=a=>!q||(a.Name+a.AppNo+phn(a.Phone)+a.Parent+(a.PayRef||"")).toLowerCase().includes(q);
-  const w=S.apps.filter(a=>stage(a)==="Registered"&&m(a)),c=S.apps.filter(a=>a.PayStatus==="Confirmed"&&m(a)).sort((x,y)=>y.PayAt-x.PayAt),tot=c.reduce((s,a)=>s+(+a.PayAmount||0),0);
-  $("#pb").innerHTML=`<div class="panel"><div class="panel-head"><h3>Awaiting payment</h3><span class="tag gold">${w.length}</span></div>${w.length?`<div style="overflow:auto"><table><thead><tr><th>No.</th><th>Learner</th><th>Grade</th><th>Parent</th><th>Phone</th><th></th></tr></thead><tbody>${w.slice(0,100).map(a=>`<tr><td class="mono">${a.AppNo}</td><td><strong>${esc(a.Name)}</strong></td><td>${a.Grade}</td><td>${esc(a.Parent)}</td><td class="mono">${esc(phn(a.Phone))}</td><td><button class="btn btn-primary btn-sm" onclick="payM('${a.AppNo}')">Confirm payment</button></td></tr>`).join("")}</tbody></table></div>`:'<div class="empty">Nobody is waiting for payment confirmation.</div>'}</div>
-  <div class="panel"><div class="panel-head"><h3>Confirmed payments</h3><span class="tag">${c.length} · ${money(tot)}</span></div>${c.length?`<div style="overflow:auto"><table><thead><tr><th>No.</th><th>Learner</th><th>Amount</th><th>Method</th><th>Reference</th><th>Confirmed by</th><th>When</th></tr></thead><tbody>${c.slice(0,100).map(a=>`<tr class="click" onclick="prof('${a.AppNo}')"><td class="mono">${a.AppNo}</td><td>${esc(a.Name)}</td><td class="mono">${money(a.PayAmount)}</td><td>${esc(a.PayMethod)}</td><td class="mono">${esc(a.PayRef)}</td><td>${esc(a.PayBy)}</td><td>${tfmt(a.PayAt)}</td></tr>`).join("")}</tbody></table></div>`:'<div class="empty">No confirmed payments match.</div>'}</div>`};
- $("#pq").oninput=draw;draw()}
+function payV(){head("Payment desk",`<span class="tag" id="pcount"></span>`);
+ $("#view").innerHTML=`<div class="panel"><div class="search-row"><input type="search" class="grow bigsearch" id="pq" placeholder="Type the learner's name, application number or parent's phone…" autocomplete="off" value="${esc(S.pq||"")}"></div><div id="pb"></div></div>`;
+ const lbl=`Verify payment · ${money(S.fee)}`,cnt=()=>{const p=S.apps.filter(a=>a.PayStatus==="Confirmed");$("#pcount").textContent=p.length+" paid of "+S.apps.length+" · "+money(p.reduce((s,a)=>s+(+a.PayAmount||0),0))};
+ const draw=()=>{if(!$("#pq"))return;S.pq=$("#pq").value;const q=S.pq.trim().toLowerCase(),nm=(x,y)=>String(x.Name).localeCompare(String(y.Name),undefined,{sensitivity:"base"});cnt();
+  let L=S.apps.filter(a=>q?(a.Name+" "+a.AppNo+" "+phn(a.Phone)+" "+a.Parent).toLowerCase().includes(q):stage(a)==="Registered");
+  L=L.sort((x,y)=>(x.PayStatus==="Confirmed")-(y.PayStatus==="Confirmed")||nm(x,y));const more=L.length-30;L=L.slice(0,30);
+  $("#pb").innerHTML=L.length?`<div style="overflow:auto"><table><thead><tr><th>Learner</th><th>Grade</th><th>Parent</th><th style="width:1%"></th></tr></thead><tbody>${L.map(a=>`<tr><td><strong>${esc(a.Name)}</strong><div class="helptext mono" style="margin:0">${esc(a.AppNo)}</div></td><td>${esc(a.Grade)}</td><td>${esc(a.Parent)}<div class="helptext mono" style="margin:0">${esc(phn(a.Phone))}</div></td><td>${a.PayStatus==="Confirmed"?`<button class="btn btn-paid" disabled>&#10003; Paid</button><div class="helptext" style="margin:2px 0 0">${esc(a.PayBy)} · ${tfmt(a.PayAt)}</div>`:`<button class="btn btn-pay" data-pay="${esc(a.AppNo)}">${lbl}</button>`}</td></tr>`).join("")}</tbody></table></div>${more>0?`<div class="helptext">${more} more. Keep typing to narrow the list.</div>`:""}`:`<div class="empty"><h4>${q?"No learner matches":"Everyone listed has paid"}</h4>${q?"Check the spelling, or register the learner first.":"Type a name above to look someone up."}</div>`};
+ $("#pb").onclick=async e=>{const b=e.target.closest("[data-pay]");if(!b||b.disabled)return;const no=b.dataset.pay,a=S.apps.find(x=>x.AppNo===no);
+  b.disabled=true;b.classList.add("paying");b.innerHTML='<span class="spin"></span> Verifying…';
+  const j=await api("pay",{no,amount:S.fee});
+  if(!j.ok){toast(j.error,1);b.disabled=false;b.classList.remove("paying");b.innerHTML=lbl;refresh();return}
+  upd(j);b.className="btn btn-paid";b.innerHTML="&#10003; Paid";cnt();toast(a.Name+" is paid and now in the teachers' queue");
+  setTimeout(()=>{if(S.cur==="pay"&&$("#pq")){$("#pq").value="";draw();$("#pq").focus()}},1400)};
+ $("#pq").oninput=draw;draw();$("#pq").focus()}
 
 /* ===== interviews (queue + live monitor) ===== */
-function ivV(){head("Interviews",`<button class="btn btn-ghost btn-sm" onclick="S.rf={t:'paper'};go('rep')">Paper register (offline backup)</button>`);
- const rank={InProgress:0,Stopped:1,Queued:2},live=S.apps.filter(a=>rank[stage(a)]!==undefined).sort((a,b)=>rank[stage(a)]-rank[stage(b)]||String(a.TeacherName).localeCompare(b.TeacherName)),paid=by("Paid");
- $("#view").innerHTML=`<div class="panel"><div class="panel-head"><h3>Paid, ready to send to interview</h3><span class="tag gold">${paid.length}</span></div>${paid.length?`<div style="overflow:auto"><table><thead><tr><th>No.</th><th>Learner</th><th>Grade</th><th>Payment ref</th><th></th></tr></thead><tbody>${paid.map(a=>`<tr><td class="mono">${a.AppNo}</td><td><strong>${esc(a.Name)}</strong></td><td>${a.Grade}</td><td class="mono">${esc(a.PayRef)}</td><td><button class="btn btn-primary btn-sm" onclick="queueM('${a.AppNo}')">Send to interview</button></td></tr>`).join("")}</tbody></table></div>`:'<div class="empty">No paid learners are waiting.</div>'}</div>
- <div class="panel"><div class="panel-head"><h3>Interview queue and live sessions</h3><span class="tag">${live.length}</span></div>${live.length?`<div style="overflow:auto"><table><thead><tr><th>No.</th><th>Learner</th><th>Grade</th><th>Teacher · room</th><th>Paper no.</th><th>Status</th><th>Time left</th><th></th></tr></thead><tbody>${live.map(a=>`<tr class="click" onclick="prof('${a.AppNo}')"><td class="mono">${a.AppNo}</td><td><strong>${esc(a.Name)}</strong></td><td>${a.Grade}</td><td>${esc(a.TeacherName)} · ${esc(a.Room||"—")}</td><td class="mono">${esc(a.PaperNo)}</td><td>${spill(a)}</td><td class="mono">${stage(a)==="InProgress"?`<span data-dl="${a.DeadlineAt}">…</span>`:"—"}</td><td class="act noprint"><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();prof('${a.AppNo}')">Open</button></td></tr>`).join("")}</tbody></table></div>`:'<div class="empty">No learners are queued or in interview.</div>'}</div>`}
+function ivV(){head("Live interviews");
+ const rank={InProgress:0,Stopped:1,Queued:2},live=S.apps.filter(a=>rank[stage(a)]!==undefined).sort((a,b)=>rank[stage(a)]-rank[stage(b)]||(+a.PayAt||0)-(+b.PayAt||0)),c=s=>by(s).length;
+ $("#view").innerHTML=`<div class="grid cols-3" style="margin-bottom:18px"><div class="stat-card"><div class="label">Waiting to start</div><div class="value">${c("Queued")}</div><div class="delta">paid, in the teachers' queue</div></div><div class="stat-card"><div class="label">In progress</div><div class="value">${c("InProgress")}</div><div class="delta">${S.apps.filter(isOver).length} overdue</div></div><div class="stat-card"><div class="label">Stopped, not submitted</div><div class="value">${c("Stopped")}</div><div class="delta">teacher still to submit</div></div></div>
+ <div class="panel"><div class="panel-head"><h3>Queue and running interviews</h3><span class="tag">${live.length}</span></div>${live.length?`<div style="overflow:auto"><table><thead><tr><th>Learner</th><th>Grade</th><th>Teacher</th><th>Status</th><th></th></tr></thead><tbody>${live.slice(0,200).map(a=>`<tr class="click" onclick="prof('${a.AppNo}')"><td><strong>${esc(a.Name)}</strong><div class="helptext mono" style="margin:0">${a.AppNo}</div></td><td>${a.Grade}</td><td>${esc(a.TeacherName||"Not taken yet")}</td><td>${spill(a)}</td><td class="act noprint"><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();prof('${a.AppNo}')">Open</button></td></tr>`).join("")}</tbody></table></div>`:'<div class="empty">Nobody is waiting or in interview.</div>'}</div>`}
 
 /* ===== marking ===== */
 function markV(){head("Marking");const L=S.apps.filter(a=>["AwaitingMarking","Marking","MarksEntered"].includes(stage(a))),P=isP();
- $("#view").innerHTML=`<div class="panel"><div class="panel-head"><h3>Marking queue</h3><span class="tag">${L.length}</span></div><div class="helptext" style="margin:-6px 0 12px">Awaiting marking → marks entered → admin verifies → result recorded automatically (45/100 and above = Recommended).</div>${L.length?`<div style="overflow:auto"><table><thead><tr><th>Paper no.</th><th>Learner</th><th>Grade</th><th>Submitted</th><th>Stage</th><th>Marks</th><th></th></tr></thead><tbody>${L.map(a=>{const s=stage(a);return`<tr><td class="mono">${esc(a.PaperNo)}</td><td><strong>${esc(a.Name)}</strong><div class="helptext" style="margin:0">${a.AppNo}</div></td><td>${a.Grade}</td><td>${tfmt(a.SubmittedAt)}</td><td>${spill(a)}</td><td>${a.Marks?"Total "+a.Total+"/100<div class='helptext' style='margin:0'>by "+esc(a.MarkedBy)+"</div>":"—"}</td><td class="act noprint">${s==="AwaitingMarking"?`<button class="btn btn-ghost btn-sm" onclick="smark('${a.AppNo}')">Start marking</button><button class="btn btn-primary btn-sm" onclick="marksM('${a.AppNo}')">Enter marks</button>`:s==="Marking"?`<button class="btn btn-primary btn-sm" onclick="marksM('${a.AppNo}')">Enter marks</button>`:`<button class="btn btn-ghost btn-sm" onclick="marksM('${a.AppNo}')">Correct</button>${S.user.role==="admin"?`<button class="btn btn-primary btn-sm" onclick="verM('${a.AppNo}')">Verify</button>`:""}`}</td></tr>`}).join("")}</tbody></table></div>`:'<div class="empty"><h4>Nothing to mark</h4>Papers appear here when teachers submit them.</div>'}</div>`}
+ $("#view").innerHTML=`<div class="panel"><div class="panel-head"><h3>Marking queue</h3><span class="tag">${L.length}</span></div><div class="helptext" style="margin:-6px 0 12px">Awaiting marking → marks entered → admin verifies → result recorded automatically (${S.pass}/100 and above = Recommended).</div>${L.length?`<div style="overflow:auto"><table><thead><tr><th>Learner</th><th>Grade</th><th>Submitted</th><th>Stage</th><th>Marks</th><th></th></tr></thead><tbody>${L.map(a=>{const s=stage(a);return`<tr><td><strong>${esc(a.Name)}</strong><div class="helptext" style="margin:0">${a.AppNo}</div></td><td>${a.Grade}</td><td>${tfmt(a.SubmittedAt)}</td><td>${spill(a)}</td><td>${a.Marks?"Total "+a.Total+"/100<div class='helptext' style='margin:0'>by "+esc(a.MarkedBy)+"</div>":"—"}</td><td class="act noprint">${(s==="AwaitingMarking"||s==="Marking")?`<button class="btn btn-primary btn-sm" onclick="marksM('${a.AppNo}')">Enter marks</button>`:`<button class="btn btn-ghost btn-sm" onclick="marksM('${a.AppNo}')">Correct</button>${S.user.role==="admin"?`<button class="btn btn-primary btn-sm" onclick="verM('${a.AppNo}')">Verify</button>`:""}`}</td></tr>`}).join("")}</tbody></table></div>`:'<div class="empty"><h4>Nothing to mark</h4>Papers appear here when teachers submit them.</div>'}</div>`}
 
 /* ===== decisions ===== */
 function decV(){head("Decisions");const P=isP();
@@ -856,51 +863,59 @@ function intV(){head("Interview register",`<button class="btn btn-ghost btn-sm" 
 
 /* ===== teacher portal ===== */
 const tpill=a=>{const s=stage(a);if(isOver(a))return'<span class="tag warn">Overdue</span>'+cdc(a);if(s==="Queued")return'<span class="tag gold">Waiting to start</span>';if(s==="InProgress")return'<span class="tag">In progress</span>'+cdc(a);if(s==="Stopped")return'<span class="tag gold">Stopped, not submitted</span>';return'<span class="tag mute">Submitted</span>'};
-function thV(){head("Teacher Interview Portal");const A=S.apps,ip=A.filter(a=>stage(a)==="InProgress");
+const tAct=a=>{const s=stage(a),no=a.AppNo,c=(cls,fn,l)=>`<button class="btn ${cls} btn-sm" onclick="event.stopPropagation();${fn}('${no}',this)">${l}</button>`;
+ return s==="Queued"?c("btn-primary","qStart","Start"):s==="InProgress"?c("btn-danger","qStop","Stop"):s==="Stopped"?c("btn-primary","qSubmit","Submit to marking"):""};
+function thV(){head("Teacher Interview Portal");
  const rank={InProgress:0,Stopped:1,Queued:2},gi=a=>{const i=GRADES.indexOf(a.Grade);return i<0?99:i},nm=(a,b)=>String(a.Name).localeCompare(String(b.Name),undefined,{sensitivity:"base"});
- const SORTS={status:["Status (active first)",(a,b)=>(rank[stage(a)]??3)-(rank[stage(b)]??3)||nm(a,b)],gup:["Grade (lowest first)",(a,b)=>gi(a)-gi(b)||nm(a,b)],gdn:["Grade (highest first)",(a,b)=>gi(b)-gi(a)||nm(a,b)],name:["Name (A to Z)",nm]};
+ const SORTS={status:["First come, first served",(a,b)=>(rank[stage(a)]??3)-(rank[stage(b)]??3)||(+a.PayAt||0)-(+b.PayAt||0)||nm(a,b)],gup:["Grade (lowest first)",(a,b)=>gi(a)-gi(b)||nm(a,b)],gdn:["Grade (highest first)",(a,b)=>gi(b)-gi(a)||nm(a,b)],name:["Name (A to Z)",nm]};
  if(!SORTS[S.ts])S.ts="status";
- $("#view").innerHTML=`<div class="grid cols-2" style="margin-bottom:18px"><div class="stat-card"><div class="label">Assigned to me</div><div class="value">${A.length}</div><div class="delta">Interview candidates</div></div>
- <div class="stat-card"><div class="label">In progress</div><div class="value">${ip.length}</div><div class="delta">Active interviews</div></div></div>
+ $("#view").innerHTML=`<div class="grid cols-2" style="margin-bottom:18px"><div class="stat-card"><div class="label">Waiting to start</div><div class="value" id="tw">0</div><div class="delta">Paid and ready for interview</div></div>
+ <div class="stat-card"><div class="label">In progress</div><div class="value" id="ti">0</div><div class="delta">My active interviews</div></div></div>
  <div class="panel"><div class="panel-head"><h3>Interview queue</h3><span class="tag" id="tcnt"></span></div>
  <div class="search-row sortbar"><input type="search" class="grow" id="tq" placeholder="Search a learner by name or application number…" value="${esc(S.tq||"")}" autocomplete="off"><select id="ts" title="Sort learners">${Object.keys(SORTS).map(k=>`<option value="${k}"${S.ts===k?" selected":""}>Sort: ${SORTS[k][0]}</option>`).join("")}</select></div>
- <div id="ttb"></div></div>`;
- const draw=()=>{if(!$("#tq"))return;S.tq=$("#tq").value;S.ts=$("#ts").value;const q=S.tq.trim().toLowerCase();
-  const L=A.filter(a=>!q||(String(a.Name)+" "+a.AppNo).toLowerCase().includes(q)).sort(SORTS[S.ts][1]);
-  $("#tcnt").textContent=(q?L.length+" of "+A.length:A.length)+" learner"+(A.length===1?"":"s");
-  $("#ttb").innerHTML=L.length?`<div style="overflow:auto"><table><thead><tr><th>Learner</th><th>Grade</th><th>Status</th></tr></thead><tbody>${L.map(a=>`<tr class="click" onclick="tProf('${a.AppNo}')"><td><strong>${esc(a.Name)}</strong><div class="helptext mono" style="margin:0">${esc(a.AppNo)}</div></td><td>${esc(a.Grade)}</td><td>${tpill(a)}</td></tr>`).join("")}</tbody></table></div>`:(A.length?`<div class="empty"><h4>No learner matches "${esc(S.tq)}"</h4>Check the spelling or clear the search box.</div>`:'<div class="empty"><h4>No learners assigned yet</h4>Learners appear here once administration sends them to you.</div>')};
- $("#tq").oninput=draw;$("#ts").onchange=draw;draw()}
+ <div id="ttb"></div><div class="helptext">This list updates by itself every 10 seconds.</div></div>`;
+ const draw=()=>{if(!$("#tq"))return;S.tq=$("#tq").value;S.ts=$("#ts").value;const A=S.apps,q=S.tq.trim().toLowerCase(),live=a=>["Queued","InProgress","Stopped"].includes(stage(a));
+  $("#tw").textContent=A.filter(a=>stage(a)==="Queued").length;$("#ti").textContent=A.filter(a=>stage(a)==="InProgress").length;
+  const L=A.filter(a=>q?(String(a.Name)+" "+a.AppNo).toLowerCase().includes(q):live(a)).sort(SORTS[S.ts][1]),done=A.filter(a=>!live(a)).length;
+  $("#tcnt").textContent=L.length+" shown"+(!q&&done?" · "+done+" submitted":"");
+  $("#ttb").innerHTML=L.length?`<div style="overflow:auto"><table><thead><tr><th>Learner</th><th>Grade</th><th>Status</th><th style="width:1%"></th></tr></thead><tbody>${L.slice(0,150).map(a=>`<tr class="click" onclick="tProf('${a.AppNo}')"><td><strong>${esc(a.Name)}</strong><div class="helptext mono" style="margin:0">${esc(a.AppNo)}</div></td><td>${esc(a.Grade)}</td><td>${tpill(a)}</td><td>${tAct(a)}</td></tr>`).join("")}</tbody></table></div>`:(q?`<div class="empty"><h4>No learner matches "${esc(S.tq)}"</h4>Check the spelling or clear the search box.</div>`:'<div class="empty"><h4>Nobody is waiting</h4>Learners appear here as soon as administration verifies their payment.</div>')};
+ S.drawT=draw;$("#tq").oninput=draw;$("#ts").onchange=draw;draw()}
+
+async function qStart(no,b){const a=S.apps.find(x=>x.AppNo===no);if(b){b.disabled=true;b.textContent="Starting…"}
+ const j=await api("tstart",{no});if(!j.ok){toast(j.error,1);await refresh();if(S.drawT)S.drawT();return}
+ upd(j);toast("Interview started for "+a.Name);closeModal();if(S.drawT&&S.cur==="th")S.drawT()}
+function qStop(no,b,ses){const a=S.apps.find(x=>x.AppNo===no);if(!a)return;
+ mod("Stop this interview?",`<div class="stop-pop"><div class="stop-ic">&#9202;</div><p>You are about to stop the interview for <b>${esc(a.Name)}</b>.</p><div class="helptext">After stopping, press <b>Submit to marking</b> to send the paper on. The timer cannot be restarted.</div></div>`,
+ "Yes, stop interview",bb=>busy(bb,async()=>{
+  const j=await api("tstop",{no,comments:ses===true&&$("#notes")?$("#notes").value:undefined});
+  if(!j.ok)return toast(j.error,1);
+  upd(j);closeModal();toast("Interview stopped. Now press Submit to marking.");ses===true?go("tses",no):(S.drawT&&S.drawT())}),"btn-danger")}
+async function qSubmit(no,b,ses){if(b)b.disabled=true;
+ const j=await api("tsubmit",{no});if(!j.ok){toast(j.error,1);if(b)b.disabled=false;return}
+ upd(j);toast("Submitted to marking");ses===true?go("tses",no):(S.drawT&&S.drawT())}
 
 function tProf(no){const a=S.apps.find(x=>x.AppNo===no);if(!a)return;const st=stage(a);
- const btn=st==="Queued"?`<button class="btn btn-primary" onclick="startI('${no}')">Start interview</button>`:["InProgress","Stopped"].includes(st)?`<button class="btn btn-primary" onclick="closeModal();go('tses','${no}')">Open session</button>`:"";
- const prev=Math.max(0,(+a.Attempts||0)-(["InProgress","Stopped","AwaitingMarking","Marking","MarksEntered","ReadyForDecision","Decided"].includes(st)?1:0));
+ const btn=st==="Queued"?`<button class="btn btn-primary" onclick="qStart('${no}',this)">Start interview</button>`:["InProgress","Stopped"].includes(st)?`<button class="btn btn-primary" onclick="closeModal();go('tses','${no}')">Open session</button>`:"";
  openModal(`<h3>Learner profile</h3>
  ${kv("Application number",'<span class="mono">'+esc(a.AppNo)+"</span>")}${kv("Full name",esc(a.Name))}${kv("Date of birth",esc(a.DOB))}${kv("Grade applying for in 2027",esc(a.Grade))}
  ${kv("Previous school",esc(a.PrevSchool||"—"))}${kv("Current grade",esc(a.CurrGrade||"—"))}${kv("Parent or guardian",esc(a.Parent)+" · "+esc(phn(a.Phone)))}
- ${kv("Payment verification",a.PayStatus==="Confirmed"?'<span class="tag">Confirmed</span>':'<span class="tag warn">Not confirmed</span>')}${kv("Previous attempts",prev)}
- <div class="hlist" id="hx">Loading history…</div>
- <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal()">Close</button>${btn}</div>`,
- async()=>{const j=await api("history",{no});if($("#hx"))$("#hx").innerHTML=j.ok&&j.log.length?"<b>Interview history</b>"+j.log.map(r=>`<div><span class="mono">${r.Time}</span> · ${esc(r.Note||r.To)}</div>`).join(""):"No interview history yet."})}
-
-function startI(no){const a=S.apps.find(x=>x.AppNo===no);
- mod("Start interview",`<p>Start the <b>two-hour countdown</b> for <b>${esc(a.Name)}</b>?</p><div class="helptext">The timer is kept on the server. Refreshing the page, closing the browser or losing internet will not restart it, and it cannot be started a second time.</div>`,"Start now",b=>busy(b,async()=>{
-  const j=await api("tstart",{no});if(!j.ok)return toast(j.error,1);upd(j);closeModal();S.al={};go("tses",no);toast("Interview started")}))}
+ ${kv("Payment verification",a.PayStatus==="Confirmed"?'<span class="tag">Confirmed</span>':'<span class="tag warn">Not confirmed</span>')}
+ <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal()">Close</button>${btn}</div>`)}
 
 function tses(no){const a=S.apps.find(x=>x.AppNo===no);if(!a)return go("th");head("Interview session");const st=stage(a);S.rs=st;
  const hdr=`<div class="panel-head"><h3>Interview session</h3>${tpill(a)}</div><div class="helptext" style="margin:-6px 0 14px">Candidate #${esc(a.AppNo)} · ${esc(a.Name)} · ${esc(a.Grade)}</div>`;
  let body="";
  if(st==="InProgress")body=`<div class="timer" id="tmbox"><div class="tml" id="tml">Time remaining</div><div class="tm" id="tm">--:--:--</div><div class="prog"><i id="tmp" style="--w:0%"></i></div><div class="prog-pct"><span>Elapsed time</span><b id="tmpc">0%</b></div></div>
- <div class="alertbar hide" id="exp" style="margin-top:14px">TIME EXPIRED. Ordinary interview actions are switched off. Stop the interview and record the outcome, and give a short explanation. Nothing has been deleted.</div>
- <div class="field" style="margin-top:16px"><label>Interview notes</label><textarea id="notes" rows="5">${esc(a.Comments)}</textarea></div>
+ <div class="alertbar hide" id="exp" style="margin-top:14px">TIME EXPIRED. Press Stop, then submit to marking. Nothing has been deleted.</div>
+ <div class="field" style="margin-top:16px"><label>Interview notes (optional)</label><textarea id="notes" rows="4">${esc(a.Comments)}</textarea></div>
  <div class="btn-row"><button class="btn btn-ghost" id="sv">Save notes</button><button class="btn btn-danger" id="stp">Stop interview</button></div>`;
- else if(st==="Stopped")body=`<div class="infobar">Interview stopped at ${tfmt(a.StoppedAt)}${a.OverdueNote?" (overdue: "+esc(a.OverdueNote)+")":""}. Confirm the paper is handed in, then submit to administration.</div>
- ${a.Comments?kv("Interview notes",esc(a.Comments)):""}<div class="field" style="margin-top:12px"><label>Paper handed in?</label><select id="sp">${opts(["Yes","No"],a.PaperSubmitted||"Yes")}</select></div><button class="btn btn-primary" id="sb">Submit to admin</button>`;
- else body=`<div class="infobar">This interview has been submitted to administration and is now locked. You cannot edit it.</div>${kv("Stopped",tfmt(a.StoppedAt))}${kv("Paper submitted",esc(a.PaperSubmitted))}${a.Comments?kv("Interview notes",esc(a.Comments)):""}`;
- $("#view").innerHTML=`<div class="panel" style="max-width:820px">${hdr}${body}</div><button class="btn btn-ghost btn-sm" onclick="go('th')">Back to my interviews</button>`;
+ else if(st==="Stopped")body=`<div class="infobar">Interview stopped at ${tfmt(a.StoppedAt)}. Press the button below to send it to marking.</div>${a.Comments?kv("Interview notes",esc(a.Comments)):""}<button class="btn btn-primary" id="sb" style="margin-top:12px">Submit to marking</button>`;
+ else body=`<div class="infobar">This interview was submitted to marking and is now locked.</div>${kv("Stopped",tfmt(a.StoppedAt))}${a.Comments?kv("Interview notes",esc(a.Comments)):""}`;
+ $("#view").innerHTML=`<div class="panel" style="max-width:820px">${hdr}${body}</div><button class="btn btn-ghost btn-sm" onclick="go('th')">Back to the queue</button>`;
  if(st==="InProgress"){
   $("#sv").onclick=e=>busy(e.target,async()=>{const j=await api("tnotes",{no,comments:$("#notes").value});if(!j.ok)return toast(j.error,1);upd(j);toast("Notes saved")});
-  $("#stp").onclick=()=>stopM(no)}
- if(st==="Stopped")$("#sb").onclick=e=>busy(e.target,async()=>{const j=await api("tsubmit",{no,paper:$("#sp").value});if(!j.ok)return toast(j.error,1);upd(j);toast("Submitted to administration");go("tses",no)});
+  $("#stp").onclick=e=>qStop(no,e.target,true)}
+ if(st==="Stopped")$("#sb").onclick=e=>qSubmit(no,e.target,true);
  if(st==="InProgress")tmUpdate()}
 
 function tmUpdate(){const a=S.apps.find(x=>x.AppNo===S.arg);if(!a)return;
@@ -913,23 +928,17 @@ function tmUpdate(){const a=S.apps.find(x=>x.AppNo===S.arg);if(!a)return;
  S.al=S.al||{};const k=a.AppNo+":"+lvl;
  if(lvl&&!S.al[k]){S.al[k]=1;toast(lvl==="expired"?"TIME EXPIRED for "+a.Name:lvl==="urgent"?"Less than 10 minutes left for "+a.Name:"30 minutes remaining for "+a.Name,lvl!=="amber");if(lvl!=="amber")beep()}}
 
-function stopM(no){const a=S.apps.find(x=>x.AppNo===no),over=isOver(a);
- mod("Stop interview",`<p>Stop the session for <b>${esc(a.Name)}</b> and record the outcome.</p><div class="field"><label>Was the paper submitted?</label><select id="s_p"><option>Yes</option><option>No</option></select></div>
- <div class="field"><label>Interview notes</label><textarea id="s_c" rows="4">${esc($("#notes")?$("#notes").value:a.Comments)}</textarea></div>
- ${over?`<div class="field"><label>The interview ran over time. Explain why</label><textarea id="s_n" rows="2"></textarea></div>`:""}`,
- "Stop interview",b=>busy(b,async()=>{const j=await api("tstop",{no,paper:$("#s_p").value,comments:$("#s_c").value,note:over?$("#s_n").value:""});if(!j.ok)return toast(j.error,1);upd(j);closeModal();toast("Interview stopped");go("tses",no)}),"btn-danger")}
-
 /* ===== reports ===== */
 const RP={
  sum:["Admission summary",L=>{const c=s=>L.filter(a=>stage(a)===s).length,d=x=>L.filter(a=>a.Decision===x&&stage(a)==="Decided").length,pd=L.filter(a=>a.PayStatus==="Confirmed");
   return[["Applicants",L.length],["Payments confirmed",pd.length],["Fees confirmed (KSh)",pd.reduce((s,a)=>s+(+a.PayAmount||0),0)],["Awaiting payment",c("Registered")],["In interview queue",c("Paid")+c("Queued")],["Interviews in progress",c("InProgress")],["Overdue now",L.filter(isOver).length],["Awaiting marking / verification",c("AwaitingMarking")+c("Marking")+c("MarksEntered")],["Ready for decision",c("ReadyForDecision")],["Recommended",d("Recommended")],["Waitlisted",d("Waitlisted")],["Not recommended",d("Not recommended")]].map(r=>({Measure:r[0],Value:r[1]}))}],
  pay:["Registration and payment",L=>{const p=L.filter(a=>a.PayStatus==="Confirmed"),r=L.map(a=>({"App no":a.AppNo,Learner:a.Name,Grade:a.Grade,Registered:a.RegDate,Payment:a.PayStatus||"Pending",Amount:a.PayStatus==="Confirmed"?+a.PayAmount:"",Method:a.PayMethod||"",Reference:a.PayRef||"","Confirmed by":a.PayBy||"","Confirmed at":a.PayAt?tfmt(a.PayAt):""}));
   if(r.length)r.push({"App no":"TOTAL",Learner:p.length+" confirmed payments",Grade:"",Registered:"",Payment:"",Amount:p.reduce((s,a)=>s+(+a.PayAmount||0),0),Method:"",Reference:"","Confirmed by":"","Confirmed at":""});return r}],
- que:["Interview queue by grade and teacher",L=>L.filter(a=>["Paid","Queued","InProgress","Stopped"].includes(stage(a))).sort((a,b)=>String(a.Grade).localeCompare(b.Grade)||String(a.TeacherName).localeCompare(b.TeacherName)).map(a=>({Grade:a.Grade,Teacher:a.TeacherName||"Not assigned",Room:a.Room||"","App no":a.AppNo,Learner:a.Name,"Paper no":a.PaperNo||"",Status:(STG[stage(a)]||[""])[0]}))],
- prog:["Learners currently in progress",L=>L.filter(a=>stage(a)==="InProgress").map(a=>({"App no":a.AppNo,Learner:a.Name,Grade:a.Grade,Teacher:a.TeacherName,Room:a.Room||"",Started:tfmt(a.StartedAt),Deadline:tfmt(a.DeadlineAt),Timer:isOver(a)?"OVERDUE":"Running"}))],
+ que:["Interview queue by grade and teacher",L=>L.filter(a=>["Paid","Queued","InProgress","Stopped"].includes(stage(a))).sort((a,b)=>String(a.Grade).localeCompare(b.Grade)||String(a.TeacherName).localeCompare(b.TeacherName)).map(a=>({Grade:a.Grade,Teacher:a.TeacherName||"Not assigned","App no":a.AppNo,Learner:a.Name,Status:(STG[stage(a)]||[""])[0]}))],
+ prog:["Learners currently in progress",L=>L.filter(a=>stage(a)==="InProgress").map(a=>({"App no":a.AppNo,Learner:a.Name,Grade:a.Grade,Teacher:a.TeacherName,Started:tfmt(a.StartedAt),Deadline:tfmt(a.DeadlineAt),Timer:isOver(a)?"OVERDUE":"Running"}))],
  over:["Overdue interviews and explanations",L=>L.filter(a=>/verdue/.test(a.SessionStatus||"")||isOver(a)).map(a=>({"App no":a.AppNo,Learner:a.Name,Teacher:a.TeacherName,Started:tfmt(a.StartedAt),Deadline:tfmt(a.DeadlineAt),Stopped:tfmt(a.StoppedAt),Explanation:a.OverdueNote||(isOver(a)?"Still running, no explanation yet":""),Extensions:a.Extensions||""}))],
  done:["Interviews completed and papers submitted",L=>L.filter(a=>a.StoppedAt).map(a=>({"App no":a.AppNo,Learner:a.Name,Grade:a.Grade,Teacher:a.TeacherName,Started:tfmt(a.StartedAt),Stopped:tfmt(a.StoppedAt),"Minutes":Math.round((a.StoppedAt-a.StartedAt)/6e4),"Paper handed in":a.PaperSubmitted||"","Submitted to admin":a.SubmittedAt?tfmt(a.SubmittedAt):"Not yet"}))],
- await:["Papers awaiting marking",L=>L.filter(a=>["AwaitingMarking","Marking","MarksEntered"].includes(stage(a))).map(a=>({"Paper no":a.PaperNo,"App no":a.AppNo,Learner:a.Name,Grade:a.Grade,Submitted:tfmt(a.SubmittedAt),Stage:(STG[stage(a)]||[""])[0],Marker:a.MarkedBy||""}))],
+ await:["Papers awaiting marking",L=>L.filter(a=>["AwaitingMarking","Marking","MarksEntered"].includes(stage(a))).map(a=>({"App no":a.AppNo,Learner:a.Name,Grade:a.Grade,Submitted:tfmt(a.SubmittedAt),Stage:(STG[stage(a)]||[""])[0],Marker:a.MarkedBy||""}))],
  marks:["Marks entered, verified and pending",L=>L.filter(a=>["AwaitingMarking","Marking","MarksEntered","ReadyForDecision","Decided"].includes(stage(a))).map(a=>{let m={};try{m=JSON.parse(a.Marks)}catch(e){}const r={"App no":a.AppNo,Learner:a.Name,Grade:a.Grade};S.sections.forEach(s=>r[s]=m[s]??"");r.Total=a.Marks?a.Total:"";r.Status=a.MarkStatus||"Pending";r["Entered by"]=a.MarkedBy||"";r["Verified by"]=a.VerifiedBy||"";return r})],
  res:["Passed, failed and waitlisted",L=>L.filter(a=>stage(a)==="Decided").sort((a,b)=>String(a.Decision).localeCompare(String(b.Decision))||String(a.Grade).localeCompare(b.Grade)||(+b.Total||0)-(+a.Total||0)).map(a=>({Outcome:a.Decision==="Recommended"?"Passed (recommended)":a.Decision==="Waitlisted"?"Waitlisted":"Not recommended",Learner:a.Name,"App no":a.AppNo,Grade:a.Grade,Total:a.Total||"","Decided by":a.DecisionBy||"","Decided at":a.DecisionAt?tfmt(a.DecisionAt):""}))],
  gr:["Admissions against vacancies",L=>GRADES.map(g=>{const x=L.filter(a=>a.Grade===g),v=S.vac[g]||0,r=x.filter(a=>a.Decision==="Recommended"&&stage(a)==="Decided").length;return{Grade:g,Applicants:x.length,Paid:x.filter(a=>a.PayStatus==="Confirmed").length,Interviewed:x.filter(a=>a.StartedAt).length,Recommended:r,Waitlisted:x.filter(a=>a.Decision==="Waitlisted").length,Vacancies:v,"Places left":v-r}})],
@@ -937,7 +946,6 @@ const RP={
  rec:["Daily reconciliation",L=>{const D={},K=["Registered","Payments confirmed","Amount (KSh)","Interviews started","Submitted to admin","Decided"],add=(ms,k,x)=>{if(!ms)return;const d=dkey(ms);D[d]=D[d]||{Date:d,Registered:0,"Payments confirmed":0,"Amount (KSh)":0,"Interviews started":0,"Submitted to admin":0,Decided:0,Marked:""};if(k==="Amount (KSh)")D[d][k]+=x;else D[d][k]++};
   L.forEach(a=>{if(a.RegDate)add(new Date(a.RegDate+"T12:00:00+03:00").getTime(),"Registered");if(a.PayStatus==="Confirmed"){add(a.PayAt,"Payments confirmed");add(a.PayAt,"Amount (KSh)",+a.PayAmount||0)}add(a.StartedAt,"Interviews started");add(a.SubmittedAt,"Submitted to admin");add(a.DecisionAt,"Decided")});
   const r=Object.values(D).sort((x,y)=>x.Date<y.Date?-1:1);if(r.length){const t={Date:"TOTAL"};K.forEach(k=>t[k]=r.reduce((s,x)=>s+x[k],0));t.Marked=L.filter(a=>a.MarkStatus).length;r.push(t)}return r}],
- paper:["Paper register (offline backup)",L=>L.filter(a=>["Queued","InProgress","Stopped"].includes(stage(a))).map(a=>({"Candidate no":a.AppNo,"Paper no":a.PaperNo||"",Learner:a.Name,Grade:a.Grade,Teacher:a.TeacherName||"",Room:a.Room||"","Start time":"","Stop time":"","Paper in (Y/N)":"","Teacher signature":""}))],
  audit:["Full audit report",null]};
 function rep(){head("Reports",`<button class="btn btn-ghost btn-sm" onclick="window.print()">Print / save as PDF</button><button class="btn btn-primary btn-sm" id="xl">Export to Excel</button>`);
  const f=S.rf=S.rf||{t:"sum"};
